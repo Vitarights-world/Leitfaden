@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>â˜€ Team Solaris â€” ChatGPT Prompts fÃ¼r die 7-Tage-Gruppe</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#f5f2eb;color:#1a2744;line-height:1.6}
+:root{
+  --y:#F5C200;--yl:#FEF9D6;--ym:#FAD84A;
+  --n:#1a2744;--nm:#2d3f6b;
+  --bl:#dce8f5;--bm:#a8c8e8;
+  --be:#faf7f2;--bem:#ede8dc;
+  --w:#fff;--tm:#4a5a7a;--tl:#7a8aaa;--bd:#dce8f5
+}
+.wrap{max-width:760px;margin:0 auto;padding:1.5rem 1rem 4rem}
+.hdr{background:var(--n);border-radius:16px;padding:2rem 2.5rem;margin-bottom:1.5rem;position:relative;overflow:hidden}
+.hdr::before{content:'â˜€';position:absolute;right:10px;top:-15px;font-size:140px;opacity:0.06;line-height:1;pointer-events:none}
+.hdr h1{font-size:24px;font-weight:700;color:var(--y);margin-bottom:0.5rem}
+.hdr p{font-size:23px;color:var(--bl);line-height:1.7}
+.intro{background:var(--be);border-radius:14px;padding:1.4rem 1.6rem;margin-bottom:1.5rem;border:1.5px solid var(--bem)}
+.intro h2{font-size:23px;font-weight:700;color:var(--n);margin-bottom:0.5rem}
+.intro p{font-size:19px;color:var(--tm);line-height:1.7;margin-bottom:0.5rem}
+.intro p:last-child{margin-bottom:0}
+.setup{background:var(--n);border-radius:14px;padding:1.6rem 1.9rem;margin-bottom:1.5rem}
+.setup h2{font-size:23px;font-weight:700;color:var(--y);margin-bottom:1.25rem}
+.setup-fields{display:grid;grid-template-columns:1fr 1fr;gap:13px}
+.field-group{display:flex;flex-direction:column;gap:4px}
+.field-group label{font-size:14px;font-weight:600;color:var(--bm);letter-spacing:0.06em;text-transform:uppercase}
+.field-group input,.field-group select,.field-group textarea{padding:11px 14px;border-radius:14px;border:1.5px solid var(--nm);background:var(--nm);color:var(--w);font-size:19px;font-family:inherit;outline:none;transition:border-color 0.15s}
+.field-group input:focus,.field-group select:focus,.field-group textarea:focus{border-color:var(--y)}
+.field-group textarea{resize:vertical;min-height:90px}
+.field-group select option{background:var(--n);color:var(--w)}
+.field-full{grid-column:1/-1}
+.day{background:var(--w);border:1.5px solid var(--bd);border-radius:14px;margin-bottom:1.25rem;overflow:hidden;box-shadow:0 2px 8px rgba(26,39,68,0.06)}
+.day-h{background:var(--n);padding:0.9rem 1.25rem;display:flex;align-items:center;gap:13px;cursor:pointer;user-select:none;transition:background 0.12s}
+.day-h:hover{background:var(--nm)}
+.dn{width:36px;height:36px;border-radius:50%;background:var(--y);color:var(--n);font-size:18px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.dt{flex:1}
+.dt h2{font-size:23px;font-weight:700;color:var(--w)}
+.dt p{font-size:14px;color:var(--bl);margin-top:2px}
+.chv{color:var(--y);font-size:19px;transition:transform 0.2s;flex-shrink:0}
+.chv.op{transform:rotate(180deg)}
+.day-b{display:none;padding:1.25rem}
+.day-b.op{display:block}
+.goal-box{background:var(--yl);border-radius:14px;padding:1.4rem 1.6rem;margin-bottom:1.25rem;border:1.5px solid var(--ym)}
+.goal-box .lb{font-size:13px;font-weight:700;color:#8a7000;margin-bottom:5px;letter-spacing:0.08em;text-transform:uppercase}
+.goal-box p{font-size:19px;color:#5a4a00;line-height:1.65}
+.aha-box{background:var(--bl);border-radius:14px;padding:1.4rem 1.6rem;margin-bottom:1.25rem;border:1.5px solid var(--bm)}
+.aha-box .lb{font-size:13px;font-weight:700;color:#2d5a8a;margin-bottom:5px;letter-spacing:0.08em;text-transform:uppercase}
+.aha-box ul{list-style:none;margin:0;padding:0}
+.aha-box li{font-size:19px;color:#1a3a5c;line-height:1.65;padding:3px 0;display:flex;gap:7px}
+.aha-box li::before{content:'ðŸ’¡';flex-shrink:0}
+.prompt-box{background:var(--n);border-radius:14px;padding:1.4rem 1.6rem;margin-top:0;position:relative}
+.prompt-box .lb{font-size:13px;font-weight:700;color:var(--ym);margin-bottom:10px;letter-spacing:0.08em;text-transform:uppercase}
+.prompt-text{font-size:19px;color:var(--bl);line-height:1.8;white-space:pre-wrap;font-family:inherit}
+.prompt-text .placeholder{color:var(--ym);font-weight:600}
+.cbtn{margin-top:12px;padding:11px 22px;border-radius:14px;font-size:15px;font-weight:700;border:none;cursor:pointer;background:var(--y);color:var(--n);transition:all 0.15s;display:inline-flex;align-items:center;gap:9px}
+.cbtn:hover{background:var(--ym);transform:translateY(-1px)}
+.cbtn.ok{background:var(--w);color:var(--n)}
+.generate-btn{width:100%;padding:10px;border-radius:14px;font-size:19px;font-weight:700;border:none;cursor:pointer;background:var(--ym);color:var(--n);transition:all 0.15s;margin-bottom:10px;display:flex;align-items:center;justify-content:center;gap:9px}
+.generate-btn:hover{background:var(--y)}
+.tipp{background:var(--be);border-radius:14px;padding:0.85rem 1rem;margin-top:0.75rem;border-left:3px solid var(--bm)}
+.tipp .lb{font-size:13px;font-weight:700;color:#2d5a8a;margin-bottom:4px;letter-spacing:0.07em;text-transform:uppercase}
+.tipp p{font-size:19px;color:#1a3a5c;line-height:1.65}
+.divider{height:1px;background:var(--bem);margin:0.9rem 0;border-radius:2px}
+@media(max-width:500px){
+  .hdr{padding:1.5rem 1.25rem}
+  .setup-fields{grid-template-columns:1fr}
+  .wrap{padding:1rem 0.75rem 3rem}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<div class="hdr">
+  <h1>â˜€ ChatGPT-Prompts fÃ¼r die 7-Tage-Gruppe</h1>
+  <p>Fertige Prompts fÃ¼r jeden Tag â€” einmal deine Infos eintragen, dann per Knopfdruck in die Zwischenablage und in ChatGPT einfÃ¼gen. ChatGPT schreibt dir einen individuellen, fachlich fundierten Post mit echten Aha-Momenten.</p>
+</div>
+
+<div class="intro">
+  <h2>So funktioniert es</h2>
+  <p>1. Trag unten deine persÃ¶nlichen Infos ein (Thema, Tier, Geschichte etc.) â€” einmal ausfÃ¼llen reicht fÃ¼r alle 7 Tage.</p>
+  <p>2. Klappe den gewÃ¼nschten Tag auf und klicke â€žPrompt kopieren".</p>
+  <p>3. Ã–ffne ChatGPT, fÃ¼ge den Prompt ein und sende ihn ab.</p>
+  <p>4. Den generierten Text kurz durchlesen, nach Bedarf anpassen, und in deine WhatsApp-Gruppe posten.</p>
+</div>
+
+<!-- SETUP -->
+<div class="setup">
+  <h2>âš™ Deine Infos â€” einmal ausfÃ¼llen</h2>
+  <div class="setup-fields">
+    <div class="field-group">
+      <label>Dein Hauptthema</label>
+      <input type="text" id="thema" placeholder="z.B. Juckreiz bei Hunden" oninput="updatePrompts()">
+    </div>
+    <div class="field-group">
+      <label>Tierart (oder Zielgruppe)</label>
+      <input type="text" id="tier" placeholder="z.B. Hunde / Katzen / Menschen" oninput="updatePrompts()">
+    </div>
+    <div class="field-group">
+      <label>Deine Erfahrung (kurz)</label>
+      <input type="text" id="erfahrung" placeholder="z.B. 5 Jahre Tiergesundheit" oninput="updatePrompts()">
+    </div>
+    <div class="field-group">
+      <label>Dein Name</label>
+      <input type="text" id="name" placeholder="z.B. Sandra" oninput="updatePrompts()">
+    </div>
+    <div class="field-group field-full">
+      <label>Deine persÃ¶nliche Geschichte (1â€“3 SÃ¤tze)</label>
+      <textarea id="geschichte" placeholder="z.B. Mein Hund Balu hatte 3 Jahre lang OhrentzÃ¼ndungen. Nach 6 Wochen mit dem Beosigner hatten wir das erste Mal Ruhe. Seitdem ist das nicht mehr unser Thema." oninput="updatePrompts()"></textarea>
+    </div>
+    <div class="field-group">
+      <label>HÃ¤ufigste Symptome in deiner Zielgruppe</label>
+      <input type="text" id="symptome" placeholder="z.B. Juckreiz, Ohren, Darm, Haut" oninput="updatePrompts()">
+    </div>
+    <div class="field-group">
+      <label>Ton der Gruppe</label>
+      <select id="ton" oninput="updatePrompts()">
+        <option value="warmherzig, persÃ¶nlich und verstÃ¤ndlich">Warmherzig & persÃ¶nlich</option>
+        <option value="sachlich, klar und vertrauenswÃ¼rdig">Sachlich & klar</option>
+        <option value="locker, humorvoll und nahbar">Locker & nahbar</option>
+      </select>
+    </div>
+  </div>
+</div>
+
+<!-- TAG 1 -->
+<div class="day">
+  <div class="day-h" onclick="tog('1')">
+    <div class="dn">1</div>
+    <div class="dt"><h2>Tag 1 â€” Willkommen & das Problem benennen</h2><p>Ankommen lassen Â· Vertrauen aufbauen Â· das Thema prÃ¤zise setzen</p></div>
+    <div class="chv" id="c1">â–¼</div>
+  </div>
+  <div class="day-b" id="b1">
+    <div class="goal-box"><div class="lb">Ziel dieses Posts</div><p>Die Teilnehmer sollen sich sofort verstanden fÃ¼hlen. Das Problem wird so prÃ¤zise benannt, dass sie denken: â€žGenau das ist es!" Gleichzeitig entsteht ein GefÃ¼hl von Gemeinschaft und Vorfreude.</p></div>
+    <div class="aha-box"><div class="lb">MÃ¶gliche Aha-Momente fÃ¼r diesen Tag</div>
+      <ul>
+        <li>â€žDas Problem hat einen Namen â€” und ich bin damit nicht allein."</li>
+        <li>â€žEs ist nicht meine Schuld wenn Behandlungen nur kurz helfen."</li>
+        <li>â€žJemand versteht endlich genau was ich meine."</li>
+      </ul>
+    </div>
+    <div class="prompt-box">
+      <div class="lb">ChatGPT-Prompt â€” kopieren & einfÃ¼gen</div>
+      <div class="prompt-text" id="p1">Wird automatisch befÃ¼llt wenn du oben deine Infos eintrÃ¤gst...</div>
+    </div>
+    <button class="cbtn" onclick="copyPrompt('p1',this)">ðŸ“‹ Prompt kopieren</button>
+    <div class="tipp" style="margin-top:0.75rem"><div class="lb">Tipp nach dem Generieren</div><p>PrÃ¼fe ob die Schlusszeile eine offene Frage enthÃ¤lt â€” das ist wichtig fÃ¼r erste Reaktionen. Falls nicht, fÃ¼ge am Ende einfach hinzu: â€žWas ist bei deinem Tier das Thema das dich am meisten beschÃ¤ftigt?"</p></div>
+  </div>
+</div>
+
+<!-- TAG 2 -->
+<div class="day">
+  <div class="day-h" onclick="tog('2')">
+    <div class="dn">2</div>
+    <div class="dt"><h2>Tag 2 â€” Hintergrundwissen: Was steckt wirklich dahinter?</h2><p>Fachliche Tiefe Â· verstÃ¤ndlich erklÃ¤rt Â· echte Aha-Momente</p></div>
+    <div class="chv" id="c2">â–¼</div>
+  </div>
+  <div class="day-b" id="b2">
+    <div class="goal-box"><div class="lb">Ziel dieses Posts</div><p>Die Teilnehmer verstehen zum ersten Mal wirklich warum das Problem immer wiederkehrt. Nicht oberflÃ¤chlich â€” sondern mit dem einen Prinzip das alles erklÃ¤rt. Das soll ein echtes â€žAha!" auslÃ¶sen, kein weiteres â€žDas wusste ich schon".</p></div>
+    <div class="aha-box"><div class="lb">MÃ¶gliche Aha-Momente fÃ¼r diesen Tag</div>
+      <ul>
+        <li>â€žDer KÃ¶rper hat eigentlich die FÃ¤higkeit sich selbst zu regulieren â€” das wusste ich nicht."</li>
+        <li>â€žWenn das Symptom weg ist, ist das Problem nicht gelÃ¶st â€” das macht so viel Sinn."</li>
+        <li>â€žDer Grund warum alle bisherigen Behandlungen nur kurzfristig halfen."</li>
+        <li>â€žDas Immunsystem und die Verdauung hÃ¤ngen viel stÃ¤rker zusammen als ich dachte."</li>
+      </ul>
+    </div>
+    <div class="prompt-box">
+      <div class="lb">ChatGPT-Prompt â€” kopieren & einfÃ¼gen</div>
+      <div class="prompt-text" id="p2">Wird automatisch befÃ¼llt wenn du oben deine Infos eintrÃ¤gst...</div>
+    </div>
+    <button class="cbtn" onclick="copyPrompt('p2',this)">ðŸ“‹ Prompt kopieren</button>
+    <div class="tipp" style="margin-top:0.75rem"><div class="lb">Tipp nach dem Generieren</div><p>Dieser Tag darf fachlich etwas tiefer gehen als die anderen â€” das schafft Respekt und Vertrauen. Aber: Wenn du den Text selbst nicht auf Anhieb verstehst, bitte ChatGPT, ihn einfacher zu formulieren.</p></div>
+  </div>
+</div>
+
+<!-- TAG 3 -->
+<div class="day">
+  <div class="day-h" onclick="tog('3')">
+    <div class="dn">3</div>
+    <div class="dt"><h2>Tag 3 â€” Deine persÃ¶nliche Geschichte</h2><p>Emotional Â· authentisch Â· echte Verbindung schaffen</p></div>
+    <div class="chv" id="c3">â–¼</div>
+  </div>
+  <div class="day-b" id="b3">
+    <div class="goal-box"><div class="lb">Ziel dieses Posts</div><p>Du wirst menschlich und greifbar. Kein Expertenstatus â€” sondern jemand der dasselbe durchgemacht hat. Dieser Post ist der emotionale Kern der Woche. Hier entsteht echtes Vertrauen, das kein Fachwissen ersetzen kann.</p></div>
+    <div class="aha-box"><div class="lb">MÃ¶gliche Aha-Momente fÃ¼r diesen Tag</div>
+      <ul>
+        <li>â€žSie ist genau wie ich â€” hat auch alles probiert."</li>
+        <li>â€žWenn es bei ihr funktioniert hat, kÃ¶nnte es auch bei mir funktionieren."</li>
+        <li>â€žDas klingt so ehrlich â€” kein Werbegerede."</li>
+        <li>â€žAuch sie war skeptisch â€” das macht es glaubwÃ¼rdiger."</li>
+      </ul>
+    </div>
+    <div class="prompt-box">
+      <div class="lb">ChatGPT-Prompt â€” kopieren & einfÃ¼gen</div>
+      <div class="prompt-text" id="p3">Wird automatisch befÃ¼llt wenn du oben deine Infos eintrÃ¤gst...</div>
+    </div>
+    <button class="cbtn" onclick="copyPrompt('p3',this)">ðŸ“‹ Prompt kopieren</button>
+    <div class="tipp" style="margin-top:0.75rem"><div class="lb">Tipp nach dem Generieren</div><p>Lies diesen Text besonders sorgfÃ¤ltig â€” er soll nach dir klingen, nicht nach KI. Ã„ndere Details die nicht stimmen und fÃ¼ge echte GefÃ¼hle hinzu die der Text vielleicht nicht getroffen hat. Deine echte Stimme ist hier entscheidend.</p></div>
+  </div>
+</div>
+
+<!-- TAG 4 -->
+<div class="day">
+  <div class="day-h" onclick="tog('4')">
+    <div class="dn">4</div>
+    <div class="dt"><h2>Tag 4 â€” HÃ¤ufige IrrtÃ¼mer & MissverstÃ¤ndnisse</h2><p>Ãœberraschend Â· entwaffnend Â· ohne zu belehren</p></div>
+    <div class="chv" id="c4">â–¼</div>
+  </div>
+  <div class="day-b" id="b4">
+    <div class="goal-box"><div class="lb">Ziel dieses Posts</div><p>Du rÃ¤umst mit Annahmen auf die viele stillschweigend haben â€” und die genau der Grund sind warum sie bisher keine dauerhafte LÃ¶sung gefunden haben. Das geschieht nicht belehrend, sondern auf AugenhÃ¶he: â€žIch habe das frÃ¼her genauso gedacht."</p></div>
+    <div class="aha-box"><div class="lb">MÃ¶gliche Aha-Momente fÃ¼r diesen Tag</div>
+      <ul>
+        <li>â€žWarte â€” das Symptom zu behandeln reicht also wirklich nicht?"</li>
+        <li>â€žIch habe immer gedacht das liegt an der Rasse â€” aber das stimmt gar nicht unbedingt?"</li>
+        <li>â€žStress als Ursache kÃ¶rperlicher Beschwerden â€” das macht biologisch wirklich Sinn."</li>
+        <li>â€žDer Tierarzt hat mir das nie so erklÃ¤rt â€” warum eigentlich nicht?"</li>
+        <li>â€žPerfektes Futter reicht also auch nicht immer â€” das erklÃ¤rt einiges."</li>
+      </ul>
+    </div>
+    <div class="prompt-box">
+      <div class="lb">ChatGPT-Prompt â€” kopieren & einfÃ¼gen</div>
+      <div class="prompt-text" id="p4">Wird automatisch befÃ¼llt wenn du oben deine Infos eintrÃ¤gst...</div>
+    </div>
+    <button class="cbtn" onclick="copyPrompt('p4',this)">ðŸ“‹ Prompt kopieren</button>
+    <div class="tipp" style="margin-top:0.75rem"><div class="lb">Tipp nach dem Generieren</div><p>Dieser Post erzeugt oft Diskussionen â€” das ist gut. Wenn jemand widerspricht, antworte ruhig und kurz: â€žDas ist eine super Perspektive â€” genau darÃ¼ber reden wir im Webinar." Nie in eine Diskussion gehen.</p></div>
+  </div>
+</div>
+
+<!-- TAG 5 -->
+<div class="day">
+  <div class="day-h" onclick="tog('5')">
+    <div class="dn">5</div>
+    <div class="dt"><h2>Tag 5 â€” Was wirklich hilft (ohne Produkt)</h2><p>Echter Mehrwert Â· praktisch Â· Vertrauen festigen</p></div>
+    <div class="chv" id="c5">â–¼</div>
+  </div>
+  <div class="day-b" id="b5">
+    <div class="goal-box"><div class="lb">Ziel dieses Posts</div><p>Du gibst echten, anwendbaren Mehrwert â€” ohne den Beosigner zu nennen. Das ist der Tag an dem die Teilnehmer merken: hier geht es nicht ums Verkaufen. Das stÃ¤rkt das Vertrauen mehr als jede Produktbeschreibung. Der Post soll praktisch, konkret und sofort umsetzbar sein.</p></div>
+    <div class="aha-box"><div class="lb">MÃ¶gliche Aha-Momente fÃ¼r diesen Tag</div>
+      <ul>
+        <li>â€žChronischer Stress blockiert das Immunsystem â€” das hatte ich nie so verstanden."</li>
+        <li>â€žJuckreiz, Ohren und Darm kÃ¶nnten alle denselben Ursprung haben?"</li>
+        <li>â€žGeduld ist Teil der Methode â€” nicht ein Zeichen dass es nicht wirkt."</li>
+        <li>â€žDen KÃ¶rper unterstÃ¼tzen statt bekÃ¤mpfen â€” das klingt so logisch."</li>
+        <li>â€žDas Nervensystem spielt eine viel grÃ¶ÃŸere Rolle als ich dachte."</li>
+      </ul>
+    </div>
+    <div class="prompt-box">
+      <div class="lb">ChatGPT-Prompt â€” kopieren & einfÃ¼gen</div>
+      <div class="prompt-text" id="p5">Wird automatisch befÃ¼llt wenn du oben deine Infos eintrÃ¤gst...</div>
+    </div>
+    <button class="cbtn" onclick="copyPrompt('p5',this)">ðŸ“‹ Prompt kopieren</button>
+    <div class="tipp" style="margin-top:0.75rem"><div class="lb">Tipp nach dem Generieren</div><p>Wenn jemand an Tag 5 nach dem Produkt fragt â€” perfekt! Antworte: â€žDas freut mich dass du fragst! Genau das zeige ich euch Ã¼bermorgen im Webinar in Ruhe â€” magst du dabei sein?"</p></div>
+  </div>
+</div>
+
+<!-- TAG 6 -->
+<div class="day">
+  <div class="day-h" onclick="tog('6')">
+    <div class="dn">6</div>
+    <div class="dt"><h2>Tag 6 â€” Die BrÃ¼cke: Warum klassische LÃ¶sungen nicht reichen</h2><p>Logische Verbindung Â· Neugier wecken Â· Beosigner vorbereiten</p></div>
+    <div class="chv" id="c6">â–¼</div>
+  </div>
+  <div class="day-b" id="b6">
+    <div class="goal-box"><div class="lb">Ziel dieses Posts</div><p>Du baust die logische BrÃ¼cke: Die Teilnehmer verstehen jetzt dass es einen Ansatz braucht der den Selbstregulationsmechanismus direkt anspricht â€” und nicht nur Symptome behandelt. Der Beosigner wird damit zur natÃ¼rlichen nÃ¤chsten Frage. Du nennst ihn noch nicht, aber du machst echte Neugier auf morgen.</p></div>
+    <div class="aha-box"><div class="lb">MÃ¶gliche Aha-Momente fÃ¼r diesen Tag</div>
+      <ul>
+        <li>â€žSolange ich nur das Symptom behandle, kommt es wieder â€” das leuchtet mir jetzt wirklich ein."</li>
+        <li>â€žVon innen unterstÃ¼tzen statt von auÃŸen behandeln â€” das ist ein vÃ¶llig anderer Ansatz."</li>
+        <li>â€žEs gibt also etwas das direkt am Regulationsmechanismus ansetzt? Das will ich wissen."</li>
+        <li>â€žDas ist der Grund warum ich jahrelang im Kreis gedreht habe."</li>
+      </ul>
+    </div>
+    <div class="prompt-box">
+      <div class="lb">ChatGPT-Prompt â€” kopieren & einfÃ¼gen</div>
+      <div class="prompt-text" id="p6">Wird automatisch befÃ¼llt wenn du oben deine Infos eintrÃ¤gst...</div>
+    </div>
+    <button class="cbtn" onclick="copyPrompt('p6',this)">ðŸ“‹ Prompt kopieren</button>
+    <div class="tipp" style="margin-top:0.75rem"><div class="lb">Tipp nach dem Generieren</div><p>Wer auf die Frage am Ende antwortet, bekommt den Webinar-Link sofort persÃ¶nlich geschickt â€” das schafft viel mehr Verbindung als ein Link in der Gruppe.</p></div>
+  </div>
+</div>
+
+<!-- TAG 7 -->
+<div class="day">
+  <div class="day-h" onclick="tog('7')">
+    <div class="dn">7</div>
+    <div class="dt"><h2>Tag 7 â€” Webinar-Einladung & herzlicher Abschluss</h2><p>Warm Â· persÃ¶nlich Â· keine Verkaufssprache Â· zwei Nachrichten</p></div>
+    <div class="chv" id="c7">â–¼</div>
+  </div>
+  <div class="day-b" id="b7">
+    <div class="goal-box"><div class="lb">Ziel dieses Posts</div><p>Du lÃ¤dst warm und persÃ¶nlich zum Webinar ein â€” ohne Druck, ohne VerkaufsankÃ¼ndigung. Die Teilnehmer sollen neugierig und entspannt sein. Heute sendest du zwei Nachrichten: morgens die Einladung, nachmittags die Erinnerung.</p></div>
+    <div class="aha-box"><div class="lb">Was die Einladung auslÃ¶sen soll</div>
+      <ul>
+        <li>â€žSie verkauft mir nichts â€” sie zeigt mir einfach was sie selbst macht."</li>
+        <li>â€žNach dieser Woche will ich wirklich wissen wie das konkret aussieht."</li>
+        <li>â€žKein Druck, keine Verpflichtung â€” ich kann einfach zuschauen."</li>
+      </ul>
+    </div>
+    <div class="prompt-box">
+      <div class="lb">ChatGPT-Prompt (Morgen) â€” kopieren & einfÃ¼gen</div>
+      <div class="prompt-text" id="p7a">Wird automatisch befÃ¼llt wenn du oben deine Infos eintrÃ¤gst...</div>
+    </div>
+    <button class="cbtn" onclick="copyPrompt('p7a',this)">ðŸ“‹ Prompt Morgen kopieren</button>
+    <div class="divider"></div>
+    <div class="prompt-box" style="margin-top:0">
+      <div class="lb">ChatGPT-Prompt (Nachmittag / Erinnerung) â€” kopieren & einfÃ¼gen</div>
+      <div class="prompt-text" id="p7b">Wird automatisch befÃ¼llt wenn du oben deine Infos eintrÃ¤gst...</div>
+    </div>
+    <button class="cbtn" onclick="copyPrompt('p7b',this)">ðŸ“‹ Prompt Erinnerung kopieren</button>
+    <div class="tipp" style="margin-top:0.75rem"><div class="lb">Nach dem Webinar</div><p>Warte 24 Stunden â€” dann melde dich persÃ¶nlich bei allen die dabei waren. Nicht mit einem Angebot, sondern mit einer echten Frage: â€žWas hat dich am meisten beschÃ¤ftigt von heute Abend?" Das Ã¶ffnet das EinzelgesprÃ¤ch ganz natÃ¼rlich.</p></div>
+  </div>
+</div>
+
+</div>
+
+<!-- GOODIE -->
+<div class="day">
+  <div class="day-h" onclick="tog('goodie')">
+    <div class="dn" style="font-size:16px">ðŸŽ</div>
+    <div class="dt"><h2>Bonus â€” Prompt fÃ¼r dein Live-Goodie</h2><p>WÃ¤hle deinen Goodie-Typ Â· Prompt generieren Â· in ChatGPT einfÃ¼gen</p></div>
+    <div class="chv" id="cgoodie">â–¼</div>
+  </div>
+  <div class="day-b" id="bgoodie">
+    <div class="goal-box"><div class="lb">WofÃ¼r ist dieses Goodie?</div><p>Das Goodie erhalten nur Live-Teilnehmer des Webinars â€” am Ende der Veranstaltung. Es soll echten Mehrwert haben, zum Thema passen, und die Teilnehmer in der Zeit zwischen Webinar und EinzelgesprÃ¤ch beschÃ¤ftigen und begeistern.</p></div>
+
+    <div style="background:var(--n);border-radius:14px;padding:1.4rem 1.6rem;margin-bottom:1.25rem">
+      <div style="font-size:13px;font-weight:700;color:var(--ym);margin-bottom:10px;letter-spacing:0.08em;text-transform:uppercase">Welches Goodie mÃ¶chtest du erstellen?</div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:11px">
+        <label style="display:flex;align-items:center;gap:11px;cursor:pointer;background:var(--nm);padding:0.7rem 0.9rem;border-radius:14px;border:1.5px solid transparent" id="gl-1">
+          <input type="radio" name="goodie" value="checkliste" onchange="buildGoodiePrompt()" style="accent-color:var(--y)"> <span style="font-size:19px;color:var(--w)">ðŸ“‹ Checkliste</span>
+        </label>
+        <label style="display:flex;align-items:center;gap:11px;cursor:pointer;background:var(--nm);padding:0.7rem 0.9rem;border-radius:14px;border:1.5px solid transparent" id="gl-2">
+          <input type="radio" name="goodie" value="pdf" onchange="buildGoodiePrompt()" style="accent-color:var(--y)"> <span style="font-size:19px;color:var(--w)">ðŸ“„ Mini-PDF / Ratgeber</span>
+        </label>
+        <label style="display:flex;align-items:center;gap:11px;cursor:pointer;background:var(--nm);padding:0.7rem 0.9rem;border-radius:14px;border:1.5px solid transparent" id="gl-3">
+          <input type="radio" name="goodie" value="anleitung" onchange="buildGoodiePrompt()" style="accent-color:var(--y)"> <span style="font-size:19px;color:var(--w)">ðŸ—‚ Schritt-fÃ¼r-Schritt-Anleitung</span>
+        </label>
+        <label style="display:flex;align-items:center;gap:11px;cursor:pointer;background:var(--nm);padding:0.7rem 0.9rem;border-radius:14px;border:1.5px solid transparent" id="gl-4">
+          <input type="radio" name="goodie" value="fragebogen" onchange="buildGoodiePrompt()" style="accent-color:var(--y)"> <span style="font-size:19px;color:var(--w)">ðŸ” Selbstcheck / Fragebogen</span>
+        </label>
+        <label style="display:flex;align-items:center;gap:11px;cursor:pointer;background:var(--nm);padding:0.7rem 0.9rem;border-radius:14px;border:1.5px solid transparent" id="gl-5">
+          <input type="radio" name="goodie" value="rezept" onchange="buildGoodiePrompt()" style="accent-color:var(--y)"> <span style="font-size:19px;color:var(--w)">ðŸŒ¿ Begleitplan / Protokoll</span>
+        </label>
+      </div>
+    </div>
+
+    <div class="aha-box" id="goodie-erklaerung" style="display:none"><div class="lb">Was dieses Goodie leisten soll</div><p id="goodie-erklaerung-text"></p></div>
+
+    <div class="prompt-box" id="goodie-prompt-box" style="display:none">
+      <div class="lb">ChatGPT-Prompt fÃ¼r dein Goodie â€” kopieren & einfÃ¼gen</div>
+      <div class="prompt-text" id="pgoodie"></div>
+    </div>
+    <button class="cbtn" id="goodie-copy-btn" style="display:none" onclick="copyPrompt('pgoodie',this)">ðŸ“‹ Prompt kopieren</button>
+
+    <div class="tipp" style="margin-top:0.75rem"><div class="lb">Wie du das Goodie teilst</div><p>Das fertige Goodie am Ende des Webinars in die Gruppe posten â€” oder noch besser: persÃ¶nlich an jeden Live-Teilnehmer schicken. Das schafft eine direkte Verbindung und Ã¶ffnet das EinzelgesprÃ¤ch.</p></div>
+  </div>
+</div>
+
+<script>
+function getVal(id,fallback){
+  var v=document.getElementById(id).value.trim();
+  return v||fallback;
+}
+
+function buildPrompts(){
+  var thema=getVal('thema','[dein Thema, z.B. Juckreiz und OhrentzÃ¼ndungen bei Hunden]');
+  var tier=getVal('tier','[Hunde / Katzen / deine Zielgruppe]');
+  var erfahrung=getVal('erfahrung','[deine Erfahrung, z.B. 5 Jahre im Bereich Tiergesundheit]');
+  var name=getVal('name','[dein Name]');
+  var geschichte=getVal('geschichte','[deine persÃ¶nliche Geschichte mit dem Beosigner]');
+  var symptome=getVal('symptome','[hÃ¤ufige Symptome, z.B. Juckreiz, Ohren, Darm, Haut]');
+  var ton=getVal('ton','warmherzig, persÃ¶nlich und verstÃ¤ndlich');
+
+  var p1=`Schreib einen WhatsApp-Gruppen-Post fÃ¼r Tag 1 einer 7-tÃ¤gigen Informationsgruppe zum Thema â€ž${thema}" fÃ¼r ${tier}-Halter.
+
+Mein Name ist ${name}, ich habe ${erfahrung} Erfahrung in diesem Bereich.
+
+ZIEL DIESES POSTS:
+Die Teilnehmer sollen sich sofort willkommen und verstanden fÃ¼hlen. Das Problem wird so prÃ¤zise benannt, dass sie denken: â€žGenau das ist es!" Gleichzeitig entsteht Vorfreude auf die nÃ¤chsten 7 Tage.
+
+INHALT:
+- Herzliche BegrÃ¼ÃŸung (persÃ¶nlich, nicht fÃ¶rmlich)
+- Das Problem prÃ¤zise benennen: Warum kommen dieselben Beschwerden (${symptome}) immer wieder â€” obwohl man so viel probiert hat?
+- Den Teilnehmern das GefÃ¼hl geben: das ist nicht ihre Schuld und sie sind nicht allein
+- Kurzer Ausblick was diese Woche bringt (Neugier wecken, ohne alles zu verraten)
+- Offene Abschlussfrage die zur Interaktion einlÃ¤dt
+
+TON: ${ton}, keine Verkaufssprache, keine Produktnennung
+
+FORMAT: WhatsApp-tauglich, mit Emojis, AbsÃ¤tze kurz halten, max. 200-250 WÃ¶rter
+
+WICHTIG: Keine medizinischen Versprechen, keine Heilsaussagen. Der Post soll wie eine persÃ¶nliche Nachricht klingen, nicht wie ein Marketing-Text.`;
+
+  var p2=`Schreib einen WhatsApp-Gruppen-Post fÃ¼r Tag 2 einer 7-tÃ¤gigen Informationsgruppe zum Thema â€ž${thema}" fÃ¼r ${tier}-Halter.
+
+Mein Name ist ${name}, ich habe ${erfahrung} Erfahrung.
+
+ZIEL DIESES POSTS:
+Die Teilnehmer sollen zum ersten Mal wirklich verstehen WARUM Beschwerden wie ${symptome} immer wiederkehren â€” mit einem echten Aha-Effekt, nicht nur oberflÃ¤chlichen ErklÃ¤rungen.
+
+FACHLICHER KERN (bitte biologisch korrekt und verstÃ¤ndlich erklÃ¤ren):
+- Jeder KÃ¶rper besitzt einen kÃ¶rpereigenen Selbstregulationsmechanismus (HomÃ¶ostase)
+- Wenn dieser Mechanismus gestÃ¶rt ist, kehren Symptome immer wieder â€” egal wie oft man sie behandelt
+- Der Unterschied zwischen Symptom-Behandlung und Ursachen-Ansatz
+- Warum das Immunsystem, das Nervensystem und die Verdauung miteinander verbunden sind
+- Konkret auf ${tier} bezogen: wie sich eine gestÃ¶rte Selbstregulation in ${symptome} Ã¤uÃŸern kann
+
+AHA-MOMENT: Die Teilnehmer sollen am Ende verstehen: â€žIch habe bisher immer das Signal bekÃ¤mpft â€” nicht das was dahintersteckt."
+
+TON: ${ton}, einfach erklÃ¤rt aber nicht vereinfacht, ruhig ein bisschen fachliche Tiefe â€” das schafft Respekt und Vertrauen
+
+FORMAT: WhatsApp-tauglich, mit Emojis, AbsÃ¤tze kurz, max. 220-260 WÃ¶rter. Am Ende eine Frage die zur Interaktion einlÃ¤dt.
+
+WICHTIG: Keine Produktnennung, keine Heilsversprechen.`;
+
+  var p3=`Schreib einen emotionalen WhatsApp-Gruppen-Post fÃ¼r Tag 3 einer 7-tÃ¤gigen Informationsgruppe zum Thema â€ž${thema}" fÃ¼r ${tier}-Halter.
+
+Mein Name ist ${name}. Meine persÃ¶nliche Geschichte: ${geschichte}
+
+ZIEL DIESES POSTS:
+Ich werde menschlich und greifbar â€” nicht als Experte, sondern als jemand der dasselbe durchgemacht hat. Dieser Post ist der emotionale Kern der Woche und schafft echtes Vertrauen.
+
+STRUKTUR DER GESCHICHTE:
+1. Damals: Wie war die Situation? (frustrierend, hoffnungslos, immer wieder dasselbe)
+2. Der Wendepunkt: Wie bin ich auf den Beosigner gestoÃŸen? (zufÃ¤llig, durch Empfehlung, skeptisch)
+3. Die Skepsis: Ich war anfangs wirklich nicht Ã¼berzeugt â€” das muss ehrlich klingen
+4. Die VerÃ¤nderung: Was hat sich konkret verÃ¤ndert â€” spezifisch, nicht allgemein
+5. Heute: Wie ist die Situation jetzt â€” kurz und ehrlich
+
+WICHTIGE ELEMENTE:
+- Die Skepsis muss deutlich spÃ¼rbar sein â€” das macht die Geschichte glaubwÃ¼rdiger
+- Keine Ãœbertreibungen, kein â€žWunder" â€” ehrliche, messbare VerÃ¤nderungen
+- Am Ende eine Frage die andere einlÃ¤dt ihre eigene Geschichte zu teilen
+
+TON: ${ton}, persÃ¶nlich, verletzlich, ehrlich â€” wie eine Nachricht an eine gute Freundin
+
+FORMAT: WhatsApp-tauglich, Emojis einsetzen, max. 230-270 WÃ¶rter
+
+WICHTIG: Keine Heilsversprechen, keine medizinischen Aussagen.`;
+
+  var p4=`Schreib einen WhatsApp-Gruppen-Post fÃ¼r Tag 4 einer 7-tÃ¤gigen Informationsgruppe zum Thema â€ž${thema}" fÃ¼r ${tier}-Halter.
+
+Mein Name ist ${name}, ich habe ${erfahrung} Erfahrung.
+
+ZIEL DIESES POSTS:
+H¤ufige IrrtÃ¼mer und MissverstÃ¤ndnisse rund um ${thema} entwaffnend und ohne erhobenen Zeigefinger korrigieren. Der Ton ist: â€žIch habe das frÃ¼her genauso geglaubt."
+
+BITTE FOLGENDE IRRTÃœMER FACHLICH KORREKT UND MIT ERKLÃ„RENDEM AHA-EFFEKT AUFGREIFEN:
+
+Irrtum 1: â€žWenn das Symptom (${symptome}) weg ist, ist das Problem gelÃ¶st."
+â†’ ErklÃ¤re biologisch warum das nicht stimmt (Symptom vs. Ursache, Selbstregulationsmechanismus)
+
+Irrtum 2: â€žDas richtige Futter lÃ¶st alles."
+â†’ ErklÃ¤re warum ErnÃ¤hrung wichtig aber nicht immer ausreichend ist â€” was noch eine Rolle spielt
+
+Irrtum 3: â€žDas ist halt die Rasse / das Alter / die Veranlagung."
+â†’ ErklÃ¤re warum das in vielen FÃ¤llen eine falsche Zuschreibung ist und was wirklich dahintersteckt
+
+Irrtum 4: â€žWenn der Tierarzt nichts findet, ist alles gut."
+â†’ ErklÃ¤re respektvoll warum SelbstregulationsstÃ¶rungen oft auÃŸerhalb des tierÃ¤rztlichen Fokus liegen
+
+Gerne noch einen 5. Ã¼berraschenden Irrtum hinzufÃ¼gen der echte Aha-Momente auslÃ¶st.
+
+TON: ${ton}, humorvoll-leicht (ohne den Finger zu heben), auf AugenhÃ¶he
+
+FORMAT: WhatsApp-tauglich, nummerierte IrrtÃ¼mer, Emojis, max. 250-280 WÃ¶rter. Am Ende eine Frage.
+
+WICHTIG: TierÃ¤rzte nicht diskreditieren, respektvolle Formulierung.`;
+
+  var p5=`Schreib einen WhatsApp-Gruppen-Post fÃ¼r Tag 5 einer 7-tÃ¤gigen Informationsgruppe zum Thema â€ž${thema}" fÃ¼r ${tier}-Halter.
+
+Mein Name ist ${name}, ich habe ${erfahrung} Erfahrung.
+
+ZIEL DIESES POSTS:
+Echten, konkreten und fachlich fundierten Mehrwert geben â€” ohne irgendeinen Produktnamen zu nennen. Die Teilnehmer sollen am Ende denken: â€žHier geht es wirklich ums Helfen, nicht ums Verkaufen."
+
+INHALTE (bitte alle aufgreifen, fachlich korrekt und mit Aha-Effekt):
+
+1. Das Nervensystem als unterschÃ¤tzter Faktor:
+ErklÃ¤re wie chronischer Stress (auch bei Tieren) den Selbstregulationsmechanismus blockiert und warum das kÃ¶rperliche Beschwerden wie ${symptome} begÃ¼nstigt. Biologischer Hintergrund erwÃ¼nscht.
+
+2. Die Verbindung zwischen ${symptome} als Gesamtbild:
+ErklÃ¤re warum scheinbar unabhÃ¤ngige Symptome oft denselben Ursprung haben â€” und warum das bedeutet dass man das Grundproblem angehen muss.
+
+3. Die Bedeutung von Geduld als biologisches Prinzip:
+ErklÃ¤re kurz wie Heilungsprozesse im KÃ¶rper funktionieren und warum echte VerÃ¤nderung Zeit braucht.
+
+4. Ein konkreter, sofort umsetzbarer Tipp:
+Etwas das Halter oder Betroffene direkt ausprobieren kÃ¶nnen â€” ohne Produkt.
+
+TON: ${ton}, praktisch, konkret, vertrauenserweckend
+
+FORMAT: WhatsApp-tauglich, nummerierte Punkte, Emojis, max. 250-280 WÃ¶rter. Am Ende eine Frage die zur Interaktion einlÃ¤dt.
+
+WICHTIG: Kein Produktname, keine Heilsversprechen.`;
+
+  var p6=`Schreib einen WhatsApp-Gruppen-Post fÃ¼r Tag 6 einer 7-tÃ¤gigen Informationsgruppe zum Thema â€ž${thema}" fÃ¼r ${tier}-Halter.
+
+Mein Name ist ${name}.
+
+ZIEL DIESES POSTS:
+Die logische BrÃ¼cke bauen zwischen dem was die Gruppe diese Woche gelernt hat â€” und einem Ansatz der direkt am Selbstregulationsmechanismus ansetzt. Der Beosigner wird NICHT genannt, aber die Neugier auf morgen wird geweckt.
+
+AUFBAU:
+1. Kurze Zusammenfassung der Woche: Was haben wir gelernt? (Selbstregulation, Symptom vs. Ursache, Nervenystem)
+2. Die logische Konsequenz: Solange man nur Symptome behandelt, kommen sie wieder
+3. Die Erkenntnis: Was wirklich hilft muss den KÃ¶rper bei seiner eigenen Selbstregulation unterstÃ¼tzen â€” nicht von auÃŸen bekÃ¤mpfen
+4. ErklÃ¤re kurz fachlich was â€žSelbstregulation aktivieren" biologisch bedeutet â€” ohne ein Produkt zu nennen
+5. PersÃ¶nlicher Teaser: â€žIch zeige euch morgen konkret was ich selbst seit [Zeitraum] anwende und was es bei [Tier/mir] verÃ¤ndert hat"
+6. Mini-Anmeldung: Frage wer beim Webinar dabei sein mÃ¶chte, mit dem Versprechen den Link persÃ¶nlich zu schicken
+
+TON: ${ton}, ein bisschen spannend und vorfreudig, persÃ¶nlich
+
+FORMAT: WhatsApp-tauglich, Emojis, max. 200-230 WÃ¶rter
+
+WICHTIG: Kein Produktname, keine Heilsversprechen. Die Neugier soll natÃ¼rlich entstehen.`;
+
+  var p7a=`Schreib eine herzliche WhatsApp-Gruppen-Nachricht fÃ¼r Tag 7 Morgen (Webinar-Einladung) einer 7-tÃ¤gigen Informationsgruppe zum Thema â€ž${thema}" fÃ¼r ${tier}-Halter.
+
+Mein Name ist ${name}.
+
+ZIEL DIESER NACHRICHT:
+Warm und persÃ¶nlich zum Webinar einladen â€” ohne Verkaufsdruck, ohne AnkÃ¼ndigung eines Produkts. Die Teilnehmer sollen neugierig und entspannt sein.
+
+INHALT:
+- Herzlicher MorgengruÃŸ
+- Kurze Vorfreude auf heute Abend ausdrÃ¼cken
+- Was sie im Webinar erwartet (konkret, aber ohne Druck):
+  â†’ Was ich selbst seit [Zeitraum] anwende
+  â†’ Wie es konkret bei meinem ${tier} gewirkt hat
+  â†’ Wie das fÃ¼r ihre ${tier} aussehen kÃ¶nnte
+  â†’ Raum fÃ¼r persÃ¶nliche Fragen
+- Praktische Infos: kostenlos, ca. [Dauer] Minuten, um [Uhrzeit] Uhr
+- Webinar-Link: [LINK HIER EINFÃœGEN]
+- Herzlicher Abschluss der die Woche zusammenfasst
+
+TON: ${ton}, wie eine persÃ¶nliche Einladung von einer guten Bekannten â€” keine Werbung
+
+FORMAT: WhatsApp-tauglich, Emojis, max. 150-180 WÃ¶rter
+
+WICHTIG: Kein Verkaufs-Vokabular. Keine Produktpreise. Keine Versprechen Ã¼ber Ergebnisse.`;
+
+  var p7b=`Schreib eine kurze, herzliche WhatsApp-Erinnerungsnachricht fÃ¼r heute Nachmittag (2 Stunden vor dem Webinar) in einer Informationsgruppe zum Thema â€ž${thema}".
+
+Mein Name ist ${name}.
+
+ZIEL: Sanfte Erinnerung an das heutige Webinar â€” kurz, warmherzig, ohne Druck.
+
+INHALT:
+- Kurze freudige Erinnerung ans Webinar heute Abend
+- Uhrzeit: [UHRZEIT EINFÃœGEN]
+- Link nochmals teilen: [LINK EINFÃœGEN]
+- Ein Satz der Vorfreude ausdrÃ¼ckt
+
+TON: ${ton}, kurz und warm â€” wie eine schnelle Erinnerungs-Nachricht an Freunde
+
+FORMAT: Max. 60-80 WÃ¶rter, Emojis willkommen`;
+
+  document.getElementById('p1').textContent=p1;
+  document.getElementById('p2').textContent=p2;
+  document.getElementById('p3').textContent=p3;
+  document.getElementById('p4').textContent=p4;
+  document.getElementById('p5').textContent=p5;
+  document.getElementById('p6').textContent=p6;
+  document.getElementById('p7a').textContent=p7a;
+  document.getElementById('p7b').textContent=p7b;
+}
+
+function updatePrompts(){buildPrompts()}
+
+function tog(n){
+  var b=document.getElementById('b'+n);
+  var c=document.getElementById('c'+n);
+  var op=b.classList.toggle('op');
+  c.classList.toggle('op',op);
+}
+function tog(n){
+  var b=document.getElementById('b'+n);
+  var c=document.getElementById('c'+n);
+  if(!b||!c)return;
+  var op=b.classList.toggle('op');
+  c.classList.toggle('op',op);
+}
+
+function copyPrompt(id,btn){
+  var text=document.getElementById(id).textContent;
+  navigator.clipboard.writeText(text).then(function(){
+    btn.classList.add('ok');
+    btn.textContent='âœ“ In Zwischenablage!';
+    setTimeout(function(){
+      btn.classList.remove('ok');
+      btn.textContent=btn.textContent.includes('Erinnerung')?'ðŸ“‹ Prompt Erinnerung kopieren':
+        btn.textContent.includes('Morgen')?'ðŸ“‹ Prompt Morgen kopieren':'ðŸ“‹ Prompt kopieren';
+    },2500);
+  });
+}
+
+function buildGoodiePrompt(){
+  var thema=getVal('thema','[dein Thema, z.B. Juckreiz und OhrentzÃ¼ndungen bei Hunden]');
+  var tier=getVal('tier','[Hunde / Katzen / deine Zielgruppe]');
+  var name=getVal('name','[dein Name]');
+  var symptome=getVal('symptome','[hÃ¤ufige Symptome]');
+  var ton=getVal('ton','warmherzig, persÃ¶nlich und verstÃ¤ndlich');
+
+  var typ=document.querySelector('input[name="goodie"]:checked');
+  if(!typ)return;
+
+  var erklaerungen={
+    checkliste:'Eine Checkliste ist schnell erstellt, leicht lesbar und sofort nutzbar. Ideal fÃ¼r Teampartner die wenig Zeit haben. Die Teilnehmer kÃ¶nnen sie direkt neben sich legen und ihren Alltag damit strukturieren.',
+    pdf:'Ein kurzer Ratgeber gibt Tiefe und Substanz. Er zeigt Expertise und bleibt als Dokument erhalten â€” die Teilnehmer schauen immer wieder rein. Etwas mehr Aufwand, aber sehr hochwertig.',
+    anleitung:'Eine Schritt-fÃ¼r-Schritt-Anleitung ist besonders praktisch fÃ¼r Menschen die wissen mÃ¶chten wie sie konkret anfangen. Sie fÃ¼hrt direkt zur Anwendung â€” und damit zum ersten persÃ¶nlichen Erfolg.',
+    fragebogen:'Ein Selbstcheck ist interaktiv und persÃ¶nlich â€” die Teilnehmer entdecken selbst wie es um ihre Situation steht. Das erzeugt oft den stÃ¤rksten Aha-Effekt und fÃ¼hrt zu den besten FolgegesprÃ¤chen.',
+    rezept:'Ein Begleitplan oder Protokoll gibt Struktur fÃ¼r die ersten Wochen. Ideal fÃ¼r Menschen die gerne systematisch vorgehen und Fortschritte dokumentieren mÃ¶chten.'
+  };
+
+  var prompts={
+    checkliste:`Erstelle eine hochwertige, druckbare Checkliste zum Thema â€ž${thema}" fÃ¼r ${tier}-Halter als exklusives Live-Goodie nach einem Webinar.
+
+Mein Name ist ${name}. Das Goodie erhalten nur Live-Teilnehmer meines Webinars â€” es soll echten Mehrwert haben und nicht wie Werbematerial wirken.
+
+TITEL DER CHECKLISTE (bitte einen ansprechenden vorschlagen):
+z.B. â€žDie 10 wichtigsten Signale einer gestÃ¶rten Selbstregulation bei ${tier}"
+
+INHALT DER CHECKLISTE:
+Erstelle 10-15 konkrete, fachlich fundierte Checkpunkte die ${tier}-Halter dabei helfen:
+- Anzeichen einer gestÃ¶rten Selbstregulation bei ihrem Tier zu erkennen (bezogen auf ${symptome})
+- Den Unterschied zwischen Symptom-Behandlung und Ursachen-Ansatz im Alltag wahrzunehmen
+- Kleine, sofort umsetzbare Beobachtungen die zeigen ob sich etwas verÃ¤ndert
+
+STRUKTUR:
+- Kurze Einleitung (2-3 SÃ¤tze, persÃ¶nlich von ${name})
+- Die Checkpunkte als Ja/Nein oder Skala 1-5 formuliert
+- Kurze ErklÃ¤rung zu jedem Punkt (1 Satz) warum dieser Punkt wichtig ist
+- Abschluss: was tun wenn viele Punkte zutreffen?
+
+TON: ${ton}, fachlich fundiert aber verstÃ¤ndlich, keine Heilsversprechen, kein Produktname
+
+FORMAT: Ãœbersichtlich strukturiert, gut druckbar, mit Platz zum Abhaken`,
+
+    pdf:`Erstelle einen hochwertigen Mini-Ratgeber (4-6 Seiten) zum Thema â€ž${thema}" fÃ¼r ${tier}-Halter als exklusives Live-Goodie nach einem Webinar.
+
+Mein Name ist ${name}. Das Goodie erhalten nur Live-Teilnehmer â€” es soll echten fachlichen Mehrwert haben und Expertise demonstrieren ohne Werbung zu sein.
+
+TITEL (bitte einen ansprechenden vorschlagen):
+z.B. â€žWarum ${symptome} immer wiederkehren â€” und was wirklich dahintersteckt"
+
+KAPITEL-STRUKTUR:
+1. Das Problem: Warum klassische Behandlungen oft nur kurzfristig helfen (fachlich, mit Aha-Effekt)
+2. Der KÃ¶rper und seine Selbstregulation: Was biologisch passiert wenn dieser Mechanismus gestÃ¶rt ist â€” bezogen auf ${tier} und ${symptome}
+3. Die Rolle des Nervensystems: Wie Stress kÃ¶rperliche Beschwerden beeinflusst (Ã¼berraschende ZusammenhÃ¤nge)
+4. Was wirklich hilft: Prinzipien die am Grundproblem ansetzen â€” ohne Produktnennung
+5. Die nÃ¤chsten Schritte: Was kann ich jetzt konkret tun?
+6. Kurzes persÃ¶nliches Wort von ${name} am Ende
+
+TON: ${ton}, fachlich fundiert, verstÃ¤ndlich geschrieben, keine Heilsversprechen, kein Produktname
+
+FORMAT: Klar gegliedert, mit ZwischenÃ¼berschriften, kurze AbsÃ¤tze, gut lesbar auch auf dem Handy`,
+
+    anleitung:`Erstelle eine praktische Schritt-fÃ¼r-Schritt-Anleitung â€žDie ersten 4 Wochen mit dem Beosigner" fÃ¼r ${tier}-Halter als exklusives Live-Goodie nach einem Webinar.
+
+Mein Name ist ${name}. Das Goodie erhalten nur Live-Teilnehmer â€” es soll den Einstieg konkret und sicher machen und die Verbindung zu mir als Begleiterin stÃ¤rken.
+
+INHALT:
+Woche 1: Ankommen und beobachten
+- Wie wende ich den Beosigner an? (Thymus, Dauer, Frequenz â€” korrekte Anwendung beschreiben)
+- Was kann ich in den ersten Tagen erwarten â€” und was nicht?
+- Womit fange ich an â€” Tier, Mensch, beides?
+- Ein einfaches Beobachtungsprotokoll fÃ¼r die ersten 7 Tage
+
+Woche 2: Erste VerÃ¤nderungen wahrnehmen
+- Woran erkenne ich dass etwas passiert â€” auch wenn es subtil ist?
+- Typische erste Reaktionen (bezogen auf ${symptome} bei ${tier})
+- Was tue ich wenn ich nichts merke?
+
+Woche 3-4: Vertiefen und Routine aufbauen
+- Wie baue ich den Beosigner in den Alltag ein?
+- KombinationsmÃ¶glichkeiten mit anderen MaÃŸnahmen
+- Wann ist ein guter Zeitpunkt fÃ¼r ein persÃ¶nliches GesprÃ¤ch?
+
+Abschluss: Kurze Einladung zum persÃ¶nlichen GesprÃ¤ch mit ${name}
+
+TON: ${ton}, praktisch, ermutigend, konkret â€” wie eine persÃ¶nliche Begleitung auf Papier
+
+FORMAT: Wochenweise strukturiert, kurze AbsÃ¤tze, mit kleinen Checklisten pro Woche, kein Werbeton`,
+
+    fragebogen:`Erstelle einen interaktiven Selbstcheck â€žWie gut reguliert sich mein ${tier} noch selbst?" als exklusives Live-Goodie nach einem Webinar zum Thema â€ž${thema}".
+
+Mein Name ist ${name}. Das Goodie erhalten nur Live-Teilnehmer â€” es soll einen starken persÃ¶nlichen Aha-Effekt erzeugen und den Wunsch nach einem GesprÃ¤ch wecken.
+
+AUFBAU DES SELBSTCHECKS:
+
+Einleitung (3-4 SÃ¤tze): Was misst dieser Check â€” und warum ist das relevant?
+
+Teil 1 â€” KÃ¶rperliche Signale (5-7 Fragen)
+Fragen zu ${symptome} und weiteren kÃ¶rperlichen Anzeichen einer gestÃ¶rten Selbstregulation bei ${tier}.
+Format: Ja / Manchmal / Nein â€” mit Punkten (Ja=2, Manchmal=1, Nein=0)
+
+Teil 2 â€” Muster und Geschichte (4-5 Fragen)
+Fragen zu Behandlungshistorie, Wiederholung von Beschwerden, bisherigen LÃ¶sungsversuchen.
+
+Teil 3 â€” Stress und Nervensystem (3-4 Fragen)
+Ãœberraschende Fragen zum Stresslevel des Tieres â€” die die meisten noch nie so gestellt bekommen haben.
+
+Auswertung:
+0-8 Punkte: Gut aufgestellt â€” mit Tipps was weiter helfen kann
+9-15 Punkte: Aufmerksamkeit empfohlen â€” mit konkreten nÃ¤chsten Schritten
+16+ Punkte: Dringend Handlungsbedarf â€” mit freundlicher Einladung zum persÃ¶nlichen GesprÃ¤ch mit ${name}
+
+TON: ${ton}, neugierig machend, nicht alarmierend, fachlich korrekt, keine Heilsversprechen
+
+FORMAT: Klar strukturiert, gut auf dem Handy lesbar, mit Platz zum Eintragen`,
+
+    rezept:`Erstelle ein persÃ¶nliches Begleitprotokoll â€žMeine ersten 30 Tage â€” Beobachtungstagebuch fÃ¼r ${tier}-Halter" als exklusives Live-Goodie nach einem Webinar zum Thema â€ž${thema}".
+
+Mein Name ist ${name}. Das Goodie erhalten nur Live-Teilnehmer â€” es soll die Anwendung strukturieren, Fortschritte sichtbar machen und die Verbindung zu mir als Begleiterin stÃ¤rken.
+
+INHALT DES PROTOKOLLS:
+
+Einleitung von ${name}: Warum Beobachtung so wichtig ist (kurz, persÃ¶nlich, motivierend)
+
+WÃ¶chentliche Seiten (4 Wochen):
+- Datum und Woche
+- HÃ¤ufigkeit der Anwendung (Checkboxen)
+- Beobachtungen zu ${symptome}: besser / gleich / anders (mit Freitextfeld)
+- Stimmung / Energie des Tieres: Skala 1-10 mit Notizfeld
+- Ãœberraschende Beobachtungen diese Woche
+- Meine Frage der Woche (fÃ¼r das GesprÃ¤ch mit ${name})
+
+Monatliche Zusammenfassung:
+- Was hat sich verÃ¤ndert?
+- Womit bin ich zufrieden?
+- Was mÃ¶chte ich als nÃ¤chstes besprechen?
+
+Abschlussseite: Einladung zum persÃ¶nlichen GesprÃ¤ch mit ${name} â€” mit dem Hinweis das Protokoll mitzubringen
+
+TON: ${ton}, persÃ¶nlich, ermutigend, strukturiert
+
+FORMAT: Druckbar, eine Seite pro Woche, viel Platz zum Schreiben, ansprechendes Layout`
+  };
+
+  var erklaerung=erklaerungen[typ.value];
+  var prompt=prompts[typ.value];
+
+  document.getElementById('goodie-erklaerung-text').textContent=erklaerung;
+  document.getElementById('goodie-erklaerung').style.display='block';
+  document.getElementById('pgoodie').textContent=prompt;
+  document.getElementById('goodie-prompt-box').style.display='block';
+  document.getElementById('goodie-copy-btn').style.display='inline-flex';
+}
+
+// Init
+buildPrompts();
+</script>
+</body>
+</html>
