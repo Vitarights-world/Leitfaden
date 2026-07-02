@@ -1,0 +1,1774 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>☀ Team Solaris — Leitfaden</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#f5f2eb;color:#1a2744;line-height:1.6;font-size:15px}
+:root{
+  --y:#F5C200;--yl:#FEF9D6;--ym:#FAD84A;
+  --n:#1a2744;--nm:#2d3f6b;
+  --bl:#dce8f5;--bm:#a8c8e8;
+  --be:#faf7f2;--bem:#ede8dc;
+  --w:#fff;--tm:#4a5a7a;--tl:#7a8aaa;--bd:#dce8f5
+}
+
+/* LAYOUT */
+.shell{display:flex;min-height:100vh}
+.sidebar{width:220px;background:var(--n);flex-shrink:0;position:fixed;top:0;left:0;height:100vh;overflow-y:auto;padding:1.6rem 0;z-index:100}
+.sidebar-logo{padding:0 1.25rem 1.25rem;border-bottom:1px solid var(--nm)}
+.sidebar-logo h1{font-size:20px;font-weight:700;color:var(--y);display:flex;align-items:center;gap:10px}
+.sidebar-logo p{font-size:14px;color:var(--bl);margin-top:3px}
+.nav-section{padding:1rem 1.25rem 0.25rem;font-size:16px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--tl)}
+.nav-item{display:block;padding:0.55rem 1.25rem;font-size:19px;color:var(--bl);cursor:pointer;border-left:3px solid transparent;transition:all 0.15s;text-decoration:none}
+.nav-item:hover{background:var(--nm);color:var(--w)}
+.nav-item.active{background:var(--nm);color:var(--y);border-left-color:var(--y)}
+.main{margin-left:220px;padding:2rem 2rem 3rem;max-width:820px}
+
+/* MOBILE */
+.mob-bar{display:none;background:var(--n);padding:0.85rem 1rem;position:sticky;top:0;z-index:200;align-items:center;justify-content:space-between}
+.mob-logo{font-size:19px;font-weight:700;color:var(--y)}
+.mob-menu-btn{background:none;border:none;color:var(--y);font-size:26px;cursor:pointer;padding:0 4px}
+.mob-nav{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:var(--n);z-index:300;overflow-y:auto;padding:1rem 0}
+.mob-nav.open{display:block}
+.mob-close{display:block;padding:0.75rem 1.25rem;color:var(--y);font-size:20px;font-weight:600;cursor:pointer;border-bottom:1px solid var(--nm);margin-bottom:0.5rem}
+
+@media(max-width:680px){
+  .sidebar{display:none}
+  .mob-bar{display:flex}
+  .main{margin-left:0;padding:1.6rem 1rem 3rem}
+}
+
+/* PAGES */
+.page{display:none}
+.page.active{display:block;animation:fi 0.2s ease}
+@keyframes fi{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}
+
+/* SUB NAV */
+.sub-nav{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:1.25rem}
+.sub-btn{padding:8px 16px;border-radius:16px;font-size:15px;font-weight:500;border:1.5px solid var(--bd);cursor:pointer;background:var(--w);color:var(--tm);transition:all 0.12s}
+.sub-btn:hover{background:var(--be)}
+.sub-btn.active{background:var(--n);color:var(--y);border-color:var(--n)}
+.subpage{display:none}
+.subpage.active{display:block}
+
+/* COMPONENTS */
+.hero{background:var(--n);border-radius:14px;padding:1.75rem 2rem;margin-bottom:1.5rem;position:relative;overflow:hidden}
+.hero::before{content:'☀';position:absolute;right:10px;top:-10px;font-size:130px;opacity:0.06;line-height:1;pointer-events:none}
+.hero h2{font-size:26px;font-weight:700;color:var(--y);margin-bottom:0.4rem}
+.hero p{font-size:20px;color:var(--bl);line-height:1.65}
+
+.phase-hdr{display:flex;align-items:center;gap:12px;padding:1rem 1.25rem;border-radius:14px;margin-bottom:1.25rem;background:var(--n)}
+.phase-num{width:38px;height:38px;border-radius:50%;background:var(--y);color:var(--n);font-size:25px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.phase-hdr h2{font-size:20px;font-weight:600;color:var(--w)}
+.phase-hdr p{font-size:19px;color:var(--bl);margin-top:2px}
+
+.card{background:var(--w);border:1.5px solid var(--bd);border-radius:14px;padding:1.4rem 1.6rem;margin-bottom:1rem}
+.card h3{font-size:20px;font-weight:600;color:var(--n);margin-bottom:0.5rem;display:flex;align-items:center;gap:7px}
+.card p{font-size:20px;color:var(--tm);line-height:1.7}
+
+.sec-title{font-size:16px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--tl);margin:1.5rem 0 0.75rem}
+
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;margin-top:0.75rem}
+.mc{background:var(--be);border-radius:14px;padding:0.9rem;border:1.5px solid var(--bem)}
+.mc h4{font-size:19px;font-weight:600;color:var(--n);margin-bottom:4px}
+.mc p{font-size:19px;color:var(--tm);line-height:1.55}
+
+.week-tag{display:inline-block;font-size:14px;font-weight:600;padding:3px 10px;border-radius:14px;margin-bottom:1rem;background:var(--yl);color:#7a5a00;border:1px solid var(--ym)}
+
+/* BOXES */
+.ybox{background:var(--yl);border-radius:14px;padding:0.9rem 1rem;margin-top:0.75rem;border-left:3px solid var(--ym)}
+.ybox .lb{font-size:16px;font-weight:600;color:#8a7000;margin-bottom:5px;letter-spacing:0.07em;text-transform:uppercase}
+.ybox p{font-size:19px;color:#5a4a00;line-height:1.65}
+
+.bbox{background:var(--bl);border-radius:14px;padding:0.9rem 1rem;margin-top:0.75rem;border-left:3px solid var(--bm)}
+.bbox .lb{font-size:16px;font-weight:600;color:#2d5a8a;margin-bottom:5px;letter-spacing:0.07em;text-transform:uppercase}
+.bbox p{font-size:19px;color:#1a3a5c;line-height:1.65}
+
+.wbox{background:#fff8e1;border-radius:14px;padding:0.9rem 1rem;margin-top:0.75rem;border-left:3px solid #e6a800}
+.wbox .lb{font-size:16px;font-weight:600;color:#b07800;margin-bottom:5px;letter-spacing:0.07em;text-transform:uppercase}
+.wbox p{font-size:19px;color:#7a5200;line-height:1.65}
+
+.rbox{background:#fef0f0;border-radius:14px;padding:0.9rem 1rem;margin-top:0.75rem;border-left:3px solid #e24b4a}
+.rbox .lb{font-size:16px;font-weight:600;color:#a32d2d;margin-bottom:5px;letter-spacing:0.07em;text-transform:uppercase}
+.rbox p{font-size:19px;color:#501313;line-height:1.65}
+
+.nbox{background:var(--n);border-radius:14px;padding:0.9rem 1rem;margin-top:0.75rem}
+.nbox .lb{font-size:16px;font-weight:600;color:var(--ym);margin-bottom:5px;letter-spacing:0.07em;text-transform:uppercase}
+.nbox p{font-size:19px;color:var(--bl);line-height:1.65}
+
+/* CHECKLIST */
+.cl{list-style:none;margin-top:0.75rem}
+.cl li{display:flex;align-items:flex-start;gap:10px;font-size:20px;color:var(--tm);line-height:1.6;padding:5px 0;border-bottom:1px solid var(--bd)}
+.cl li:last-child{border-bottom:none}
+.cl li .ck{color:var(--y);flex-shrink:0;margin-top:2px;font-size:16px}
+.goal .cl li{color:var(--bl);border-color:var(--nm)}
+.goal .cl li .ck{color:var(--y)}
+.goal{background:var(--n);border-radius:14px;padding:1.6rem;margin-top:0.75rem}
+.goal h3{font-size:20px;font-weight:600;color:var(--y);margin-bottom:1rem}
+
+.divider{height:1px;background:var(--bem);margin:1.1rem 0;border-radius:2px}
+.film-btn{display:inline-flex;align-items:center;gap:6px;margin-top:0.75rem;padding:9px 20px;background:var(--y);color:var(--n);border-radius:10px;text-decoration:none;font-size:16px;font-weight:700}
+.film-btn:hover{background:var(--ym)}
+
+/* DIALOGUE */
+.dlg{background:var(--be);border-radius:14px;padding:1rem;margin-top:0.75rem;border:1.5px solid var(--bem)}
+.dlg-title{font-size:16px;font-weight:600;letter-spacing:0.07em;text-transform:uppercase;color:var(--tl);margin-bottom:0.85rem}
+.msg{display:flex;gap:10px;margin-bottom:9px;align-items:flex-start}
+.msg:last-child{margin-bottom:0}
+.bbl{border-radius:14px;padding:0.55rem 0.8rem;font-size:19px;line-height:1.6;max-width:84%}
+.msg.them .bbl{background:var(--w);border:1.5px solid var(--bd);color:var(--n);border-radius:4px 12px 12px 12px}
+.msg.us .bbl{background:var(--n);color:var(--w);border-radius:14px 4px 12px 12px;margin-left:auto}
+.msg.us{flex-direction:row-reverse}
+.mwrap{display:flex;flex-direction:column;max-width:84%}
+.msg.us .mwrap{align-items:flex-end}
+.mwho{font-size:16px;font-weight:600;margin-bottom:2px}
+.msg.them .mwho{color:var(--tl)}
+.msg.us .mwho{color:var(--ym);text-align:right}
+
+/* STEP BLOCKS */
+.sb{background:var(--be);border-radius:14px;padding:1.6rem 1.5rem;margin-bottom:1rem;border:1.5px solid var(--bem)}
+.sb-num{width:28px;height:28px;border-radius:50%;background:var(--y);color:var(--n);font-size:19px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-bottom:7px}
+.sb h3{font-size:20px;font-weight:600;color:var(--n);margin-bottom:3px}
+.sb p{font-size:19px;color:var(--tm);line-height:1.65}
+
+/* FLOW STEPS */
+.flow{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:1rem 0}
+.fs{border-radius:14px;padding:0.9rem;text-align:center}
+.fs .fn{font-size:16px;font-weight:600;letter-spacing:0.07em;text-transform:uppercase;margin-bottom:5px}
+.fs .ft{font-size:19px;font-weight:600}
+.fs .fs2{font-size:15px;margin-top:3px}
+.fs-y{background:var(--yl);border:1.5px solid var(--ym)}
+.fs-y .fn{color:#8a7000}.fs-y .ft{color:#5a4a00}.fs-y .fs2{color:#8a7000}
+.fs-b{background:var(--bl);border:1.5px solid var(--bm)}
+.fs-b .fn{color:#2d5a8a}.fs-b .ft{color:#1a3a5c}.fs-b .fs2{color:#3a6a9a}
+.fs-e{background:var(--bem);border:1.5px solid #c0b8a8}
+.fs-e .fn{color:var(--tm)}.fs-e .ft{color:var(--n)}.fs-e .fs2{color:var(--tm)}
+
+/* COMPARE */
+.cmp{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:0.75rem}
+.ci{border-radius:14px;padding:0.85rem}
+.ci .cilb{font-size:16px;font-weight:600;margin-bottom:5px;letter-spacing:0.05em;text-transform:uppercase}
+.ci p{font-size:19px;line-height:1.6}
+.ci-bad{background:#fef0f0;border:1.5px solid #f7c1c1}
+.ci-bad .cilb{color:#a32d2d}.ci-bad p{color:#501313}
+.ci-good{background:var(--yl);border:1.5px solid var(--ym)}
+.ci-good .cilb{color:#8a7000}.ci-good p{color:#5a4a00}
+
+/* MINDSET */
+.msc{border-radius:14px;padding:1.4rem 1.6rem;margin-bottom:1rem;border:1.5px solid}
+.msc .mn{font-size:16px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;margin-bottom:5px}
+.msc h3{font-size:20px;font-weight:600;margin-bottom:3px}
+.msc p{font-size:19px;line-height:1.65}
+.msc-y{background:var(--yl);border-color:var(--ym)}
+.msc-y .mn,.msc-y h3{color:#5a4a00}.msc-y p{color:#8a7000}
+.msc-b{background:var(--bl);border-color:var(--bm)}
+.msc-b .mn,.msc-b h3{color:#1a3a5c}.msc-b p{color:#2d5a8a}
+.msc-n{background:var(--n);border-color:var(--nm)}
+.msc-n .mn,.msc-n h3{color:var(--y)}.msc-n p{color:var(--bl)}
+
+/* EINWAND */
+.et{border-radius:14px;padding:1rem 1.25rem;margin-bottom:1rem;border:1.5px solid}
+.et .etl{font-size:16px;font-weight:600;letter-spacing:0.07em;text-transform:uppercase;margin-bottom:5px}
+.et h3{font-size:20px;font-weight:600;margin-bottom:3px}
+.et p{font-size:19px;line-height:1.65}
+.et-1{background:var(--yl);border-color:var(--ym)}
+.et-1 .etl{color:#8a7000}.et-1 h3{color:#5a4a00}.et-1 p{color:#8a7000}
+.et-2{background:var(--bl);border-color:var(--bm)}
+.et-2 .etl{color:#2d5a8a}.et-2 h3{color:#1a3a5c}.et-2 p{color:#2d5a8a}
+.et-3{background:var(--bem);border-color:#c0b8a8}
+.et-3 .etl{color:var(--tm)}.et-3 h3{color:var(--n)}.et-3 p{color:var(--tm)}
+.et-4{background:#fff8e1;border-color:#e6c800}
+.et-4 .etl{color:#8a6000}.et-4 h3{color:#5a4000}.et-4 p{color:#8a6000}
+
+/* COMEBACK */
+.cb{background:var(--be);border-radius:14px;padding:1.4rem 1.6rem;margin-bottom:1rem;border:1.5px solid var(--bem)}
+.cb h3{font-size:20px;font-weight:600;color:var(--n);margin-bottom:0.4rem}
+.cb p{font-size:19px;color:var(--tm);line-height:1.65}
+
+/* 7-TAGE */
+.day{background:var(--w);border:1.5px solid var(--bd);border-radius:14px;margin-bottom:1rem;overflow:hidden}
+.day-h{background:var(--n);padding:0.9rem 1.25rem;display:flex;align-items:center;gap:10px;cursor:pointer;user-select:none;transition:background 0.12s}
+.day-h:hover{background:var(--nm)}
+.dn{width:34px;height:34px;border-radius:50%;background:var(--y);color:var(--n);font-size:20px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.dt h3{font-size:20px;font-weight:600;color:var(--w)}
+.dt p{font-size:14px;color:var(--bl);margin-top:1px}
+.dchv{color:var(--y);font-size:19px;transition:transform 0.2s;flex-shrink:0;margin-left:auto}
+.dchv.op{transform:rotate(180deg)}
+.day-b{display:none;padding:1.4rem 1.6rem}
+.day-b.op{display:block}
+.vorlage{background:var(--yl);border-radius:14px;padding:1.6rem 1.5rem;margin-top:0.75rem;border:1.5px solid var(--ym)}
+.vorlage .lb{font-size:16px;font-weight:600;color:#8a7000;margin-bottom:8px;letter-spacing:0.07em;text-transform:uppercase}
+.vorlage pre{font-size:19px;color:#3a2e00;line-height:1.8;white-space:pre-wrap;font-family:inherit}
+.cpbtn{margin-top:10px;padding:7px 16px;border-radius:14px;font-size:15px;font-weight:600;border:none;cursor:pointer;background:var(--y);color:var(--n);transition:all 0.15s;display:inline-flex;align-items:center;gap:5px}
+.cpbtn:hover{background:var(--ym)}
+.cpbtn.ok{background:var(--n);color:var(--y)}
+
+/* NACHHAKEN */
+.cat-nav{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:1.1rem}
+.cat-btn{padding:8px 16px;border-radius:16px;font-size:15px;font-weight:500;border:1.5px solid var(--bd);cursor:pointer;background:var(--w);color:var(--tm);transition:all 0.12s}
+.cat-btn:hover{background:var(--be)}
+.cat-btn.active{background:var(--y);color:var(--n);border-color:var(--y)}
+.cat-sec{display:none}
+.cat-sec.active{display:block}
+.cat-lb{font-size:16px;font-weight:600;letter-spacing:0.07em;text-transform:uppercase;color:var(--tl);margin-bottom:1rem}
+.phrase{background:var(--w);border:1.5px solid var(--bd);border-radius:14px;padding:0.85rem 1rem;margin-bottom:0.55rem;display:flex;align-items:flex-start;justify-content:space-between;gap:10px;transition:border-color 0.12s}
+.phrase:hover{border-color:var(--y)}
+.phrase-t{font-size:13.5px;color:var(--n);line-height:1.6;flex:1}
+.pbtn{flex-shrink:0;padding:5px 10px;border-radius:14px;font-size:14px;font-weight:500;border:1.5px solid var(--bd);cursor:pointer;background:var(--be);color:var(--tm);transition:all 0.12s;white-space:nowrap}
+.pbtn:hover{background:var(--yl);color:#7a5a00;border-color:var(--y)}
+.pbtn.ok{background:var(--yl);color:#7a5a00;border-color:var(--y)}
+
+@media(max-width:480px){
+  .flow{grid-template-columns:1fr}
+  .cmp{grid-template-columns:1fr}
+  .grid2{grid-template-columns:1fr}
+}
+.spick-cat{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:1rem}
+.spick-btn{padding:8px 16px;border-radius:20px;font-size:14px;font-weight:600;border:1.5px solid var(--bd);cursor:pointer;background:var(--w);color:var(--tm);transition:all 0.12s;white-space:nowrap}
+.spick-btn.active{background:var(--y);color:var(--n);border-color:var(--y)}
+.spick-sec{display:none}
+.spick-sec.active{display:block}
+.spick-sec.active{display:block}
+.phrase-card{background:var(--w);border:1.5px solid var(--bd);border-radius:12px;padding:0.85rem 1rem;margin-bottom:0.6rem;display:flex;align-items:flex-start;justify-content:space-between;gap:10px}
+.phrase-t{font-size:15px;color:var(--n);line-height:1.6;flex:1}
+.copy-btn{flex-shrink:0;padding:8px 12px;border-radius:8px;font-size:14px;font-weight:600;border:none;cursor:pointer;background:var(--y);color:var(--n);transition:all 0.15s;white-space:nowrap}
+.copy-btn.ok{background:var(--n);color:var(--y)}
+</style>
+</head>
+<body>
+
+<!-- SIDEBAR -->
+<div class="shell">
+<nav class="sidebar">
+  <div class="sidebar-logo">
+    <h1>☀ Team Solaris</h1>
+    <p>Leitfaden für modernes Netzwerken</p>
+  </div>
+  <div class="nav-section">Start</div>
+  <a class="nav-item active" onclick="go('start',this)">Übersicht & Prinzip</a>
+  <div class="nav-section">Die drei Phasen</div>
+  <a class="nav-item" onclick="go('phase1',this)">Phase 1 — Fundament</a>
+  <a class="nav-item" onclick="go('phase2',this)">Phase 2 — Gespräche</a>
+  <a class="nav-item" onclick="go('phase3',this)">Phase 3 — Aufbau</a>
+  <div class="nav-section">Werkzeuge</div>
+  <a class="nav-item" onclick="go('sieben',this)">7-Tage-Gruppe</a>
+  <a class="nav-item" onclick="go('gespraech',this)">Gesprächsführung</a>
+  <a class="nav-item" onclick="go('nachhaken',this)">Nachhaken</a>
+  <div class="nav-section">Support</div>
+  <a class="nav-item" onclick="go('kein-netz',this)">Kein Netzwerk?</a>
+  <a class="nav-item" onclick="go('spickzettel',this)">⚡ Spickzettel</a>
+  <a class="nav-item" onclick="go('imagefilme',this)">🎬 Imagefilme</a>
+  <a class="nav-item" onclick="go('comeback',this)">Comeback-Modul</a>
+  <a class="nav-item" onclick="go('beosigner-erklaeren',this)">Beosigner erklären</a>
+  <a class="nav-item" onclick="go('produkte',this)">Produkte & Imagefilme</a>
+  <a class="nav-item" onclick="go('empfehlung',this)">Empfehlungsprogramm</a>
+  <a class="nav-item" onclick="go('workshop',this)">Workshop-Vorbereitung</a>
+  <a class="nav-item" onclick="go('onboarding',this)">Onboarding neue Partner</a>
+  <a class="nav-item" onclick="go('comeback-upline',this)">Comeback als Upline</a>
+  <a class="nav-item" onclick="go('reichweite',this)">Neue Reichweite-Strategien</a>
+  <a class="nav-item" onclick="go('partnergewinnung',this)">Partnergewinnung</a>
+  <a class="nav-item" onclick="go('einwand-methode',this)">Einwand-Methode</a>
+</nav>
+
+<!-- MOBILE BAR -->
+<div class="mob-bar">
+  <div class="mob-logo">☀ Team Solaris</div>
+  <button class="mob-menu-btn" onclick="toggleMob()">☰</button>
+</div>
+<div class="mob-nav" id="mobnav">
+  <span class="mob-close" onclick="toggleMob()">✕ Menü schließen</span>
+  <a class="nav-item" onclick="go('start',null);toggleMob()">Übersicht & Prinzip</a>
+  <div class="nav-section">Die drei Phasen</div>
+  <a class="nav-item" onclick="go('phase1',null);toggleMob()">Phase 1 — Fundament</a>
+  <a class="nav-item" onclick="go('phase2',null);toggleMob()">Phase 2 — Gespräche</a>
+  <a class="nav-item" onclick="go('phase3',null);toggleMob()">Phase 3 — Aufbau</a>
+  <div class="nav-section">Werkzeuge</div>
+  <a class="nav-item" onclick="go('sieben',null);toggleMob()">7-Tage-Gruppe</a>
+  <a class="nav-item" onclick="go('gespraech',null);toggleMob()">Gesprächsführung</a>
+  <a class="nav-item" onclick="go('nachhaken',null);toggleMob()">Nachhaken</a>
+  <div class="nav-section">Support</div>
+  <a class="nav-item" onclick="go('kein-netz',null);toggleMob()">Kein Netzwerk?</a>
+  <a class="nav-item" onclick="go('spickzettel',null);toggleMob()">⚡ Spickzettel</a>
+  <a class="nav-item" onclick="go('imagefilme',null);toggleMob()">🎬 Imagefilme</a>
+  <a class="nav-item" onclick="go('comeback',null);toggleMob()">Comeback-Modul</a>
+  <a class="nav-item" onclick="go('beosigner-erklaeren',null);toggleMob()">Beosigner erklären</a>
+  <a class="nav-item" onclick="go('produkte',null);toggleMob()">Produkte & Imagefilme</a>
+  <a class="nav-item" onclick="go('empfehlung',null);toggleMob()">Empfehlungsprogramm</a>
+  <a class="nav-item" onclick="go('workshop',null);toggleMob()">Workshop-Vorbereitung</a>
+  <a class="nav-item" onclick="go('onboarding',null);toggleMob()">Onboarding neue Partner</a>
+  <a class="nav-item" onclick="go('comeback-upline',null);toggleMob()">Comeback als Upline</a>
+  <a class="nav-item" onclick="go('reichweite',null);toggleMob()">Neue Reichweite-Strategien</a>
+  <a class="nav-item" onclick="go('partnergewinnung',null);toggleMob()">Partnergewinnung</a>
+  <a class="nav-item" onclick="go('einwand-methode',null);toggleMob()">Einwand-Methode</a>
+</div>
+
+<main class="main">
+
+<!-- START -->
+<div id="page-start" class="page active">
+  <div class="hero">
+    <h2>Dein Leitfaden für modernes Netzwerken</h2>
+    <p>Kein Kaltakquise. Keine Telefonlisten. Keine aufgesetzten Verkaufsgespräche.<br>Du nutzt das was du schon hast — dein Thema, dein Netzwerk, deine Geschichte.</p>
+  </div>
+  <div class="sec-title">Erfahrungsberichte</div>
+  <div class="grid2" style="margin-bottom:1rem">
+    <a href="https://t.me/+J2imJr80Wzo5YTZi" target="_blank" style="background:var(--n);border-radius:14px;padding:1.25rem;text-decoration:none;display:flex;flex-direction:column;gap:0.5rem;border:1.5px solid var(--n)">
+      <div style="font-size:28px">🐾</div>
+      <div style="font-size:16px;font-weight:700;color:var(--y)">Tierische Erfahrungen</div>
+      <div style="font-size:14px;color:var(--bl)">Telegram-Kanal öffnen →</div>
+    </a>
+    <a href="https://t.me/+bhataSN7o7YxZmFi" target="_blank" style="background:var(--n);border-radius:14px;padding:1.25rem;text-decoration:none;display:flex;flex-direction:column;gap:0.5rem;border:1.5px solid var(--n)">
+      <div style="font-size:28px">💙</div>
+      <div style="font-size:16px;font-weight:700;color:var(--y)">Erfahrungen Menschen</div>
+      <div style="font-size:14px;color:var(--bl)">Telegram-Kanal öffnen →</div>
+    </a>
+  </div>
+  <div class="sec-title">Das Prinzip</div>
+  <div class="card"><h3>🔄 Der Weg — immer gleich, immer deiner</h3><p>Egal ob du Tierfreundin, Therapeutin, Yogalehrerin oder Unternehmerin bist — das System ist dasselbe. Du baust Vertrauen rund um dein Thema auf, lädst interessierte Menschen in eine 7-Tage-WhatsApp-Gruppe ein, und zeigst im abschließenden Webinar den Beosigner als natürliche Lösung. Nicht du änderst dich — du bringst dich ein.</p></div>
+  <div class="grid2">
+    <div class="mc"><h4>Schritt 1 — Thema</h4><p>Dein Expertenwissen oder deine Leidenschaft wird zum Türöffner für dein Netzwerk.</p></div>
+    <div class="mc"><h4>Schritt 2 — Sichtbarkeit</h4><p>WhatsApp-Status, Facebook oder persönliche Gespräche — du wählst deinen Kanal.</p></div>
+    <div class="mc"><h4>Schritt 3 — 7-Tage-Gruppe</h4><p>Themengruppe auf WhatsApp mit echtem Mehrwert — täglich ein kleiner Impuls.</p></div>
+    <div class="mc"><h4>Schritt 4 — Webinar</h4><p>Der Beosigner als logische, natürliche Lösung am Ende des Weges.</p></div>
+  </div>
+  <div class="sec-title">Deine drei Monate</div>
+  <div class="card" style="cursor:pointer;border-color:var(--ym)" onclick="go('phase1',document.querySelectorAll('.nav-item')[1])">
+    <h3>📅 Wochen 1–4 — Phase 1: Fundament & Klarheit</h3>
+    <p>Dein Thema finden, deine Geschichte formulieren, erste Signale senden. Noch kein Einladen, kein Verkaufen.</p>
+  </div>
+  <div class="card" style="cursor:pointer;border-color:var(--bm)" onclick="go('phase2',document.querySelectorAll('.nav-item')[2])">
+    <h3>📅 Wochen 5–8 — Phase 2: Gespräche & Vertrauen</h3>
+    <p>Erste Einladungen, die 7-Tage-Gruppe starten, das Webinar vorbereiten.</p>
+  </div>
+  <div class="card" style="cursor:pointer;border-color:var(--bem)" onclick="go('phase3',document.querySelectorAll('.nav-item')[3])">
+    <h3>📅 Wochen 9–12 — Phase 3: Aufbau & Routinen</h3>
+    <p>Das System verstetigen, erste eigene Teampartner begleiten, Strukturen skalieren.</p>
+  </div>
+  <div class="wbox" style="margin-top:1rem"><div class="lb">Zeitaufwand ehrlich</div><p>3–5 Stunden pro Woche reichen für einen soliden Start. Täglich etwas ist besser als einmal die Woche viel. Kontinuität schlägt Intensität.</p></div>
+</div>
+
+<!-- PHASE 1 -->
+<div id="page-phase1" class="page">
+  <div class="phase-hdr"><div class="phase-num">1</div><div><h2>Phase 1 — Fundament & Klarheit</h2><p>Wochen 1–4 · Verstehen, wofür du stehst</p></div></div>
+  <div class="sub-nav">
+    <button class="sub-btn active" onclick="sub('p1','p1-warum',this)">Dein Warum</button>
+    <button class="sub-btn" onclick="sub('p1','p1-thema',this)">Dein Thema</button>
+    <button class="sub-btn" onclick="sub('p1','p1-geschichte',this)">Deine Geschichte</button>
+    <button class="sub-btn" onclick="sub('p1','p1-sichtbarkeit',this)">Erste Sichtbarkeit</button>
+    <button class="sub-btn" onclick="sub('p1','p1-ziele',this)">Ziele Woche 4</button>
+  </div>
+  <div id="p1-warum" class="subpage active">
+    <div class="week-tag">Woche 1</div>
+    <div class="card"><h3>❤ Warum machst du das wirklich?</h3><p>Nicht die schöne Antwort — die ehrliche. Geld allein hält nicht durch schwierige Wochen. Was ist dahinter? Mehr Zeit? Unabhängigkeit? Etwas aufbauen das deinen Werten entspricht?</p>
+    <div class="ybox"><div class="lb">Schreib diesen Satz fertig</div><p>„Ich mache das, weil ich möchte, dass _________________ — und das schaffe ich, indem ich _________________."</p></div></div>
+    <div class="card"><h3>💡 Warum der Beosigner?</h3><p>Was hat dich persönlich überzeugt? Eine eigene Erfahrung, die eines Tieres, die eines Menschen dem du nahestehst? Diese Geschichte ist dein stärkstes Argument — weit stärker als jede Produktbeschreibung.</p>
+    <div class="ybox"><div class="lb">Formuliere in drei Sätzen</div><p>Was war vorher? Was hat sich verändert? Was bedeutet das für dich heute?</p></div></div>
+  </div>
+  <div id="p1-thema" class="subpage">
+    <div class="week-tag">Woche 1–2</div>
+    <div class="card"><h3>🎯 Dein Thema — so konkret wie möglich</h3><p>„Gesundheit" ist kein Thema. „Warum mein Hund immer wieder kratzt — und was wirklich dahintersteckt" ist ein Thema. Dein Thema zieht genau die Menschen an, denen du wirklich helfen kannst.</p></div>
+    <div class="grid2">
+      <div class="mc"><h4>Tier & Natur</h4><p>Darmgesundheit Hund/Katze, Allergien, Ohren, Haut, Pferde, Immunsystem</p></div>
+      <div class="mc"><h4>Mensch & Körper</h4><p>Erschöpfung, Schlaf, Schmerzen, Stress, Burnout, chronische Beschwerden</p></div>
+      <div class="mc"><h4>Familie & Alltag</h4><p>Kinderimmunität, Konzentration, Schlaf bei Kindern, Familiengesundheit</p></div>
+      <div class="mc"><h4>Kein Thema?</h4><p>Schau in den Bereich „Kein Netzwerk?" — dort findest du konkrete Wege dazu.</p></div>
+    </div>
+    <div class="ybox" style="margin-top:0.75rem"><div class="lb">Dein Ein-Satz-Thema</div><p>„Ich helfe [wem], die/der [Problem hat], dabei [was konkret zu erreichen]."</p></div>
+  </div>
+  <div id="p1-geschichte" class="subpage">
+    <div class="week-tag">Woche 2</div>
+    <div class="card"><h3>💬 Deine persönliche Geschichte</h3><p>Menschen kaufen keine Produkte — sie kaufen Veränderung, die jemand anderes bereits erlebt hat. Drei Sätze reichen. Kein Roman, keine Übertreibungen.</p>
+    <ul class="cl">
+      <li><span class="ck">•</span> Vorher: Was war das Problem? Wie hat es sich angefühlt?</li>
+      <li><span class="ck">•</span> Wendepunkt: Wie bist du auf den Beosigner gestoßen?</li>
+      <li><span class="ck">•</span> Nachher: Was hat sich konkret verändert?</li>
+      <li><span class="ck">•</span> Heute: Was bedeutet das für deinen Alltag?</li>
+    </ul>
+    <div class="ybox" style="margin-top:0.75rem"><div class="lb">Beispiel</div><p>„Mein Hund hatte jahrelang Ohrentzündungen — immer wieder, trotz Tierärztin. Seit ich den Beosigner kenne, haben wir das seit Monaten nicht mehr. Ich hätte nicht gedacht, dass etwas so Einfaches so viel bewegen kann."</p></div></div>
+  </div>
+  <div id="p1-sichtbarkeit" class="subpage">
+    <div class="week-tag">Woche 3–4</div>
+    <div class="card"><h3>📡 Erste Signale — noch kein Verkaufen</h3><p>Dein Netzwerk soll wissen, wofür du stehst. Nicht durch Werbung — durch echte, regelmäßige Inhalte zu deinem Thema. Du baust Vertrauen bevor du eine Einladung aussprichst.</p></div>
+    <div class="card"><h3>📱 WhatsApp-Status (3–4x pro Woche)</h3><p>Kein Produktbild, kein Preis. Kurze Beobachtungen, Fragen, kleine Erfolge aus deinem Alltag. Der Status soll neugierig machen — nicht informieren.</p>
+    <div class="ybox"><div class="lb">Beispiel-Status</div><p>„Mein Hund hatte jahrelang Ohrentzündungen. Seit 6 Wochen nicht mehr. Ich erkläre gerne warum 🐾"</p></div>
+    <div class="ybox" style="margin-top:8px"><div class="lb">Weiteres Beispiel</div><p>„Drei Fragen die ich mir damals gewünscht hätte, bevor ich zum dritten Mal zur Tierärztin gegangen bin 🐶"</p></div></div>
+    <div class="card"><h3>👥 Facebook — 2x pro Woche</h3><p>Beitrag zu deinem Thema auf deinem Profil oder deiner Seite. Frage, Erfahrung, Einblick — kein Produktpost. Ziel: Menschen reagieren, kommentieren, fragen nach. Kein Ergebnis ohne Geduld — die ersten 2–3 Wochen wirken oft noch nichts.</p></div>
+    <div class="card"><h3>🤝 Offline — unterschätzt und kraftvoll</h3><p>Wenn jemand fragt „Was machst du gerade so?" kommt dein Ein-Satz-Thema. Nicht mehr, nicht weniger. Wer neugierig ist, fragt nach. Das ist deine Einladung zum Gespräch — und du musst nichts verkaufen.</p></div>
+  </div>
+  <div id="p1-ziele" class="subpage">
+    <div class="goal"><h3>✓ Das sollte am Ende von Woche 4 sitzen:</h3>
+      <ul class="cl">
+        <li><span class="ck">✓</span> Dein Thema ist in einem Satz klar formuliert</li>
+        <li><span class="ck">✓</span> Deine persönliche Geschichte ist aufgeschrieben</li>
+        <li><span class="ck">✓</span> Du sendest 3–4x pro Woche Signale via Status oder Facebook</li>
+        <li><span class="ck">✓</span> Du weißt, wo deine ersten 20 Menschen sind</li>
+        <li><span class="ck">✓</span> Dein Warum ist dir selbst klar — du kannst es in zwei Sätzen sagen</li>
+      </ul>
+    </div>
+    <div class="wbox" style="margin-top:0.75rem"><div class="lb">Noch nicht in Phase 1</div><p>Kein Einladen in Gruppen, kein Webinar, kein Beosigner erklären. Das kommt in Phase 2 — wenn die Grundlage wirklich sitzt.</p></div>
+  </div>
+</div>
+
+<!-- PHASE 2 -->
+<div id="page-phase2" class="page">
+  <div class="phase-hdr"><div class="phase-num" style="background:var(--bm);color:var(--n)">2</div><div><h2>Phase 2 — Gespräche & Vertrauen</h2><p>Wochen 5–8 · Erste Einladungen, die 7-Tage-Gruppe, das Webinar</p></div></div>
+  <div class="sub-nav">
+    <button class="sub-btn active" onclick="sub('p2','p2-einladen',this)">Einladen ohne Druck</button>
+    <button class="sub-btn" onclick="sub('p2','p2-gruppe',this)">Die 7-Tage-Gruppe</button>
+    <button class="sub-btn" onclick="sub('p2','p2-webinar',this)">Das Webinar</button>
+    <button class="sub-btn" onclick="sub('p2','p2-aufzeichnung',this)">Keine Aufzeichnung — 2 Alternativen</button>
+    <button class="sub-btn" onclick="sub('p2','p2-beosigner',this)">Den Beosigner vorstellen</button>
+    <button class="sub-btn" onclick="sub('p2','p2-ziele',this)">Ziele Woche 8</button>
+  </div>
+  <div id="p2-einladen" class="subpage active">
+    <div class="week-tag">Woche 5–6</div>
+    <div class="card"><h3>🤲 Einladen — so dass es sich nicht wie Verkaufen anfühlt</h3><p>Du lädst niemanden zu einem Produkt ein. Du lädst Menschen zu einem Thema ein das sie interessiert. Der Unterschied ist entscheidend — für sie und für dich.</p></div>
+    <div class="card"><h3>Wen einladen?</h3>
+    <ul class="cl">
+      <li><span class="ck">•</span> Wer hat auf deine Status-Beiträge reagiert oder nachgefragt?</li>
+      <li><span class="ck">•</span> Wer hat dich in den letzten Monaten zu deinem Thema angesprochen?</li>
+      <li><span class="ck">•</span> Wer ist in deinem Alltag mit dem Problem konfrontiert über das du sprichst?</li>
+    </ul></div>
+    <div class="card"><h3>Formulierungen die funktionieren</h3>
+    <div class="ybox"><div class="lb">Persönliche WhatsApp-Nachricht</div><p>„Ich starte nächste Woche eine kleine 7-Tage-Gruppe zum Thema [dein Thema]. Ich dachte dabei an dich — passt das gerade für dich?"</p></div>
+    <div class="ybox" style="margin-top:8px"><div class="lb">Im persönlichen Gespräch</div><p>„Ich mache gerade etwas Interessantes zum Thema [X] — wenn dich das interessiert, sag Bescheid, ich erkläre gerne mehr."</p></div>
+    <div class="rbox" style="margin-top:0.75rem"><div class="lb">Nie beim ersten Kontakt</div><p>Kein Link, kein Produkt, keine lange Erklärung. Die Einladung gilt dem Thema — nicht dem Beosigner.</p></div></div>
+  </div>
+  <div id="p2-gruppe" class="subpage">
+    <div class="card"><h3>💬 Die 7-Tage-WhatsApp-Gruppe</h3><p>Kein Verkaufsraum — ein Lernraum. Täglich ein kleiner Impuls zu deinem Thema. Der Beosigner taucht erst am Tag 6–7 auf — als logische Antwort auf eine Frage die die Teilnehmer selbst entwickelt haben.</p></div>
+    <div class="bbox"><div class="lb">Alle Tagesvorlagen mit fertigen Texten</div><p>Unter dem Menüpunkt „7-Tage-Gruppe" findest du für jeden Tag eine fertige Vorlage mit Erklärung, kopierbarem Text und konkreten Tipps — auch für den Fall dass niemand antwortet.</p></div>
+  </div>
+  <div id="p2-webinar" class="subpage">
+    <div class="card"><h3>📹 Das Webinar vorbereiten</h3><p>Das Webinar ist der natürliche Abschluss des 7-Tage-Weges. Die Teilnehmer haben sich eine Woche mit dem Problem beschäftigt — jetzt sind sie bereit für die Lösung. Du präsentierst sie nicht als Werbung, sondern als Antwort.</p>
+    <ul class="cl">
+      <li><span class="ck">•</span> Kurze Zusammenfassung der Woche — was haben wir gelernt?</li>
+      <li><span class="ck">•</span> Deine persönliche Geschichte mit dem Beosigner</li>
+      <li><span class="ck">•</span> Was ist der Beosigner? (Selbstregulation, kein Messgerät)</li>
+      <li><span class="ck">•</span> Anwendungsbeispiele passend zum Gruppenthema</li>
+      <li><span class="ck">•</span> Raum für Fragen — kein Druck, kein harter Abschluss</li>
+      <li><span class="ck">•</span> Soft-Einladung: „Wer mehr erfahren möchte, meldet sich bei mir"</li>
+    </ul>
+    <div class="rbox" style="margin-top:0.75rem"><div class="lb">Häufigster Fehler</div><p>Zu viel erklären wollen. Ein Webinar darf Neugier wecken — es muss nicht alles beantworten. Die echte Verbindung entsteht im Einzelgespräch danach.</p></div></div>
+  </div>
+  <div id="p2-aufzeichnung" class="subpage">
+    <div class="card"><h3>🎬 Keine Aufzeichnung — aber zwei starke Alternativen</h3><p>Die meisten die eine Aufzeichnung wollen, schauen sie nie. Und wer sie schaut, landet nicht im Einzelgespräch — genau dort wo der Beosigner zur natürlichen Lösung wird. Deshalb: keine Aufzeichnung als Standard. Stattdessen zwei Wege die beide besser funktionieren.</p>
+    <div class="rbox" style="margin-top:0.75rem"><div class="lb">Die Formulierung in der Einladung</div><p>„Es gibt keine Aufzeichnung — aber ich bin heute Abend live dabei und gehe persönlich auf eure Fragen ein. Das gibt es nur heute Abend."</p><p style="margin-top:0.5rem">Kein Erklären, keine Entschuldigung. Einfach klar kommuniziert.</p></div></div>
+
+    <div class="card"><h3>Weg 1 — Das exklusive Live-Goodie</h3><p>Wer live dabei ist, bekommt am Ende etwas das es nur heute gibt. Das macht die Live-Teilnahme wertvoll und unterscheidet sie klar vom „Ich schau mir das später an". Das Goodie muss echten Mehrwert haben — kein Werbematerial.</p>
+    <div class="ybox" style="margin-top:0.75rem"><div class="lb">Ideen für dein Live-Goodie</div><p>Wähle was zu dir passt — eins reicht völlig:</p></div>
+    <ul class="cl" style="margin-top:0.75rem">
+      <li><span class="ck">•</span> Eine kurze PDF: „Woran erkenne ich eine gestörte Selbstregulation bei meinem Tier — die 7 häufigsten Signale"</li>
+      <li><span class="ck">•</span> Eine Checkliste: „Was ich vor dem nächsten Tierarztbesuch wissen sollte" — mit konkreten Fragen die man stellen kann</li>
+      <li><span class="ck">•</span> Ein kurzes Audio oder Video von dir mit einer persönlichen Erklärung die es sonst nirgends gibt</li>
+      <li><span class="ck">•</span> Ein Gutschein für ein kostenloses 15-Minuten-Gespräch — nur für Live-Teilnehmer</li>
+      <li><span class="ck">•</span> Eine Schritt-für-Schritt-Anleitung: „So starte ich mit dem Beosigner — meine ersten 4 Wochen"</li>
+    </ul>
+    <div class="ybox" style="margin-top:0.75rem"><div class="lb">Formulierung am Ende des Webinars</div><p>„Ich habe heute Abend etwas Besonderes für alle die live dabei sind — als Dankeschön dafür dass ihr euch diese Zeit genommen habt. Das gibt es nur jetzt, nicht hinterher."</p></div>
+    <div class="bbox" style="margin-top:0.75rem"><div class="lb">Wichtig</div><p>Das Goodie erst am Ende des Webinars ankündigen und verschicken — nicht vorher. Sonst loggen sich manche nur ein um es zu bekommen und verlassen das Webinar sofort wieder.</p></div></div>
+
+    <div class="card"><h3>Weg 2 — Das persönliche Gespräch als Alternative</h3><p>Für alle die kein Goodie erstellen können oder wollen — und oft sogar der stärkere Weg. Wer wirklich gespannt war aber nicht kommen konnte, bekommt kein passives Dokument, sondern ein persönliches Angebot. Das führt direkt ins Einzelgespräch.</p>
+    <div class="ybox" style="margin-top:0.75rem"><div class="lb">Nachricht an alle die sich gemeldet hatten aber nicht dabei sein konnten</div><p>„Ich habe gemerkt dass du heute nicht dabei sein konntest — schade! Das Webinar war wirklich schön. Wenn du magst, erkläre ich dir das Wichtigste kurz persönlich — das dauert keine 15 Minuten und ich kann dann direkt auf deine Situation eingehen. Wäre das was für dich?"</p></div>
+    <div class="bbox" style="margin-top:0.75rem"><div class="lb">Warum das besser ist als eine Aufzeichnung</div><p>Im persönlichen Gespräch kannst du auf ihre konkrete Situation eingehen, ihre Fragen direkt beantworten, und den Beosigner als natürliche Lösung einbringen. Eine Aufzeichnung kann das nicht — und die meisten schauen sie ohnehin nie.</p></div>
+    <div class="rbox" style="margin-top:0.75rem"><div class="lb">An wen diese Nachricht geht</div><p>Nur an die die sich aktiv gemeldet hatten — an Tag 6 geantwortet haben, nachgefragt haben, oder sonst Interesse gezeigt haben. Nicht als Massen-Nachricht in die Gruppe.</p></div></div>
+
+    <div class="card"><h3>Beide Wege kombiniert — so sieht das in der Praxis aus</h3>
+    <ul class="cl">
+      <li><span class="ck">1</span> In der Einladung klar kommunizieren: keine Aufzeichnung, aber heute Abend gibt es etwas Besonderes für alle die live dabei sind</li>
+      <li><span class="ck">2</span> Am Ende des Webinars: das Goodie verschicken (Weg 1) — oder ankündigen dass du gleich persönlich schreibst (Weg 2)</li>
+      <li><span class="ck">3</span> Innerhalb von 24 Stunden: persönliche Nachricht an alle die nicht dabei waren aber Interesse gezeigt hatten</li>
+      <li><span class="ck">4</span> Das Einzelgespräch öffnen: „Was hat dich am meisten beschäftigt?" — oder direkt das Gesprächsangebot machen</li>
+    </ul></div>
+  </div>
+
+  <div id="p2-beosigner" class="subpage">
+    <div class="card"><h3>💙 Den Beosigner richtig vorstellen</h3><p>Der Beosigner ist ein kleines Handgerät das am Thymus angewendet wird und die körpereigene Selbstregulation unterstützt. Er misst nicht — er unterstützt. Das ist ein wichtiger Unterschied der konsequent kommuniziert werden sollte.</p>
+    <div class="ybox"><div class="lb">So beschreiben</div><p>„Der Beosigner unterstützt den Körper dabei, wieder in seine eigene Balance zu finden. Er misst nichts und gibt keine Werte aus — er gibt dem Körper einen Impuls zur Selbstregulation."</p></div>
+    <div class="rbox" style="margin-top:0.75rem"><div class="lb">Immer beachten</div><p>Keine Heilsversprechen, keine medizinischen Diagnosen, keine Garantien. Der Beosigner unterstützt — was der Körper daraus macht, entscheidet er selbst.</p></div></div>
+    <div class="card"><h3>Anwendung zeigen — nicht nur erklären</h3><p>Zeig den Beosigner im Video. 30 Sekunden Anwendung am Thymus. Keine Magie, keine Dramaturgie — einfach zeigen wie es geht. Das nimmt die Scheu und macht es greifbar.</p></div>
+  </div>
+  <div id="p2-ziele" class="subpage">
+    <div class="goal"><h3>✓ Das sollte am Ende von Woche 8 sitzen:</h3>
+      <ul class="cl">
+        <li><span class="ck">✓</span> Deine erste 7-Tage-Gruppe ist geplant oder läuft bereits</li>
+        <li><span class="ck">✓</span> Mindestens 10–15 Menschen sind eingeladen</li>
+        <li><span class="ck">✓</span> Dein Webinar ist vorbereitet — Struktur steht</li>
+        <li><span class="ck">✓</span> Du kannst den Beosigner in zwei Sätzen erklären</li>
+        <li><span class="ck">✓</span> Du hast mindestens ein erstes Folgegespräch geführt</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- PHASE 3 -->
+<div id="page-phase3" class="page">
+  <div class="phase-hdr"><div class="phase-num" style="background:var(--bem);color:var(--n)">3</div><div><h2>Phase 3 — Aufbau & Routinen</h2><p>Wochen 9–12 · Wiederholung, Skalierung, erstes Team</p></div></div>
+  <div class="sub-nav">
+    <button class="sub-btn active" onclick="sub('p3','p3-routine',this)">Wochenroutine</button>
+    <button class="sub-btn" onclick="sub('p3','p3-zyklus',this)">Zyklus wiederholen</button>
+    <button class="sub-btn" onclick="sub('p3','p3-team',this)">Erstes Team aufbauen</button>
+    <button class="sub-btn" onclick="sub('p3','p3-ziele',this)">Ziele Woche 12</button>
+  </div>
+  <div id="p3-routine" class="subpage active">
+    <div class="week-tag">Ab Woche 9</div>
+    <div class="card"><h3>🗓 Deine Wochenroutine — weniger ist mehr</h3><p>In Phase 3 geht es nicht darum, mehr zu tun — sondern das Richtige regelmäßig zu tun. Diese vier Blöcke pro Woche reichen, wenn sie konsequent passieren.</p></div>
+    <div class="grid2">
+      <div class="mc"><h4>Block 1 — Sichtbarkeit (täglich, 10 Min)</h4><p>WhatsApp-Status oder Facebook. Ein Gedanke, eine Frage, ein Ergebnis. Nie mehr als nötig.</p></div>
+      <div class="mc"><h4>Block 2 — Gespräche (2x pro Woche)</h4><p>Nachfassen bei Interessenten, persönliche Einladungen, Folgegespräche nach Webinaren.</p></div>
+      <div class="mc"><h4>Block 3 — Gruppe/Webinar (alle 4–6 Wochen)</h4><p>Neue 7-Tage-Gruppe starten. Mit der Zeit läuft der Zyklus fast von selbst.</p></div>
+      <div class="mc"><h4>Block 4 — Team (1x pro Woche)</h4><p>Kurzes Check-in, Fragen beantworten, motivieren ohne zu pushen.</p></div>
+    </div>
+  </div>
+  <div id="p3-zyklus" class="subpage">
+    <div class="card"><h3>🔁 Der Zyklus läuft — immer wieder</h3><p>Nach dem ersten Webinar ist vor dem nächsten. Das Prinzip bleibt gleich — aber du wirst besser, schneller, sicherer. Mit jeder Gruppe lernst du was bei deiner Zielgruppe ankommt.</p>
+    <div class="ybox" style="margin-top:0.75rem"><div class="lb">Merke</div><p>Nicht jede Gruppe führt zu vielen Verkäufen. Aber jede Gruppe baut deine Expertise, dein Netzwerk und deine Sichtbarkeit aus. Das summiert sich.</p></div></div>
+    <div class="card"><h3>Was du nach dem ersten Zyklus weißt</h3>
+    <ul class="cl">
+      <li><span class="ck">•</span> Welche Inhalte in der Gruppe am meisten Reaktion bekommen haben</li>
+      <li><span class="ck">•</span> Welche Fragen im Webinar immer wieder kommen</li>
+      <li><span class="ck">•</span> Welche Einladungsformulierung am besten funktioniert</li>
+      <li><span class="ck">•</span> Wer aus der Gruppe echtes Interesse an einer Partnerschaft zeigt</li>
+    </ul></div>
+  </div>
+  <div id="p3-team" class="subpage">
+    <div class="card"><h3>👥 Wenn sich jemand für eine Partnerschaft interessiert</h3><p>Nicht jeder der den Beosigner gut findet, wird Teampartner. Und das ist gut so. Du suchst Menschen die wirklich wollen — nicht solche die du überredet hast.</p>
+    <div class="ybox" style="margin-top:0.75rem"><div class="lb">Soft-Einladung</div><p>„Ich frage mich manchmal, ob das für dich auch interessant wäre — nicht nur als Kundin, sondern als jemand der das weitergibt. Kein Druck, aber wenn dich das neugierig macht, rede ich gerne darüber."</p></div></div>
+    <div class="card"><h3>Was neue Partner als erstes brauchen</h3>
+    <ul class="cl">
+      <li><span class="ck">✓</span> Klarheit über ihr eigenes Thema — nicht dein Thema übernehmen</li>
+      <li><span class="ck">✓</span> Ihre persönliche Geschichte formulieren</li>
+      <li><span class="ck">✓</span> Diesen Leitfaden — damit sie nicht alleine starten</li>
+      <li><span class="ck">✓</span> Das Wissen: Sie werden nach dem Ja nicht allein gelassen</li>
+    </ul>
+    <div class="rbox" style="margin-top:0.75rem"><div class="lb">Häufigster Grund fürs Aufhören</div><p>Sie haben sich allein gefühlt. Ein kurzes wöchentliches Check-in verhindert das.</p></div></div>
+  </div>
+  <div id="p3-ziele" class="subpage">
+    <div class="goal"><h3>✓ Kleine Orientierung für Woche 12 — schau was schon da ist:</h3>
+      <ul class="cl">
+        <li><span class="ck">✓</span> Mindestens eine vollständige Gruppe + Webinar durchgeführt</li>
+        <li><span class="ck">✓</span> Eine feste Wochenroutine — Sichtbarkeit, Gespräche, Gruppe</li>
+        <li><span class="ck">✓</span> Erste eigene Kunden oder Interessenten an der Partnerschaft</li>
+        <li><span class="ck">✓</span> Du weißt was in deiner Gruppe funktioniert — und was nicht</li>
+        <li><span class="ck">✓</span> Vielleicht: ein erster Teampartner den du begleitest</li>
+      </ul>
+    </div>
+    <div class="ybox" style="margin-top:0.75rem"><div class="lb">Und dann?</div><p>Du wiederholst den Zyklus — mit mehr Sicherheit, mehr Erfahrung, mehr Netzwerk. Network Marketing ist kein Sprint. Es ist ein Rhythmus.</p></div>
+  </div>
+
+  <div id="gy-einwaende" class="subpage">
+    <div class="card"><h3>💬 Einwände sicher beantworten</h3><p>Diese Fragen kommen — und sie sind gut. Wer fragt, ist interessiert. Wer skeptisch ist, denkt nach. Diese Antworten geben dir und deinem Team Sicherheit — ohne zu viel zu erklären und ohne Heilsversprechen.</p></div>
+
+    <div class="nbox"><div class="lb">Das Prinzip</div><p>Du musst niemanden überzeugen. Du musst ruhig bleiben und ehrlich antworten. Wer nach einer ehrlichen Antwort immer noch skeptisch ist — das ist in Ordnung. Nicht jeder ist dein Kunde.</p></div>
+
+    <div class="sec" style="margin-top:1rem">Einwand 1 — „Ist das nicht esoterisch?"</div>
+    <div class="card"><h3>Was dahintersteckt</h3><p>Dieser Einwand kommt meist von Menschen die schlechte Erfahrungen mit unseriösen Produkten gemacht haben — oder die das Wort „Energie" mit Esoterik gleichsetzen. Das ist verständlich. Die Antwort geht sachlich in Richtung Wissenschaft — ohne defensiv zu werden.</p>
+    <div class="ybox" style="margin-top:0.75rem"><div class="lb">Antwort — ruhig und sachlich</div><p>„Das verstehe ich — der Begriff klingt erstmal so. Tatsächlich basiert der Beosigner auf Biophotonen-Forschung. Der Biophysiker Prof. Dr. Fritz-Albert Popp hat bereits in den 1970er Jahren nachgewiesen, dass Zellen Lichtimpulse aussenden und damit kommunizieren. Der Beosigner nutzt genau dieses Prinzip — er gibt dem Körper einen Impuls über den Thymus, der als Schaltzentrale des Immunsystems gilt. Das ist keine Magie, das ist angewandte Quantenphysik — ein Bereich den sogar das Bundesministerium für Bildung und Forschung als Zukunftsfeld bezeichnet."</p></div>
+    <div class="bbox" style="margin-top:0.6rem"><div class="lb">Wenn sie weiter skeptisch sind</div><p>„Ich war selbst skeptisch — das war sogar einer der Gründe warum ich ihm eine Chance gegeben habe. Ich wollte es selbst erleben statt einfach glauben. Was mich überzeugt hat war das Ergebnis — nicht die Theorie."</p></div></div>
+
+    <div class="sec">Einwand 2 — „Gibt es dafür wissenschaftliche Belege?"</div>
+    <div class="card"><h3>Was dahintersteckt</h3><p>Eine berechtigte Frage — und eine die man gut beantworten kann. Vitarights hat tatsächlich Studien, darunter eine doppelblinde Untersuchung vom Institut für Sportwissenschaft und Gesundheitsmanagement aus 2025. Das ist kein Marketingversprechen.</p>
+    <div class="ybox" style="margin-top:0.75rem"><div class="lb">Antwort</div><p>„Ja, es gibt Studien. Vitarights arbeitet mit Forschungsteams aus Medizin, Physik und Sportwissenschaft zusammen. Eine doppelblinde Studie vom Institut für Sportwissenschaft und Gesundheitsmanagement aus 2025 hat zum Beispiel gemessen wie der Beosigner Plus die Regulation und Vitalwerte beeinflusst — mit sehr klaren positiven Ergebnissen. Auf der Vitarights-Website unter ‚Studien' ist das alles nachlesbar. Ich kann dir den Link gerne schicken."</p></div>
+    <div class="ybox" style="margin-top:0.6rem"><div class="lb">Link zum Teilen</div><p>vitarights.de/studien</p></div></div>
+
+    <div class="sec">Einwand 3 — „Mein Tierarzt hält nichts davon"</div>
+    <div class="card"><h3>Was dahintersteckt</h3><p>Tierärzte sind Mediziner — ihr Bereich ist Diagnose und Behandlung von Krankheiten. Der Beosigner ist kein Medizinprodukt und kein Ersatz für tierärztliche Behandlung. Das muss man klar kommunizieren — dann löst sich der Einwand fast von selbst.</p>
+    <div class="ybox" style="margin-top:0.75rem"><div class="lb">Antwort</div><p>„Das überrascht mich nicht — der Beosigner ist auch kein Medizinprodukt und kein Konkurrent zur Tiermedizin. Er unterstützt die körpereigene Selbstregulation — das ist ein ganz anderer Ansatz als Diagnose und Behandlung. Viele unserer Kunden nutzen ihn ergänzend zum Tierarzt, nicht statt ihm. Was ich beobachte: wenn der Körper besser reguliert, braucht man oft weniger Behandlungen. Aber das ist eine Erfahrung, keine Garantie."</p></div></div>
+
+    <div class="sec">Einwand 4 — „Das ist mir zu teuer für etwas das ich nicht kenne"</div>
+    <div class="card"><h3>Was dahintersteckt</h3><p>Hier geht es nicht um den Preis — sondern um fehlende persönliche Erfahrung. Die beste Antwort darauf ist eine Geschichte, kein Argument.</p>
+    <div class="ybox" style="margin-top:0.75rem"><div class="lb">Antwort</div><p>„Das verstehe ich absolut — ich hätte das auch gedacht bevor ich es selbst erlebt habe. Darf ich dir kurz erzählen was mich damals überzeugt hat?" [→ eigene Geschichte, drei Sätze]</p></div>
+    <div class="ybox" style="margin-top:0.6rem"><div class="lb">Wenn sie trotzdem zögern</div><p>„Was wäre für dich ein Zeichen dass es das wert ist? Was müsste sich verändern?"</p></div></div>
+
+    <div class="sec">Einwand 5 — „Ich muss das erst mit meinem Mann / meiner Frau besprechen"</div>
+    <div class="card"><h3>Was dahintersteckt</h3><p>Manchmal ist das ehrlich gemeint. Manchmal ist es ein höfliches Nein. Der Unterschied liegt im Ton des Gesprächs davor. Ehrlich nachfragen ist die einzige sinnvolle Reaktion — nie drängen.</p>
+    <div class="ybox" style="margin-top:0.75rem"><div class="lb">Antwort</div><p>„Das ist völlig verständlich — das ist eine Investition die man nicht alleine trifft. Darf ich kurz fragen: Gibt es noch etwas das dir selbst noch unklar ist, bevor du das Gespräch führst? Dann kann ich dir vielleicht noch helfen."</p></div>
+    <div class="bbox" style="margin-top:0.6rem"><div class="lb">Wenn sie wirklich besprechen wollen</div><p>„Kein Problem. Ich schicke dir kurz die wichtigsten Infos — dann hast du etwas in der Hand für das Gespräch. Und falls dein Mann / deine Frau Fragen hat, bin ich gerne auch für ein kurzes Gespräch zu zweit da."</p></div>
+    <div class="rbox" style="margin-top:0.6rem"><div class="lb">Was du nie tun solltest</div><p>Nachhaken im Sinne von „Und hast du gesprochen?" schicken. Wer es besprechen wollte, meldet sich. Wer sich nicht meldet, hat eine Entscheidung getroffen — auch wenn er sie nicht ausspricht.</p></div></div>
+
+    <div class="sec">Was dir und deinem Team Sicherheit gibt</div>
+    <div class="card"><h3>Die wichtigste Haltung bei Einwänden</h3>
+    <ul class="cl" style="margin-top:0.5rem">
+      <li><span class="ck">•</span> Du musst niemanden überzeugen — du musst ehrlich antworten</li>
+      <li><span class="ck">•</span> Deine eigene Geschichte ist stärker als jede Studie</li>
+      <li><span class="ck">•</span> Wer nach einer ehrlichen Antwort noch skeptisch ist — das ist in Ordnung</li>
+      <li><span class="ck">•</span> Nie Heilsversprechen — nie medizinische Aussagen</li>
+      <li><span class="ck">•</span> Der Beosigner unterstützt Selbstregulation — er heilt nicht, er behandelt nicht</li>
+    </ul>
+    <div class="nbox" style="margin-top:0.75rem"><div class="lb">Erfahrungsberichte — das stärkste Argument</div><p>Echte Erlebnisse überzeugen mehr als jede Studie:<br><a href="https://t.me/+J2imJr80Wzo5YTZi" target="_blank" style="color:var(--y);font-weight:700">🐾 Tierische Erfahrungen mit dem Beosigner</a><br><a href="https://t.me/+bhataSN7o7YxZmFi" target="_blank" style="color:var(--y);font-weight:700">💙 Erfahrungen Menschen mit dem Beosigner</a></p></div>
+    <div class="nbox" style="margin-top:0.75rem"><div class="lb">Für tieferes Wissen</div><p>Auf vitarights.de gibt es unter „Beosigner-Konzept", „Biophotonen" und „Studien" alles Wichtige nachlesbar. Schick deinen Kunden bei Bedarf einfach den Link — das ist transparenter als jede Erklärung.</p></div></div>
+  </div>
+
+</div>
+
+<!-- 7 TAGE -->
+<div id="page-sieben" class="page">
+  <div class="phase-hdr"><div class="phase-num" style="font-size:15px">7T</div><div><h2>Die 7-Tage-Gruppe</h2><p>Fertige Post-Vorlagen für jeden Tag — anpassen, kopieren, senden</p></div></div>
+  <div class="card"><h3>ℹ Wie du diese Vorlagen nutzt</h3><p>Die Texte sind für das Thema „Tiergesundheit / wiederkehrende Beschwerden" geschrieben. Ersetze die Stellen in [eckigen Klammern] mit deinen eigenen Infos. Die Struktur bleibt bei jedem Thema gleich.</p>
+  <div class="bbox" style="margin-top:0.75rem"><div class="lb">Wichtig</div><p>Sende täglich zur gleichen Uhrzeit — am besten morgens zwischen 8 und 10 Uhr. Das schafft Verlässlichkeit und Vorfreude in der Gruppe.</p></div></div>
+
+  <div class="day">
+    <div class="day-h" onclick="dayTog('d1')"><div class="dn">1</div><div class="dt"><h3>Tag 1 — Willkommen & das Problem benennen</h3><p>Ankommen lassen · Vertrauen aufbauen · das Thema setzen</p></div><div class="dchv" id="dc1">▼</div></div>
+    <div class="day-b" id="d1">
+      <div class="card"><h3>🎯 Was du heute erreichst</h3><p>Die Teilnehmer fühlen sich willkommen und verstanden. Sie merken: hier ist jemand der wirklich weiß wovon er spricht. Du benennst das Problem so präzise, dass sie denken: „Genau das ist es!"</p></div>
+      <div class="vorlage"><div class="lb">Vorlage Tag 1 — kopieren & anpassen</div>
+<pre>Herzlich willkommen in unserer kleinen Gruppe! 🌟
+
+Ich bin so froh, dass ihr dabei seid.
+
+In den nächsten 7 Tagen beschäftigen wir uns gemeinsam mit einer Frage, die viele von euch schon lange begleitet:
+
+Warum hat mein Tier immer wieder dieselben Beschwerden — obwohl ich schon so vieles probiert habe?
+
+Ich kenne das Gefühl, wenn man beim Tierarzt war, das Futter umgestellt hat, Cremes und Mittelchen ausprobiert hat — und trotzdem ist es nach ein paar Wochen wieder da.
+
+Das ist kein Zufall. Und es ist auch nicht deine Schuld.
+
+In dieser Woche zeige ich euch, was wirklich dahintersteckt.
+
+Ich freue mich auf euch! 🐾
+
+Magst du kurz sagen: Was ist bei deinem Tier das Thema das dich am meisten beschäftigt?</pre>
+      </div>
+      <button class="cpbtn" onclick="cpPost(this)">📋 Text kopieren</button>
+      <div class="bbox" style="margin-top:0.75rem"><div class="lb">Tipp</div><p>Die Frage am Ende bringt erste Reaktionen. Antworte auf jede Antwort persönlich — auch kurz reicht.</p></div>
+      <div class="wbox"><div class="lb">Wenn niemand antwortet</div><p>Nicht nachhaken. Einfach morgen mit Tag 2 weitermachen. Viele lesen nur mit. Oft kommen die ersten Reaktionen erst ab Tag 3.</p></div>
+    </div>
+  </div>
+
+  <div class="day">
+    <div class="day-h" onclick="dayTog('d2')"><div class="dn">2</div><div class="dt"><h3>Tag 2 — Hintergrundwissen: Was steckt wirklich dahinter?</h3><p>Wissen teilen ohne zu überfordern · Neugier wecken</p></div><div class="dchv" id="dc2">▼</div></div>
+    <div class="day-b" id="d2">
+      <div class="card"><h3>🎯 Was du heute erreichst</h3><p>Du erklärst einfach und verständlich warum das Problem immer wiederkehrt. Kein tiefes Fachwissen nötig — nur das eine Prinzip das alles erklärt: der Körper kann seinen Regulationsmechanismus nicht mehr aktivieren.</p></div>
+      <div class="vorlage"><div class="lb">Vorlage Tag 2 — kopieren & anpassen</div>
+<pre>Tag 2 — heute wird es ein bisschen erklärend 🧠
+
+Aber keine Angst, ich halte es kurz und verständlich!
+
+Viele fragen sich: Warum kommen dieselben Beschwerden immer wieder — obwohl man sie doch behandelt hat?
+
+Die Antwort steckt im Körper selbst.
+
+Jeder Körper — Mensch oder Tier — hat eigentlich die Fähigkeit, sich selbst zu regulieren. Das Immunsystem, die Verdauung, die Haut — alles ist darauf ausgelegt, ins Gleichgewicht zu kommen.
+
+Aber manchmal gerät dieser Mechanismus aus dem Takt.
+
+Und dann passiert genau das, was viele kennen: man behandelt das Symptom — der Juckreiz geht weg, die Ohren werden besser — aber nach ein paar Wochen ist alles wieder da. Weil die eigentliche Ursache nicht angesprochen wurde.
+
+Morgen zeige ich euch was das im Alltag konkret bedeutet 🐾
+
+Kennt ihr das? Schreibt gerne kurz!</pre>
+      </div>
+      <button class="cpbtn" onclick="cpPost(this)">📋 Text kopieren</button>
+      <div class="bbox" style="margin-top:0.75rem"><div class="lb">Tipp</div><p>Lies den Text laut vor. Wenn du selbst stolperst, vereinfache ihn. Du musst nicht wie ein Experte klingen — du musst verständlich klingen.</p></div>
+      <div class="wbox"><div class="lb">Wenn jemand kritisch nachfragt</div><p>„Das ist eine super Frage. Am besten erkläre ich das im Webinar am Ende der Woche — da habe ich auch konkrete Beispiele dabei."</p></div>
+    </div>
+  </div>
+
+  <div class="day">
+    <div class="day-h" onclick="dayTog('d3')"><div class="dn">3</div><div class="dt"><h3>Tag 3 — Deine persönliche Geschichte</h3><p>Echte Erfahrung schafft mehr Vertrauen als jeder Fachtext</p></div><div class="dchv" id="dc3">▼</div></div>
+    <div class="day-b" id="d3">
+      <div class="card"><h3>🎯 Was du heute erreichst</h3><p>Du wirst greifbar und menschlich. Kein Expertenstatus — sondern jemand der dasselbe erlebt hat. Das ist der emotionale Kern der ganzen Woche. Hier entsteht echtes Vertrauen.</p></div>
+      <div class="vorlage"><div class="lb">Vorlage Tag 3 — kopieren & anpassen</div>
+<pre>Heute möchte ich etwas Persönliches mit euch teilen 🙏
+
+Vor [Zeitraum] stand ich selbst genau da, wo viele von euch gerade stehen.
+
+Mein [Tier/Hund/Pferd] hatte [Beschwerden konkret beschreiben]. Ich war beim Tierarzt, habe das Futter gewechselt, habe alles probiert was man so probiert.
+
+Mal war es besser. Mal schlechter. Aber es blieb immer wieder da.
+
+Irgendwann habe ich aufgehört zu glauben, dass es eine wirkliche Lösung gibt.
+
+Und dann — [kurz erzählen wie du auf den Beosigner gestoßen bist].
+
+Ich war skeptisch. Ehrlich gesagt sehr skeptisch.
+
+Aber nach [Zeitraum] habe ich etwas gemerkt: [was sich verändert hat — konkret und ehrlich].
+
+Seitdem ist das nicht mehr mein Thema.
+
+Ich erzähle das nicht um zu beeindrucken. Sondern weil ich mir gedacht habe: wenn das bei uns funktioniert hat, vielleicht hilft es auch anderen.
+
+Was war euer Wendepunkt — habt ihr einen Moment erlebt wo ihr gedacht habt: so kann es nicht weitergehen? 🐾</pre>
+      </div>
+      <button class="cpbtn" onclick="cpPost(this)">📋 Text kopieren</button>
+      <div class="bbox" style="margin-top:0.75rem"><div class="lb">Tipp</div><p>Je echter deine Geschichte ist, desto stärker die Wirkung. Keine Übertreibungen — einfach was wirklich passiert ist. Das reicht. Das ist sogar besser.</p></div>
+      <div class="wbox"><div class="lb">Wenn jemand privat schreibt</div><p>Kurz antworten: „Ich freue mich so — genau darüber reden wir am Ende der Woche. Ich schicke dir dann den Link persönlich!"</p></div>
+    </div>
+  </div>
+
+  <div class="day">
+    <div class="day-h" onclick="dayTog('d4')"><div class="dn">4</div><div class="dt"><h3>Tag 4 — Häufige Irrtümer & Missverständnisse</h3><p>Fehlinformationen korrigieren ohne zu belehren</p></div><div class="dchv" id="dc4">▼</div></div>
+    <div class="day-b" id="d4">
+      <div class="card"><h3>🎯 Was du heute erreichst</h3><p>Du räumst Missverständnisse aus dem Weg die viele daran hindern eine Lösung zu finden. Du tust das nicht belehrend — sondern als jemand der dasselbe erst lernen musste.</p></div>
+      <div class="vorlage"><div class="lb">Vorlage Tag 4 — kopieren & anpassen</div>
+<pre>Tag 4 — heute räumen wir mit ein paar Mythen auf 😄
+
+Ich sage das ohne Finger zu heben — ich habe das früher genauso geglaubt.
+
+Irrtum 1: „Wenn das Symptom weg ist, ist das Problem gelöst."
+Leider nein. Ein Symptom ist ein Signal des Körpers — kein Problem an sich. Wenn das Signal unterdrückt wird, ist das Problem noch da.
+
+Irrtum 2: „Mein Tier muss einfach das richtige Futter bekommen."
+Ernährung ist wichtig — aber oft nicht der einzige Faktor. Viele Tiere mit perfektem Futter haben trotzdem immer wieder dieselben Probleme.
+
+Irrtum 3: „Das ist halt so bei diesem Tier / dieser Rasse."
+Das höre ich sehr oft. Aber in vielen Fällen hat das nichts mit Rasse oder Veranlagung zu tun.
+
+Irrtum 4: „Wenn der Tierarzt nichts findet, ist alles in Ordnung."
+Tierärzte sind wertvoll und wichtig. Aber Selbstregulationsprobleme erkennen — das ist einfach nicht ihr Bereich.
+
+Welcher dieser Punkte hat euch überrascht? 🙂</pre>
+      </div>
+      <button class="cpbtn" onclick="cpPost(this)">📋 Text kopieren</button>
+      <div class="bbox" style="margin-top:0.75rem"><div class="lb">Tipp</div><p>Dieser Post erzeugt oft lebhafte Diskussionen. Antworte — aber keine langen Erklärungen. „Genau das besprechen wir im Webinar" ist immer gut.</p></div>
+      <div class="wbox"><div class="lb">Wenn jemand widerspricht</div><p>Nie in eine Diskussion gehen: „Das sehe ich total — es gibt da unterschiedliche Perspektiven. Im Webinar zeige ich euch was ich selbst erlebt habe." Fertig.</p></div>
+    </div>
+  </div>
+
+  <div class="day">
+    <div class="day-h" onclick="dayTog('d5')"><div class="dn">5</div><div class="dt"><h3>Tag 5 — Was wirklich hilft (noch ohne Produkt)</h3><p>Echter Mehrwert · Vertrauen stärken · Neugier steigern</p></div><div class="dchv" id="dc5">▼</div></div>
+    <div class="day-b" id="d5">
+      <div class="card"><h3>🎯 Was du heute erreichst</h3><p>Du gibst echten, praktischen Mehrwert — komplett ohne Produktnennung. Das stärkt das Vertrauen massiv. Menschen merken: hier geht es nicht ums Verkaufen. Hier ist jemand der wirklich helfen will.</p></div>
+      <div class="vorlage"><div class="lb">Vorlage Tag 5 — kopieren & anpassen</div>
+<pre>Tag 5 — heute gibt es echte Tipps 🌿
+
+Was ich in den letzten Jahren gelernt habe — und was bei meinem Tier wirklich etwas verändert hat:
+
+1. Den Körper nicht bekämpfen — sondern unterstützen.
+Viele Behandlungen arbeiten gegen das Symptom. Was ich gelernt habe: der Körper will von selbst ins Gleichgewicht. Manchmal braucht er nur die richtigen Bedingungen dafür.
+
+2. Stress nicht unterschätzen.
+Auch Tiere haben Stress — und Stress blockiert die Selbstheilung. Manchmal liegt die Wurzel gar nicht in der Ernährung, sondern in einem dauerhaft aktivierten Nervensystem.
+
+3. Geduld ist Teil der Methode.
+Was lange gebraucht hat um zu entstehen, braucht Zeit um sich zu verändern. Wer drei Wochen probiert und aufgibt, sieht keine Ergebnisse. Wer dranbleibt, schon.
+
+4. Das Gesamtbild sehen — nicht nur das Symptom.
+Juckreiz, Ohren, Darm — das sind oft Signale desselben Grundproblems. Wer das Grundproblem angeht, sieht oft an mehreren Stellen gleichzeitig Verbesserung.
+
+Was habt ihr selbst schon erlebt das geholfen hat — auch wenn es vielleicht ungewöhnlich war? 🐾</pre>
+      </div>
+      <button class="cpbtn" onclick="cpPost(this)">📋 Text kopieren</button>
+      <div class="bbox" style="margin-top:0.75rem"><div class="lb">Tipp</div><p>An Tag 5 beginnen viele Teilnehmer selbst Tipps zu teilen — lass das zu und antworte wertschätzend. Das ist Community-Building in Echtzeit.</p></div>
+      <div class="wbox"><div class="lb">Wenn jemand nach dem Produkt fragt</div><p>„Das freut mich dass du fragst! Genau dazu machen wir übermorgen ein kleines Webinar — da erkläre ich dir alles in Ruhe. Magst du dabei sein?"</p></div>
+    </div>
+  </div>
+
+  <div class="day">
+    <div class="day-h" onclick="dayTog('d6')"><div class="dn">6</div><div class="dt"><h3>Tag 6 — Die Brücke zum Beosigner</h3><p>Warum klassische Lösungen oft nicht reichen · Neugier auf morgen wecken</p></div><div class="dchv" id="dc6">▼</div></div>
+    <div class="day-b" id="d6">
+      <div class="card"><h3>🎯 Was du heute erreichst</h3><p>Du baust die logische Brücke: Die Teilnehmer verstehen jetzt dass es einen Ansatz braucht der am Grundproblem ansetzt. Der Beosigner wird damit zur natürlichen nächsten Frage. Du nennst ihn noch nicht mit Namen — aber du machst neugierig.</p></div>
+      <div class="vorlage"><div class="lb">Vorlage Tag 6 — kopieren & anpassen</div>
+<pre>Tag 6 — heute wird es spannend 🌟
+
+Diese Woche haben wir viel geredet über Symptome, Selbstregulation und warum Behandlungen oft nur kurzfristig helfen.
+
+Jetzt stellt sich die Frage: Was dann?
+
+Ich bin zu einer Erkenntnis gekommen die für mich alles verändert hat:
+
+Solange man nur das Symptom behandelt — kommt es wieder.
+
+Was wirklich hilft, ist etwas das dem Körper hilft seinen eigenen Regulationsmechanismus wieder zu aktivieren. Nicht von außen heilen — sondern von innen unterstützen.
+
+Das klingt vielleicht abstrakt. Deswegen zeige ich euch morgen konkret wie das aussieht — und was ich selbst seit [Zeitraum] anwende.
+
+Ich freue mich so auf morgen 🙏
+
+Wer ist dabei? Schreibt kurz in die Gruppe — dann schicke ich euch den Link persönlich!</pre>
+      </div>
+      <button class="cpbtn" onclick="cpPost(this)">📋 Text kopieren</button>
+      <div class="bbox" style="margin-top:0.75rem"><div class="lb">Tipp</div><p>Wer auf die Frage antwortet, bekommt den Webinar-Link persönlich geschickt — das schafft viel mehr Verbindung als ein Link in der Gruppe.</p></div>
+      <div class="wbox"><div class="lb">Wenn jemand fragt was du anwendest</div><p>„Das erkläre ich morgen im Webinar am besten weil ich es dann auch zeigen kann. Ich schicke dir gleich den Link!" Sofort persönlich nachschreiben.</p></div>
+    </div>
+  </div>
+
+  <div class="day">
+    <div class="day-h" onclick="dayTog('d7')"><div class="dn">7</div><div class="dt"><h3>Tag 7 — Webinar-Einladung & Abschluss</h3><p>Warm einladen · kein Druck · zwei Nachrichten heute</p></div><div class="dchv" id="dc7">▼</div></div>
+    <div class="day-b" id="d7">
+      <div class="card"><h3>🎯 Was du heute erreichst</h3><p>Du lädst warm und persönlich zum Webinar ein. Kein Druck, keine Ankündigung eines Verkaufs — eine Einladung zu mehr. Heute sendest du zwei Nachrichten: morgens die Einladung, nachmittags die Erinnerung.</p></div>
+      <div class="vorlage"><div class="lb">Vorlage Tag 7 Morgen — Webinar-Einladung</div>
+<pre>Guten Morgen ihr Lieben! ☀
+
+Heute ist es soweit — heute Abend treffen wir uns live.
+
+Ich zeige euch:
+✓ Was ich selbst seit [Zeitraum] anwende
+✓ Wie es konkret bei [meinem Tier / mir] gewirkt hat
+✓ Wie das für euer Tier aussehen könnte
+✓ Und ich beantworte eure Fragen persönlich
+
+Das Webinar ist kostenlos, dauert etwa [60 Minuten] und findet um [Uhrzeit] Uhr statt.
+
+Hier ist der Link: [Webinar-Link]
+
+Ich freue mich so auf euch — es war eine tolle Woche mit euch! 🙏🐾</pre>
+      </div>
+      <button class="cpbtn" onclick="cpPost(this)">📋 Text kopieren</button>
+      <div class="vorlage" style="margin-top:0.75rem"><div class="lb">Vorlage Tag 7 Nachmittag — Erinnerung 2 Stunden vorher</div>
+<pre>Nur kurze Erinnerung — heute Abend um [Uhrzeit] Uhr sind wir live! 🌟
+
+Ich freue mich auf alle die dabei sind.
+
+Link nochmal hier: [Webinar-Link]
+
+Bis gleich! ☀</pre>
+      </div>
+      <button class="cpbtn" onclick="cpPost(this)">📋 Text kopieren</button>
+      <div class="bbox" style="margin-top:0.75rem"><div class="lb">Nach dem Webinar</div><p>Warte 24 Stunden — dann melde dich persönlich bei allen die dabei waren. Frage: „Was hat dich am meisten beschäftigt von heute Abend?" Das öffnet das Einzelgespräch ganz natürlich.</p></div>
+      <div class="wbox"><div class="lb">Wenn wenige oder niemand da war</div><p>Das passiert beim ersten Mal. Mach das Webinar trotzdem. Nimm es auf und schicke es hinterher. Beim zweiten Mal wird es mehr.</p></div>
+    </div>
+  </div>
+</div>
+
+<!-- GESPRÄCHSFÜHRUNG -->
+<div id="page-gespraech" class="page">
+  <div class="phase-hdr"><div class="phase-num" style="font-size:15px">💬</div><div><h2>Gesprächsführung</h2><p>YES FLOW · Einwände · „Zu teuer!" · Innere Haltung</p></div></div>
+  <div class="sub-nav">
+    <button class="sub-btn active" onclick="sub('gy','gy-ueber',this)">Übersicht</button>
+    <button class="sub-btn" onclick="sub('gy','gy-webinar',this)">Webinar → Gespräch</button>
+    <button class="sub-btn" onclick="sub('gy','gy-qm',this)">Quick Match</button>
+    <button class="sub-btn" onclick="sub('gy','gy-ri',this)">Real Interest</button>
+    <button class="sub-btn" onclick="sub('gy','gy-bf',this)">Bright Future</button>
+    <button class="sub-btn" onclick="sub('gy','gy-preis',this)">Preispräsentation</button>
+    <button class="sub-btn" onclick="sub('gy','gy-teuer',this)">„Zu teuer!"</button>
+    <button class="sub-btn" onclick="sub('gy','gy-rap',this)">RAP-Modus</button>
+    <button class="sub-btn" onclick="sub('gy','gy-haltung',this)">Innere Haltung</button>
+    <button class="sub-btn" onclick="sub('gy','gy-einwaende',this)">Einwände & Antworten</button>
+  </div>
+
+  <div id="gy-ueber" class="subpage active">
+    <div class="card"><h3>ℹ Wofür ist diese Anleitung?</h3><p>Nach dem Webinar melden sich Menschen — und dann wissen viele nicht wie es weitergeht. Diese Anleitung führt dich Schritt für Schritt durch das Einzelgespräch: vom ersten Kontakt bis zum klaren Ja oder Nein. Mit echten Beispieldialogen, konkreten Formulierungen und allen wichtigen Einwand-Situationen.</p></div>
+    <div class="flow">
+      <div class="fs fs-y"><div class="fn">Schritt 1</div><div class="ft">Quick Match</div><div class="fs2">Passt es überhaupt?</div></div>
+      <div class="fs fs-b"><div class="fn">Schritt 2</div><div class="ft">Real Interest</div><div class="fs2">Was bewegt sie wirklich?</div></div>
+      <div class="fs fs-e"><div class="fn">Schritt 3</div><div class="ft">Bright Future</div><div class="fs2">Ihr eigenes Bild</div></div>
+    </div>
+    <div class="wbox"><div class="lb">Wichtig vorab</div><p>Diese Struktur ist kein Skript das du auswendig lernst. Es ist ein Rahmen der dir Sicherheit gibt. Du kannst jederzeit mit deinen eigenen Worten sprechen — solange du die Richtung kennst.</p></div>
+  </div>
+
+  <div id="gy-webinar" class="subpage">
+    <div class="card"><h3>➡ Vom Webinar ins Einzelgespräch</h3><p>Nach dem Webinar warten viele einfach — oder schicken sofort einen Info-Link. Beides funktioniert nicht. Das Gespräch muss aktiv aber sanft eröffnet werden. Dein einziges Ziel: einen 15–20 minütigen Call vereinbaren.</p></div>
+    <div class="sb"><div class="sb-num">1</div><h3>Noch am selben Tag — persönliche Nachricht an aktive Teilnehmer</h3>
+    <div class="dlg" style="margin-top:0.6rem">
+      <div class="dlg-title">Beispiel — Nachricht nach dem Webinar</div>
+      <div class="msg us"><div class="mwrap"><div class="mwho">Du</div><div class="bbl">Hey [Name], schön dass du heute dabei warst 🙏 Hat dich etwas besonders angesprochen aus dem Webinar?</div></div></div>
+      <div class="msg them"><div class="mwrap"><div class="mwho">Sie</div><div class="bbl">Ja, das mit der Selbstregulation fand ich wirklich interessant. Das kenne ich von meiner Katze.</div></div></div>
+      <div class="msg us"><div class="mwrap"><div class="mwho">Du</div><div class="bbl">Das höre ich öfter — genau dafür ist der Beosigner gemacht. Hast du mal 20 Minuten? Ich erkläre dir kurz wie das konkret bei deiner Katze aussehen könnte.</div></div></div>
+    </div></div>
+    <div class="sb"><div class="sb-num">2</div><h3>Wenn sie sich von selbst melden</h3>
+    <div class="dlg" style="margin-top:0.6rem">
+      <div class="dlg-title">Beispiel</div>
+      <div class="msg them"><div class="mwrap"><div class="mwho">Sie</div><div class="bbl">Ich hätte noch Fragen zum Beosigner.</div></div></div>
+      <div class="msg us"><div class="mwrap"><div class="mwho">Du</div><div class="bbl">Das freut mich! Am besten erkläre ich dir das in einem kurzen Gespräch — dann kann ich viel besser auf deine Situation eingehen. Wann passt es dir?</div></div></div>
+    </div>
+    <div class="rbox" style="margin-top:0.6rem"><div class="lb">Nie per Text erklären</div><p>Wenn du auf „Ich hätte noch Fragen" mit einer langen Textnachricht antwortest — verlierst du sie. Kurze Antwort, konkreter Gesprächstermin.</p></div></div>
+    <div class="sb"><div class="sb-num">3</div><h3>Wenn sich niemand meldet — 48 Stunden später</h3>
+    <div class="dlg" style="margin-top:0.6rem">
+      <div class="dlg-title">Beispiel</div>
+      <div class="msg us"><div class="mwrap"><div class="mwho">Du</div><div class="bbl">Hey [Name], hat dich vom gestrigen Webinar etwas beschäftigt? Manchmal kommen die Gedanken dazu erst hinterher 😊</div></div></div>
+    </div></div>
+  </div>
+
+  <div id="gy-qm" class="subpage">
+    <div class="card"><h3>🤝 Das Beratungsgespräch — individuell statt vorgefiltert</h3><p>Der Beosigner ist kein Standardprodukt das sich mit einer Preisfrage qualifizieren lässt. Er ist modular, individuell und erklärungsbedürftig. Deshalb passt ein klassischer „Quick Match" mit Preisfilter nicht zu unserem Produkt und unserer Zielgruppe.</p><p style="margin-top:0.6rem">Was wirklich funktioniert: ein echtes Beratungsgespräch vereinbaren — ohne Druck, ohne Vorfilter. Die Qualifizierung passiert dann ganz natürlich durch echtes Zuhören und die richtigen Fragen.</p></div>
+
+    <div class="nbox"><div class="lb">Das Ziel</div><p>Nicht schnell herausfinden ob sie sich etwas leisten kann — sondern gemeinsam herausfinden was für sie und ihr Tier wirklich sinnvoll ist. Das eine macht Druck. Das andere macht Vertrauen.</p></div>
+
+    <div class="sec" style="margin-top:1rem">Schritt 1 — Das Gespräch vereinbaren</div>
+    <div class="card"><h3>So lädst du zum Beratungsgespräch ein</h3><p>Kein Verkaufsgespräch ankündigen — eine persönliche Beratung anbieten. Das ist ehrlich, weil es das ist was du wirklich tust.</p>
+    <div class="ybox" style="margin-top:0.75rem"><div class="lb">Formulierung nach dem Webinar</div><p>„Ich nehme mir gerne 30–45 Minuten für dich — dann schauen wir gemeinsam was für dich und dein Tier wirklich sinnvoll ist. Wann passt es dir?"</p></div>
+    <div class="ybox" style="margin-top:0.6rem"><div class="lb">Formulierung wenn sie von sich aus fragt</div><p>„Am besten erkläre ich dir das persönlich — dann kann ich wirklich auf deine Situation eingehen und wir schauen zusammen was für euch passt. Hast du [Zeitvorschlag] Zeit?"</p></div>
+    <div class="ybox" style="margin-top:0.6rem"><div class="lb">Formulierung per WhatsApp</div><p>„Ich würde mich freuen wenn wir uns kurz zusammensetzen — auch per Video oder Telefon. Ich erkläre dir dann alles in Ruhe und wir schauen gemeinsam was für dich Sinn macht. Keine Verpflichtung, nur ein ehrliches Gespräch."</p></div></div>
+
+    <div class="sec">Schritt 2 — Die einzige Frage die wirklich qualifiziert</div>
+    <div class="card"><h3>Nicht der Preis — die Dringlichkeit</h3><p>Die einzige sinnvolle Qualifizierungsfrage beim Beosigner ist nicht „Hast du das Geld?" — sondern „Suchst du gerade wirklich nach einer Lösung?" Das unterscheidet jemanden der bereit ist von jemandem der nur neugierig schaut.</p>
+    <div class="ybox" style="margin-top:0.75rem"><div class="lb">Die eine Frage</div><p>„Das Thema [z.B. Juckreiz bei deiner Katze] — suchst du gerade aktiv nach einer Lösung, oder ist es eher so ein ‚wäre schön wenn'?"</p></div>
+    <div class="bbox" style="margin-top:0.6rem"><div class="lb">Was die Antwort zeigt</div><p>„Aktiv suchen" = sie ist bereit für ein echtes Gespräch. „Wäre schön wenn" = gut gemeint, aber kein guter Zeitpunkt. Beides ist in Ordnung — du richtest das Gespräch danach aus.</p></div></div>
+
+    <div class="sec">Schritt 3 — Wenn der Zeitpunkt nicht passt</div>
+    <div class="card"><h3>Tür offen lassen — ohne Druck</h3><p>Manchmal ist es einfach noch nicht der richtige Moment. Das zu respektieren ist das stärkste Signal das du senden kannst — und viele kommen genau deshalb später von selbst wieder.</p>
+    <div class="ybox" style="margin-top:0.75rem"><div class="lb">Formulierung</div><p>„Das verstehe ich völlig. Wenn das Thema wieder aktuell wird, melde dich einfach — ich bin dann gerne für dich da."</p></div></div>
+
+    <div class="dlg" style="margin-top:0.75rem">
+      <div class="dlg-title">So klingt das in der Praxis</div>
+      <div class="msg us"><div class="mwrap"><div class="mwho">Du</div><div class="bbl">Hey [Name], schön dass du beim Webinar dabei warst! Hat dich etwas besonders beschäftigt?</div></div></div>
+      <div class="msg them"><div class="mwrap"><div class="mwho">Sie</div><div class="bbl">Ja, das mit der Selbstregulation hat mich wirklich überrascht. Meine Katze hat seit Jahren denselben Juckreiz.</div></div></div>
+      <div class="msg us"><div class="mwrap"><div class="mwho">Du</div><div class="bbl">Das kenne ich so gut. Darf ich kurz fragen — suchst du gerade aktiv nach einer Lösung, oder ist es eher so ein Hintergrundthema?</div></div></div>
+      <div class="msg them"><div class="mwrap"><div class="mwho">Sie</div><div class="bbl">Aktiv ja — es geht ihr wirklich nicht gut damit und ich bin langsam ratlos.</div></div></div>
+      <div class="msg us"><div class="mwrap"><div class="mwho">Du</div><div class="bbl">Dann würde ich mich gerne 30–40 Minuten mit dir zusammensetzen — damit ich wirklich auf eure Situation eingehen kann. Wann passt es dir?</div></div></div>
+      <div class="msg them"><div class="mwrap"><div class="mwho">Sie</div><div class="bbl">Morgen Nachmittag wäre gut.</div></div></div>
+      <div class="msg us"><div class="mwrap"><div class="mwho">Du</div><div class="bbl">Super, dann sprechen wir morgen. Damit ich mich gut vorbereiten kann — geht es nur um die Katze oder hast du vielleicht selbst auch ein Thema?</div></div></div>
+    </div>
+    <div class="bbox" style="margin-top:0.75rem"><div class="lb">Warum die letzte Frage so wichtig ist</div><p>Sie gibt dir einen ersten Hinweis welches Paket später sinnvoll sein könnte — Einzelgerät oder Family-Set — ohne dass du danach fragen musstest. Ganz natürlich, ganz ohne Druck.</p></div>
+  </div>
+
+  <div id="gy-ri" class="subpage">
+    <div class="card"><h3>👂 Real Interest — zuhören statt pitchen</h3><p>Die besten Gespräche sind die in denen du mehr fragst als redest. Mindestens 70% der Zeit redet sie — nicht du. Hier geht es nicht ums Produkt — hier geht es um sie.</p></div>
+    <div class="wbox"><div class="lb">Achtung — nicht im Schmerz bohren</div><p>Den Schmerz ansprechen ja — aber nicht darin verweilen. Wer zu lange beim Problem bleibt, zieht Menschen an die einen Retter suchen. Schmerz kurz berühren — dann schnell in Richtung Zukunft.</p></div>
+    <div class="sb" style="margin-top:0.75rem"><div class="sb-num">1</div><h3>Was sie bisher probiert hat</h3>
+    <div class="ybox" style="margin-top:0.5rem"><div class="lb">Frage</div><p>„Was hast du bisher alles versucht um das Problem zu lösen — und was hat davon nicht so funktioniert wie erhofft?"</p></div></div>
+    <div class="sb"><div class="sb-num">2</div><h3>Was es mit ihr macht</h3>
+    <div class="ybox" style="margin-top:0.5rem"><div class="lb">Fragen</div><p>„Was macht es mit dir, dass du das schon so lange siehst?"<br><br>„Auf einer Skala von 1–10: Wie wichtig ist es dir, das jetzt wirklich zu lösen?"</p></div>
+    <div class="bbox" style="margin-top:0.5rem"><div class="lb">Tipp</div><p>Wenn sie 7 oder höher sagt: „Was bräuchte es damit es eine 10 ist?" — das zeigt dir genau was noch fehlt.</p></div></div>
+    <div class="sb"><div class="sb-num">3</div><h3>Was sie sich wirklich wünscht — die Brücke zur Zukunft</h3>
+    <div class="ybox" style="margin-top:0.5rem"><div class="lb">Frage</div><p>„Wenn das Problem gelöst wäre — wie würde sich das für dich anfühlen? Was wäre dann anders in deinem Alltag?"</p></div>
+    <div class="dlg" style="margin-top:0.6rem">
+      <div class="dlg-title">Wie das klingt</div>
+      <div class="msg us"><div class="mwrap"><div class="mwho">Du</div><div class="bbl">Mal angenommen dieser Juckreiz ist in drei Monaten weg — wie würde sich das für dich anfühlen?</div></div></div>
+      <div class="msg them"><div class="mwrap"><div class="mwho">Sie</div><div class="bbl">Oh das wäre so eine Erleichterung. Ich mache mir ständig Sorgen um sie. Wenn ich wüsste dass es ihr gut geht, wäre ich viel entspannter.</div></div></div>
+      <div class="msg us"><div class="mwrap"><div class="mwho">Du</div><div class="bbl">Das verstehe ich so gut. Diese Sorge im Hintergrund kostet so viel Energie. Darf ich dir jetzt erzählen wie das bei mir war — und was den Unterschied gemacht hat?</div></div></div>
+    </div></div>
+  </div>
+
+  <div id="gy-bf" class="subpage">
+    <div class="card"><h3>☀ Bright Future — sie malt sich ihr eigenes Bild</h3><p>Wer aus einem positiven Zukunftsbild kauft, ist committed und hält durch. Wer aus Schmerz kauft, zweifelt später. Du bist die Brücke — sie baut das Bild selbst, mit deinen Fragen.</p></div>
+    <div class="nbox"><div class="lb">Der entscheidende Unterschied</div><p>Du verkaufst keinen Beosigner. Du bist eine Brücke zwischen dem was sie jetzt erlebt und dem was sie sich wünscht. Der Beosigner ist das Werkzeug auf dieser Brücke.</p></div>
+    <div class="sb" style="margin-top:0.75rem"><div class="sb-num">1</div><h3>Das Zukunftsbild öffnen</h3>
+    <div class="ybox" style="margin-top:0.5rem"><div class="lb">Formulierungen</div><p>„Wenn wir uns in einem halben Jahr nochmal sprechen — wie soll es dann für dich aussehen?"<br><br>„Was würde sich in deinem Alltag verändern wenn das nicht mehr dein Thema wäre?"</p></div></div>
+    <div class="sb"><div class="sb-num">2</div><h3>Den nächsten Schritt von ihr kommen lassen</h3>
+    <div class="ybox" style="margin-top:0.5rem"><div class="lb">Die stärkste Frage am Ende</div><p>„Bei allem was wir gerade besprochen haben — was denkst du, wäre für dich jetzt der sinnvollste nächste Schritt?"</p></div>
+    <div class="dlg" style="margin-top:0.6rem">
+      <div class="dlg-title">Wie das klingt</div>
+      <div class="msg us"><div class="mwrap"><div class="mwho">Du</div><div class="bbl">Bei allem was wir besprochen haben — was denkst du, wäre für dich jetzt der sinnvollste nächste Schritt?</div></div></div>
+      <div class="msg them"><div class="mwrap"><div class="mwho">Sie</div><div class="bbl">Ich glaube ich möchte das wirklich ausprobieren. Wie funktioniert das genau?</div></div></div>
+      <div class="msg us"><div class="mwrap"><div class="mwho">Du</div><div class="bbl">Super, das erkläre ich dir gerne. Am einfachsten ist es wenn wir das direkt zusammen machen — ich zeige dir alles Schritt für Schritt und bin dann auch für deine Fragen da.</div></div></div>
+    </div>
+    <div class="bbox" style="margin-top:0.6rem"><div class="lb">Der Moment</div><p>Wenn sie fragt „Wie funktioniert das genau?" oder „Was kostet das?" — hat sie sich innerlich entschieden. Jetzt den Preis klar und ruhig nennen. Keine Entschuldigung, keine lange Einleitung.</p></div></div>
+  </div>
+
+  <div id="gy-preis" class="subpage">
+    <div class="card"><h3>💶 Preispräsentation — so geht es</h3><p>Erst wenn sie ihr Zukunftsbild beschrieben hat und das Gespräch natürlich dorthin geführt hat — dann kommt der Preis. Nicht vorher. Und dann klar, ruhig und von oben nach unten.</p></div>
+
+    <div class="nbox"><div class="lb">Das Prinzip dahinter — Anchoring</div><p>Du nennst immer den höchsten Preis zuerst. Das ist keine Manipulation — es ist Psychologie. Wenn jemand zuerst 2.575 € hört, wirkt 1.725 € deutlich günstiger. Und 895 € fühlt sich am Ende wie ein leichter Einstieg an. Genau das ist der Effekt.</p></div>
+
+    <div class="sec" style="margin-top:1rem">Die drei Pakete — in dieser Reihenfolge vorstellen</div>
+
+    <div class="card" style="border-color:var(--y);border-width:2px">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.5rem">
+        <h3 style="margin-bottom:0">👨‍👩‍👧 Beosigner® Plus Family-Set</h3>
+        <div style="text-align:right"><div style="font-size:18px;font-weight:700;color:var(--n)">2.575 €</div><div style="font-size:14px;color:var(--tm)">Normalpreis</div></div>
+      </div>
+      <p>Für Paare oder Familien im selben Haushalt — oder wenn Mensch und Tier beide versorgt werden sollen. 2 Beosigner® Plus, alle BeoKeys inkl. Animal, BeoPark, BeoProtect, Cases und Tapes. Komplett ausgestattet für zwei.</p>
+      <div class="ybox" style="margin-top:0.75rem"><div class="lb">Wann empfehlen</div><p>Wenn noch ein Gerät für den Stall gebraucht wird. Für die Oma. Wenn der Mann oft auf Geschäftsreise ist und ein eigenes Gerät mitnehmen möchte. Oder wenn Mensch und Tier beide versorgt werden sollen — dann rechnet sich das Family-Set schnell.</p></div>
+    </div>
+
+    <div class="card" style="border-color:var(--bm);border-width:2px">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.5rem">
+        <h3 style="margin-bottom:0">⭐ Beosigner® Plus Komplett-Set XL</h3>
+        <div style="text-align:right"><div style="font-size:18px;font-weight:700;color:var(--n)">1.725 €</div><div style="font-size:14px;color:var(--tm)">Normalpreis</div></div>
+      </div>
+      <p>Ein Gerät mit allem was man wirklich braucht — inkl. Animal-Key für Tier-Anwendungen, alle weiteren BeoKeys, BeoPark, BeoProtect, Case und Tapes. Das meistgekaufte Paket.</p>
+      <div class="ybox" style="margin-top:0.75rem"><div class="lb">Wann empfehlen</div><p>Für alle die hauptsächlich ihr Tier behandeln wollen — und sich dabei auch selbst nicht vergessen möchten. Wer einmal alles hat, vermisst nichts.</p></div>
+    </div>
+
+    <div class="card" style="border-color:var(--bm)">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.5rem">
+        <h3 style="margin-bottom:0">🌱 Beosigner® Plus Basisgerät</h3>
+        <div style="text-align:right"><div style="font-size:18px;font-weight:700;color:var(--n)">895 €</div><div style="font-size:14px;color:var(--tm)">Normalpreis</div></div>
+      </div>
+      <p>Das Gerät allein — ohne Zubehör. Wer klein einsteigen möchte und erst Erfahrungen sammeln will. Zubehör kann jederzeit einzeln nachbestellt werden.</p>
+      <div class="ybox" style="margin-top:0.75rem"><div class="lb">Wann empfehlen</div><p>Wenn jemand erst einmal starten und schauen möchte. Wichtig zu sagen: Auch allein mit dem Basisgerät gibt es schon sehr gute Ergebnisse.</p></div>
+    </div>
+
+    <div class="bbox"><div class="lb">Hinweis zu Aktionspreisen</div><p>In Aktionsmonaten sind die Preise niedriger — nenne dann natürlich den aktuellen Aktionspreis. Außerdem ist aktuell 0 % Finanzierung über Vitarights möglich (5 oder 11 Monatsraten). Das macht besonders das Family-Set und das XL-Set für viele greifbarer.</p></div>
+
+    <div class="sec">Dein bewährter Abschlusssatz — kopierbereit</div>
+    <div class="phrase"><span class="phrase-t">„Oder du steigst klein ein mit dem Basisgerät für 895 € und nimmst dir nur das Zubehör dazu, was du wirklich zum Start brauchst — wenn überhaupt. Allein mit dem Basisgerät gibt es schon sehr gute Ergebnisse."</span><button class="pbtn" onclick="copyP(this)">📋 Kopieren</button></div>
+
+    <div class="sec">PayPal-Finanzierung — für alle die lieber in Raten zahlen</div>
+    <div class="card"><h3>💳 PayPal — 3 bis 24 Monate, zinsfrei möglich</h3><p>Viele entscheiden sich leichter wenn sie wissen dass sie nicht alles auf einmal zahlen müssen. PayPal bietet flexible Ratenzahlung — das macht besonders das Family-Set und das XL-Set für viele greifbarer.</p>
+    <div class="ybox" style="margin-top:0.75rem"><div class="lb">So bringst du es ein</div><p>„Und falls es für dich einfacher ist — du kannst auch über PayPal in Raten zahlen, 3 bis 24 Monate. Das machen viele so."</p></div>
+    <div class="bbox" style="margin-top:0.6rem"><div class="lb">Wann ansprechen</div><p>Erst nachdem du alle drei Pakete vorgestellt hast — nicht vorher. Sonst lenkt es vom Wert ab. Es ist eine Erleichterung, keine Rechtfertigung.</p></div></div>
+
+    <div class="sec">Die richtige Reihenfolge im Gespräch</div>
+    <div class="card"><h3>So läuft die Preispräsentation in der Praxis</h3>
+    <ul class="cl" style="margin-top:0.5rem">
+      <li><span class="ck">1</span> Family-Set vorstellen — Preis nennen, kurz erklären für wen es passt</li>
+      <li><span class="ck">2</span> Komplett-Set XL vorstellen — Preis nennen, erklären warum es das meistgekaufte ist</li>
+      <li><span class="ck">3</span> Basisgerät vorstellen — deinen Abschlusssatz sagen</li>
+      <li><span class="ck">4</span> Kurze Pause lassen — sie darf nachdenken</li>
+      <li><span class="ck">5</span> Falls nötig: PayPal-Ratenzahlung erwähnen</li>
+      <li><span class="ck">6</span> Fragen: „Was spricht dich davon am meisten an?"</li>
+    </ul>
+    <div class="nbox" style="margin-top:0.75rem"><div class="lb">Die stärkste Abschlussfrage</div><p>„Was spricht dich davon am meisten an?" — nicht „Was möchtest du nehmen?" Sie führt die Entscheidung sanft in die richtige Richtung, ohne Druck.</p></div></div>
+  </div>
+
+  <div id="gy-teuer" class="subpage">
+    <div class="card"><h3>💶 „Das ist mir zu teuer" — was wirklich dahintersteckt</h3><p>„Zu teuer" ist fast nie eine finale Absage. Es ist eine Frage verkleidet als Aussage. Erst herausfinden was wirklich dahintersteckt — dann antworten. Nie sofort rechtfertigen, erklären oder Rabatt anbieten.</p></div>
+    <div class="et et-1"><div class="etl">Bedeutung 1</div><h3>„Ich sehe den Wert noch nicht."</h3><p>Sie versteht noch nicht was der Beosigner konkret verändert. Der Preis wirkt hoch weil das Ergebnis noch unklar ist.</p></div>
+    <div class="et et-2"><div class="etl">Bedeutung 2</div><h3>„Ich habe Angst, Geld zu verschwenden."</h3><p>Sie hat vielleicht schon anderes probiert und war enttäuscht. Das Geld ist da — aber das Vertrauen nicht.</p></div>
+    <div class="et et-3"><div class="etl">Bedeutung 3</div><h3>„Es ist wirklich gerade finanziell eng."</h3><p>Der seltenste Fall — aber er kommt vor. Hier ist Respekt angebracht, nicht Überzeugungsarbeit.</p></div>
+    <div class="et et-4"><div class="etl">Bedeutung 4</div><h3>„Ich bin noch nicht sicher genug."</h3><p>Der Preis ist ein Vorwand. Die eigentliche Hürde ist Unsicherheit — sie braucht mehr Vertrauen, nicht weniger Preis.</p></div>
+    <div class="card" style="margin-top:0.75rem"><h3>Die Schlüsselfrage — immer zuerst</h3>
+    <div class="ybox"><div class="lb">Nie sofort auf den Preis eingehen — erst fragen</div><p>„Was meinst du mit zu teuer — geht es um den Betrag an sich, oder fragst du dich ob es das für dich wert ist?"</p></div>
+    <div class="dlg" style="margin-top:0.75rem">
+      <div class="dlg-title">Vollständiges Beispiel</div>
+      <div class="msg them"><div class="mwrap"><div class="mwho">Sie</div><div class="bbl">Das ist schon ziemlich teuer für mich.</div></div></div>
+      <div class="msg us"><div class="mwrap"><div class="mwho">Du</div><div class="bbl">Das kann ich gut verstehen. Darf ich kurz nachfragen — geht es um den Betrag, oder fragst du dich ob es das für dich wert ist?</div></div></div>
+      <div class="msg them"><div class="mwrap"><div class="mwho">Sie</div><div class="bbl">Eher das zweite. Ich weiß halt nicht ob es wirklich was bringt.</div></div></div>
+      <div class="msg us"><div class="mwrap"><div class="mwho">Du</div><div class="bbl">Das ist eine völlig berechtigte Frage. Du hast schon viel probiert und bist enttäuscht worden. Was müsste passieren damit du sicher sein könntest dass es sich lohnt?</div></div></div>
+      <div class="msg them"><div class="mwrap"><div class="mwho">Sie</div><div class="bbl">Wenn ich echte Erfahrungen hätte — und wenn ich wüsste dass ich es zurückgeben kann wenn es nicht hilft.</div></div></div>
+      <div class="msg us"><div class="mwrap"><div class="mwho">Du</div><div class="bbl">Gut dass du das sagst. Ich schicke dir gerne zwei Geschichten aus meinem Umfeld. Und zur Rückgabe schaue ich dir kurz was die aktuellen Konditionen sind.</div></div></div>
+    </div></div>
+    <div class="sec-title">Was niemals funktioniert</div>
+    <div class="cmp">
+      <div class="ci ci-bad"><div class="cilb">Nie so</div><p>„Aber das ist doch gar nicht teuer wenn man bedenkt was du bekommst!"</p></div>
+      <div class="ci ci-good"><div class="cilb">Sondern so</div><p>„Was meinst du genau — geht es um den Betrag oder den Wert?"</p></div>
+    </div>
+    <div class="cmp" style="margin-top:8px">
+      <div class="ci ci-bad"><div class="cilb">Nie so</div><p>Sofort Rabatt anbieten oder den Preis rechtfertigen.</p></div>
+      <div class="ci ci-good"><div class="cilb">Sondern so</div><p>„Was wäre es dir wert wenn das Problem in drei Monaten wirklich gelöst wäre?"</p></div>
+    </div>
+    <div class="cmp" style="margin-top:8px">
+      <div class="ci ci-bad"><div class="cilb">Nie so</div><p>„Alle anderen finden es auch seinen Preis wert!"</p></div>
+      <div class="ci ci-good"><div class="cilb">Sondern so</div><p>„Was hast du in den letzten zwei Jahren alles ausgegeben um das zu lösen?"</p></div>
+    </div>
+    <div class="nbox" style="margin-top:0.75rem"><div class="lb">Der Kern</div><p>„Zu teuer" ist fast nie ein Nein. Es ist ein Signal dass noch etwas fehlt — Vertrauen, Klarheit, oder ein konkretes Bild vom Ergebnis. Wer das versteht, muss nie mehr einen Preis rechtfertigen.</p></div>
+  </div>
+
+  <div id="gy-rap" class="subpage">
+    <div class="card"><h3>🚫 RAP-Modus — warum er nicht funktioniert</h3><p>Sobald ein Einwand kommt, verfallen viele automatisch ins Erklären, Verteidigen, Präsentieren. Das Ergebnis: die andere Person zieht sich zurück — innerlich, auch wenn sie noch zuhört.</p></div>
+    <div class="rbox"><div class="lb">Der Moment wo es passiert</div><p>Sie sagt: „Das ist schon teuer." Und du antwortest: „Ja aber dafür bekommst du wirklich viel — der Beosigner ist..." — an diesem Punkt ist das Gespräch verloren.</p></div>
+    <div class="card" style="margin-top:0.75rem"><h3>Wer fragt, führt</h3><p style="margin-bottom:1rem">Jede Aussage lässt sich als Frage formulieren. Eine Frage aktiviert — eine Aussage informiert. Aktivierung schafft Verbindung.</p>
+    <div class="cmp">
+      <div class="ci ci-bad"><div class="cilb">RAP-Aussage</div><p>„Das ist ein guter Preis für das was du bekommst."</p></div>
+      <div class="ci ci-good"><div class="cilb">Frage statt Aussage</div><p>„Was wäre es dir wert wenn das Problem gelöst wäre?"</p></div>
+    </div>
+    <div class="cmp" style="margin-top:8px">
+      <div class="ci ci-bad"><div class="cilb">RAP-Aussage</div><p>„Ich bin immer für dich erreichbar."</p></div>
+      <div class="ci ci-good"><div class="cilb">Frage statt Aussage</div><p>„Wie würde es sich anfühlen zu wissen, dass du mich jederzeit erreichen kannst?"</p></div>
+    </div>
+    <div class="cmp" style="margin-top:8px">
+      <div class="ci ci-bad"><div class="cilb">RAP-Aussage</div><p>„Das ist wirklich der nächste Schritt für dich."</p></div>
+      <div class="ci ci-good"><div class="cilb">Frage statt Aussage</div><p>„Was denkst du — was wäre für dich jetzt der sinnvollste nächste Schritt?"</p></div>
+    </div></div>
+  </div>
+
+  <div id="gy-haltung" class="subpage">
+    <div class="card"><h3>💙 Innere Haltung — das Fundament unter allem</h3><p>Technik allein reicht nicht. Wer innerlich angespannt ist — Angst vor dem Nein, Unsicherheit beim Preis — kommt nicht an. Diese drei Haltungen verändern alles.</p></div>
+    <div class="msc msc-y"><div class="mn">Haltung 1 — Innere Freiheit</div><h3>Du brauchst dieses Ja nicht</h3><p>Wirklich nicht. Gespräche aus Sicherheit schließen sich von selbst. Der Druck den du manchmal spürst kommt nicht von ihr — er kommt von dir. Und du kannst ihn loslassen.</p>
+    <div class="ybox" style="margin-top:0.6rem"><div class="lb">Übung vor jedem Gespräch</div><p>„Wenn sie Nein sagt, ist das völlig in Ordnung. Ich tue trotzdem etwas Gutes weil ich ihr zuhöre und ihr helfe, Klarheit zu bekommen."</p></div></div>
+    <div class="msc msc-b"><div class="mn">Haltung 2 — Selektion statt Überzeugung</div><h3>Nicht jede ist deine Kundin — und das ist gut so</h3><p>Ein Nein jetzt ist besser als ein halbherziges Ja. Wer überredet wurde kauft — und bereut es. Wer selbst wollte — bleibt, empfiehlt weiter, und macht Freude.</p>
+    <div class="bbox" style="margin-top:0.6rem"><div class="lb">Merksatz</div><p>„Ich helfe ihr herausfinden ob es für sie passt — ich entscheide das nicht für sie."</p></div></div>
+    <div class="msc msc-n"><div class="mn">Haltung 3 — Brücke, nicht Verkäuferin</div><h3>Du bist nicht hier um zu verkaufen</h3><p>Du hilfst jemandem einen nächsten Schritt zu tun den er sich selbst wünscht. Aus dieser Position heraus fühlt sich kein Gespräch wie Verkaufen an — weder für dich noch für sie.</p>
+    <div class="ybox" style="background:#2d3f6b;border-color:#3a5080;margin-top:0.6rem"><div class="lb" style="color:var(--ym)">Wenn sie Nein sagt</div><p style="color:var(--bl)">Dann hast du ihr geholfen Klarheit zu bekommen. Das ist wertvoll. Sie wird sich erinnern wie das Gespräch sich angefühlt hat. Viele kommen Monate später von selbst wieder.</p></div></div>
+  </div>
+</div>
+
+<!-- NACHHAKEN -->
+<div id="page-nachhaken" class="page">
+  <div class="phase-hdr"><div class="phase-num" style="font-size:15px">💬</div><div><h2>Nachhaken ohne Druck</h2><p>Formulierungen für WhatsApp — kopieren und anpassen</p></div></div>
+  <div class="card"><h3>Wie du diese Sätze nutzt</h3><p>Wähle die Kategorie die zu deiner Situation passt und kopiere den Satz direkt in WhatsApp. Passe ihn auf deine eigene Sprache an — er soll nach dir klingen, nicht nach Vorlage.</p></div>
+  <div class="cat-nav" style="margin-top:1rem">
+    <button class="cat-btn active" onclick="cat('still',this)">Still geworden</button>
+    <button class="cat-btn" onclick="cat('infos',this)">Infos geschickt</button>
+    <button class="cat-btn" onclick="cat('unsicher',this)">Unsicher wirkt</button>
+    <button class="cat-btn" onclick="cat('zeit',this)">Zeitmangel</button>
+    <button class="cat-btn" onclick="cat('begeistert',this)">War begeistert</button>
+    <button class="cat-btn" onclick="cat('monatsende',this)">Monatsende</button>
+    <button class="cat-btn" onclick="cat('ehrlich',this)">Ehrliche Antwort</button>
+  </div>
+  <div id="cat-still" class="cat-sec active">
+    <div class="cat-lb">Wenn jemand Interesse gezeigt hat, aber dann still wurde</div>
+    <div class="phrase"><span class="phrase-t">„Hey du, ich wollte kurz nachfragen: Ist das Thema für dich noch aktuell oder eher erstmal vom Tisch? Ich sortiere gerade ein bisschen 😊"</span><button class="pbtn" onclick="copyP(this)">📋 Kopieren</button></div>
+    <div class="phrase"><span class="phrase-t">„Kurze Frage: Willst du noch Infos oder passt es für dich erstmal? Ich richte mich da ganz nach dir."</span><button class="pbtn" onclick="copyP(this)">📋 Kopieren</button></div>
+    <div class="phrase"><span class="phrase-t">„Ich hatte dich noch auf meiner Liste, weil du ja mal nachgefragt hattest. Soll ich's für dich noch mal zusammenfassen oder nicht nötig?"</span><button class="pbtn" onclick="copyP(this)">📋 Kopieren</button></div>
+    <div class="phrase"><span class="phrase-t">„Ich checke gerade meine Gespräche: Soll ich deine Anfrage offen lassen oder schließen? Ich will nur Klarheit für uns beide 😊"</span><button class="pbtn" onclick="copyP(this)">📋 Kopieren</button></div>
+  </div>
+  <div id="cat-infos" class="cat-sec">
+    <div class="cat-lb">Wenn schon Infos geschickt wurden, aber nichts zurückkam</div>
+    <div class="phrase"><span class="phrase-t">„War meine letzte Nachricht zu viel Info auf einmal? Soll ich's dir kurz und knapp zusammenfassen?"</span><button class="pbtn" onclick="copyP(this)">📋 Kopieren</button></div>
+    <div class="phrase"><span class="phrase-t">„Ich bin mir nicht sicher ob meine letzte Antwort dich erreicht hat – war das hilfreich oder brauchst du's in kurz?"</span><button class="pbtn" onclick="copyP(this)">📋 Kopieren</button></div>
+    <div class="phrase"><span class="phrase-t">„Es kam keine Rückmeldung – alles gut? Willst du noch was wissen oder passt es für dich erstmal?"</span><button class="pbtn" onclick="copyP(this)">📋 Kopieren</button></div>
+  </div>
+  <div id="cat-unsicher" class="cat-sec">
+    <div class="cat-lb">Wenn die Person grundsätzlich interessiert war, aber unsicher wirkt</div>
+    <div class="phrase"><span class="phrase-t">„Was wäre für dich die wichtigste Info um entscheiden zu können? Preis? Anwendung? Erfahrungen?"</span><button class="pbtn" onclick="copyP(this)">📋 Kopieren</button></div>
+    <div class="phrase"><span class="phrase-t">„Wenn du magst, sag ich dir was die meisten am wichtigsten finden – das spart dir Zeit."</span><button class="pbtn" onclick="copyP(this)">📋 Kopieren</button></div>
+    <div class="phrase"><span class="phrase-t">„Ich kann dir drei Varianten zeigen. Welche soll ich zuerst erklären – die beliebteste oder die günstigste?"</span><button class="pbtn" onclick="copyP(this)">📋 Kopieren</button></div>
+  </div>
+  <div id="cat-zeit" class="cat-sec">
+    <div class="cat-lb">Wenn es an Zeit, Stress oder Aufschieben liegt</div>
+    <div class="phrase"><span class="phrase-t">„Ich weiß, der Alltag ist voll. Soll ich dir den Ablauf ganz kurz machen damit du's leichter hast?"</span><button class="pbtn" onclick="copyP(this)">📋 Kopieren</button></div>
+    <div class="phrase"><span class="phrase-t">„Wenn du es zeitlich grad eng hast, kann ich dir die wichtigsten Punkte in 20 Sekunden schicken."</span><button class="pbtn" onclick="copyP(this)">📋 Kopieren</button></div>
+    <div class="phrase"><span class="phrase-t">„Ich kann's für dich so einfach wie möglich machen – was würdest du bevorzugen? Text, Sprachnachricht oder ein Screenshot?"</span><button class="pbtn" onclick="copyP(this)">📋 Kopieren</button></div>
+  </div>
+  <div id="cat-begeistert" class="cat-sec">
+    <div class="cat-lb">Wenn jemand mal begeistert war, aber nicht in die Umsetzung kommt</div>
+    <div class="phrase"><span class="phrase-t">„Du hattest ja damals gesagt dass dich die Wirkung total beeindruckt hat. Soll ich dir noch den Vorteil vom aktuellen Angebot zeigen?"</span><button class="pbtn" onclick="copyP(this)">📋 Kopieren</button></div>
+    <div class="phrase"><span class="phrase-t">„Du hattest doch erzählt dass du genau sowas suchst. Willst du kurz schauen ob die Aktion für dich passt?"</span><button class="pbtn" onclick="copyP(this)">📋 Kopieren</button></div>
+    <div class="phrase"><span class="phrase-t">„Ich musste heute an dich denken – dein Thema kam in einem Gespräch vor. Soll ich dir kurz sagen warum das gerade interessant für dich wäre?"</span><button class="pbtn" onclick="copyP(this)">📋 Kopieren</button></div>
+  </div>
+  <div id="cat-monatsende" class="cat-sec">
+    <div class="cat-lb">Wenn der Monat sich dem Ende zuneigt</div>
+    <div class="phrase"><span class="phrase-t">„Nur als Info, weil ich dich auf dem Radar hatte: Das Angebot läuft in ein paar Tagen aus. Ich wollte dich nicht verpassen lassen 😊"</span><button class="pbtn" onclick="copyP(this)">📋 Kopieren</button></div>
+    <div class="phrase"><span class="phrase-t">„Falls du noch drüber nachgedacht hast – das Monatsangebot endet bald. Wenn du magst sag ich dir die wichtigsten Unterschiede noch mal."</span><button class="pbtn" onclick="copyP(this)">📋 Kopieren</button></div>
+    <div class="phrase"><span class="phrase-t">„Ich weiß du hattest Interesse – sag nur Bescheid wenn ich's dir passend machen soll. Das Angebot ist echt stark."</span><button class="pbtn" onclick="copyP(this)">📋 Kopieren</button></div>
+  </div>
+  <div id="cat-ehrlich" class="cat-sec">
+    <div class="cat-lb">Wenn man eine ehrliche Antwort herauskitzeln möchte</div>
+    <div class="phrase"><span class="phrase-t">„Sag mir ehrlich: Interessiert es dich grundsätzlich oder eher nicht? Ich hab da null Erwartungen, ich brauch nur Orientierung 😊"</span><button class="pbtn" onclick="copyP(this)">📋 Kopieren</button></div>
+    <div class="phrase"><span class="phrase-t">„Wenn du sagst 'Nein', ist es absolut okay. Ich will nur für mich richtig sortieren."</span><button class="pbtn" onclick="copyP(this)">📋 Kopieren</button></div>
+    <div class="phrase"><span class="phrase-t">„Wäre es hilfreich wenn ich dir zwei, drei Beispiele aus meiner Praxis schicke? Oder eher nicht?"</span><button class="pbtn" onclick="copyP(this)">📋 Kopieren</button></div>
+  </div>
+</div>
+
+<!-- KEIN NETZWERK -->
+<div id="page-kein-netz" class="page">
+  <div class="phase-hdr"><div class="phase-num" style="background:var(--bm);color:var(--n);font-size:18px">?</div><div><h2>Kein passendes Netzwerk?</h2><p>Für alle die ohne offensichtliche Zielgruppe starten</p></div></div>
+  <div class="card"><h3>😊 Erstmal durchatmen — das ist normal</h3><p>Nicht jeder kommt mit einer Tierpraxis oder einer aktiven Facebook-Community. Manche starten bei null. Das ist kein Nachteil — es ist ein anderer Startpunkt. Und auch der funktioniert.</p></div>
+  <div class="sec-title">Schritt 1 — Finde dein Thema trotzdem</div>
+  <div class="card"><h3>Drei Fragen die fast immer ein Thema ergeben</h3>
+  <ul class="cl">
+    <li><span class="ck">•</span> Worüber beschweren sich Menschen in deinem Alltag regelmäßig?</li>
+    <li><span class="ck">•</span> Womit hast du selbst lange gekämpft — und was hat dir geholfen?</li>
+    <li><span class="ck">•</span> Für wen bist du in deinem Umfeld schon jetzt die erste Ansprechperson?</li>
+  </ul>
+  <div class="bbox" style="margin-top:0.75rem"><div class="lb">Wichtig</div><p>Du musst kein Experte sein. Du musst jemand sein dem andere Menschen zuhören. Das reicht als Anfang.</p></div></div>
+  <div class="sec-title">Schritt 2 — Wo du schon bist</div>
+  <div class="grid2" style="margin-top:0">
+    <div class="mc"><h4>Vereine & Gruppen</h4><p>Sportverein, Elternabend, Kirchengemeinde — dort kennt dich jemand.</p></div>
+    <div class="mc"><h4>Bestehende WhatsApp-Gruppen</h4><p>Familiengruppe, Schulgruppe, Freundeskreis — ein Status reicht als erster Schritt.</p></div>
+    <div class="mc"><h4>Facebook-Gruppen beitreten</h4><p>2–3 Gruppen zu deinem Thema. Erst zuhören — dann beitragen.</p></div>
+    <div class="mc"><h4>Lokale Netzwerke</h4><p>Flohmarkt, Yoga-Kurs, Nachbarschaftscafé — offline ist unterschätzt.</p></div>
+  </div>
+  <div class="sec-title">Schritt 3 — Eigene Facebook-Gruppe starten</div>
+  <div class="card"><h3>Auch ohne Follower möglich</h3>
+  <ul class="cl">
+    <li><span class="ck">•</span> Gruppenname = Zielgruppe + konkretes Problem (nicht „Gesundheit mit Maria")</li>
+    <li><span class="ck">•</span> Erste 10–15 Bekannte direkt einladen — einfach fragen</li>
+    <li><span class="ck">•</span> 3x pro Woche Inhalt posten — Fragen stellen nicht nur senden</li>
+    <li><span class="ck">•</span> Wachstum kommt durch Weiterempfehlung</li>
+  </ul>
+  <div class="ybox" style="margin-top:0.75rem"><div class="lb">Gruppenname-Formel</div><p>„[Zielgruppe] + [konkretes Problem] + [Lösung/Hoffnung]"<br>z.B. „Hundebesitzer mit Allergieproblemen — Ursachen verstehen und auflösen"</p></div></div>
+  <div class="sec-title">Schritt 4 — Geduld ist eine Strategie</div>
+  <div class="grid2" style="margin-top:0">
+    <div class="mc"><h4>Monat 1</h4><p>Thema klar, erste 15–20 Kontakte aktiviert, regelmäßige Signale gesendet</p></div>
+    <div class="mc"><h4>Monat 2</h4><p>Erste Reaktionen, erste Gespräche, erste 7-Tage-Gruppe mit kleiner Runde</p></div>
+    <div class="mc"><h4>Monat 3</h4><p>Zweite Gruppe, erste Kunden, Netzwerk wächst organisch</p></div>
+    <div class="mc"><h4>Ab Monat 4</h4><p>Der Rhythmus sitzt. Jetzt geht es um Wiederholung und Tiefe.</p></div>
+  </div>
+</div>
+
+<!-- COMEBACK -->
+<div id="page-comeback" class="page">
+  <div class="phase-hdr"><div class="phase-num" style="background:var(--bem);color:var(--n);font-size:18px">↩</div><div><h2>Comeback-Modul</h2><p>Für alle die aus dem Rhythmus gekommen sind</p></div></div>
+  <div class="card"><h3>❤ Zuerst: Es ist normal</h3><p>Niemand geht drei Monate lang ohne Unterbrechung durch. Leben passiert. Motivation schwankt. Das bedeutet nicht dass du gescheitert bist — es bedeutet nur dass du gerade neu startest. Und neu starten ist einfacher als der erste Start.</p></div>
+  <div class="sec-title">Wo stehst du gerade?</div>
+  <div class="cb"><h3>„Ich habe noch gar nicht wirklich angefangen"</h3><p>Dann bist du nicht zurückgefallen — du hast noch nicht gestartet. Geh zu Phase 1, Woche 1. Nimm dir eine Stunde. Beantworte die drei Fragen zu deinem Thema. Das reicht für heute.</p></div>
+  <div class="cb"><h3>„Ich hatte einen guten Start, aber dann ist die Luft raus"</h3><p>Das klassische Muster: die erste Energie verpufft, die Routine fehlt. Oft fehlt nur die Routine, nicht die Motivation. Eine feste Zeit pro Tag (auch 15 Minuten) bringt mehr als eine große Aktion pro Woche.</p></div>
+  <div class="cb"><h3>„Ich habe eine Gruppe gemacht, aber wenig Resonanz"</h3><p>Das liegt fast immer an einem von zwei Dingen: entweder war das Thema zu allgemein, oder die Gruppe war zu klein. Beides lässt sich lösen. Schärfe dein Thema — und starte eine zweite Gruppe mit dem was du gelernt hast.</p></div>
+  <div class="cb"><h3>„Ich weiß nicht mehr warum ich das mache"</h3><p>Geh zurück zu Phase 1, „Dein Warum". Wirklich. Das Warum ist kein Einmalpunkt — es muss gepflegt werden.</p></div>
+  <div class="sec-title">Der 3-Tage-Neustart</div>
+  <div class="card"><h3>▶ Was jetzt konkret zu tun ist</h3>
+  <ul class="cl">
+    <li><span class="ck">1</span> <strong>Tag 1:</strong> Dein Warum aufschreiben — neu, heute, ehrlich. Nicht die alte Version.</li>
+    <li><span class="ck">2</span> <strong>Tag 2:</strong> Einen WhatsApp-Status zu deinem Thema senden. Einen. Nicht mehr.</li>
+    <li><span class="ck">3</span> <strong>Tag 3:</strong> Einer Person schreiben — kein Pitch, nur echtes Interesse an ihr.</li>
+  </ul>
+  <div class="ybox" style="margin-top:0.75rem"><div class="lb">Danach</div><p>Entscheide in welcher Phase du weitermachst — und arbeite von dort. Kein Aufholen, kein Schuldgefühl. Einfach weitermachen.</p></div></div>
+  <div class="divider"></div>
+  <div class="bbox"><div class="lb">Und wenn es sich immer noch falsch anfühlt?</div><p>Dann sprich mit Susanne. Nicht weil du musst — sondern weil ein ehrliches Gespräch oft mehr bringt als drei Wochen alleine grübeln. Du bist nicht allein in diesem Team.</p></div>
+</div>
+
+<!-- BEOSIGNER ERKLÄREN -->
+<div id="page-beosigner-erklaeren" class="page">
+  <div class="phase-hdr"><div class="phase-num" style="background:var(--y);color:var(--n);font-size:18px">💙</div><div><h2>Den Beosigner sicher erklären</h2><p>Was er ist, wie er wirkt, wie man es in zwei Sätzen sagt</p></div></div>
+
+  <div class="card"><h3>Was ist der Beosigner?</h3><p>Der Beosigner® Plus ist ein Gerät das kohärentes Licht aussendet — also Lichtimpulse mit einer konsistenten Wellenlänge. Dieser Impuls gibt dem Körper über den Thymus einen Informationsimpuls der die körpereigene Selbstregulation unterstützt.</p>
+  <div class="nbox" style="margin-top:0.75rem"><div class="lb">Die Zwei-Satz-Erklärung — kopierbereit</div><p>„Der Beosigner gibt dem Körper über kohärentes Licht einen Informationsimpuls. Dadurch wird die körpereigene Selbstregulation unterstützt — der Körper nimmt sich davon was er gerade braucht."</p></div></div>
+
+  <div class="card"><h3>Die Dietrich-Analogie — für skeptische Gegenüber</h3><p>Der Beosigner wirkt nicht stärker im Sinne von „wuchtiger" — sondern präziser und differenzierter. Eine gute Analogie aus den Vitarights-Unterlagen:</p>
+  <div class="ybox" style="margin-top:0.75rem"><div class="lb">Die Analogie</div><p>„Stell dir vor du möchtest eine Tür öffnen und hast den Schlüssel verlegt. Du könntest ein Brecheisen nehmen — das öffnet die Tür, aber nicht schön. Oder du nimmst einen feinen Satz Dietriche und öffnest sie mit Gefühl, Präzision und ohne Gewalt. Der Beosigner ist der Dietrich — nicht das Brecheisen."</p></div></div>
+
+  <div class="card"><h3>Was der Beosigner nicht ist</h3>
+  <ul class="cl" style="margin-top:0.5rem">
+    <li><span class="ck">✗</span> Kein Messgerät — er misst nichts und diagnostiziert nichts</li>
+    <li><span class="ck">✗</span> Kein Heilmittel — keine Heilversprechen, keine medizinischen Aussagen</li>
+    <li><span class="ck">✗</span> Kein Ersatz für den Tierarzt oder Arzt — immer ergänzend</li>
+  </ul></div>
+
+  <div class="sec-title">Anwendung — das Wichtigste für das Team</div>
+  <div class="card"><h3>Grundvitalisierung Mensch</h3>
+  <ul class="cl" style="margin-top:0.5rem">
+    <li><span class="ck">•</span> Hauptpunkt: Thymusdrüse (Mitte des Brustbeins) oder Solarplexus</li>
+    <li><span class="ck">•</span> Dauer: 30 Sekunden pro Anwendung</li>
+    <li><span class="ck">•</span> Häufigkeit: 2x täglich</li>
+    <li><span class="ck">•</span> Ein Punkt reicht — die neue Technologie verteilt die Information im ganzen Körper</li>
+  </ul>
+  <div class="ybox" style="margin-top:0.75rem"><div class="lb">Weniger ist oft mehr</div><p>Gerade am Anfang sanft herantasten. Der Körper entscheidet welche Informationen er annimmt. Jeder Mensch reagiert individuell.</p></div></div>
+
+  <div class="card"><h3>Grundvitalisierung Tier</h3>
+  <ul class="cl" style="margin-top:0.5rem">
+    <li><span class="ck">•</span> Vierbeiner: Thymusdrüse + Bai Hui (2 Punkte)</li>
+    <li><span class="ck">•</span> Zweibeiner (z.B. Geflügel): nur Thymusdrüse (1 Punkt)</li>
+    <li><span class="ck">•</span> Dauer: 5–10 Sekunden — Reaktion des Tieres beobachten</li>
+    <li><span class="ck">•</span> Futter & Wasser vitalisieren: ca. 10 Sekunden reichen</li>
+  </ul>
+  <div class="bbox" style="margin-top:0.75rem"><div class="lb">Warum zwei Punkte bei Vierbeinern?</div><p>Durch die Belastung auf allen vier Beinen wirkt sich die Statik anders aus als bei Zweibeinern. Der Thymus verteilt die Information im gesamten Organismus, der Bai Hui unterstützt besonders den Bewegungsapparat.</p></div></div>
+
+  <div class="card"><h3>Die BeoKeys — wann welcher?</h3>
+  <ul class="cl" style="margin-top:0.5rem">
+    <li><span class="ck">•</span> <strong>Animal Complete:</strong> für alle Tieranwendungen — im XL-Set enthalten</li>
+    <li><span class="ck">•</span> <strong>Slow Aging:</strong> der tiefwirkendste Key — bei degenerativen und langwierigen Beschwerden, unterstützt intensiv die Zellregeneration</li>
+    <li><span class="ck">•</span> <strong>Focus, Joy, Power, Stability:</strong> je nach Thema und Bedarf</li>
+  </ul>
+  <div class="rbox" style="margin-top:0.75rem"><div class="lb">Slow Aging Key — wichtiger Hinweis</div><p>Öffentlich darf über Heilwirkung nicht geschrieben werden. Im persönlichen Gespräch klar kommunizieren wann er besonders sinnvoll ist — bei langwierigen Beschwerden und wenn Zellregeneration ein Thema ist.</p></div></div>
+</div>
+
+<!-- PRODUKTE & IMAGEFILME -->
+<div id="page-produkte" class="page">
+  <div class="phase-hdr"><div class="phase-num" style="background:var(--y);color:var(--n);font-size:18px">🎬</div><div><h2>Produkte & Imagefilme</h2><p>Wann empfehle ich was — und welcher Film passt dazu</p></div></div>
+
+  <div class="card"><h3>🔵 Beosigner® Plus — das Flaggschiff</h3><p>Immer der Einstieg. Modular erweiterbar. Für Mensch und Tier.</p>
+  <div class="ybox" style="margin-top:0.75rem"><div class="lb">Wann welches Paket?</div><p><strong>Family-Set (2.575€):</strong> Zweites Gerät für den Stall, die Oma, oder wenn der Mann oft auf Geschäftsreise ist.<br><strong>Komplett-Set XL (1.725€):</strong> Ein Gerät mit allem drum und dran inkl. Animal-Key — das meistgekaufte.<br><strong>Basisgerät (895€):</strong> Sanfter Einstieg — allein gibt es schon sehr gute Ergebnisse.</p></div>
+  <a href="https://vimeo.com/1174418837/bc245f4c7b" target="_blank" class="film-btn">▶ Imagefilm öffnen</a></div>
+
+  <div class="card"><h3>🟢 FREEONIC® me — für jeden relevant</h3><p>Schützt vor Elektrosmog. Durch 5G ist man überall betroffen — viele ohne es zu merken.</p>
+  <div class="ybox" style="margin-top:0.75rem"><div class="lb">Wann empfehlen</div><p>Als Ergänzung für alle Beosigner-Kunden. Als eigenes Einstiegsprodukt für Menschen am PC, viel am Handy, oder elektrosmog-sensibel. Laut Studie wirkt der Beosigner im Schutzraum des Freeonic noch besser.</p></div>
+  <a href="https://vimeo.com/1174430553/cd71f2a323" target="_blank" class="film-btn">▶ Imagefilm öffnen</a></div>
+
+  <div class="card"><h3>🟡 ViSponder® Plus — für bestehende Kunden</h3><p>Als Einstiegsprodukt hat er sich nicht bewährt. Wer mit ihm auskommt braucht oft keinen Beosigner — wer ihn nicht spürt verliert das Interesse.</p>
+  <div class="ybox" style="margin-top:0.75rem"><div class="lb">Wann empfehlen</div><p>Für bestehende Kunden die mehr möchten. Für ältere Menschen die mit der Beosigner-Bedienung Schwierigkeiten haben. Für Menschen mit kleinerem Budget die trotzdem einsteigen wollen.</p></div>
+  <a href="https://vimeo.com/1174455172/f618073272" target="_blank" class="film-btn">▶ Imagefilm öffnen</a></div>
+
+  <div class="card"><h3>🌿 Slow Aging Konzept</h3><p>Beosigner + Slow-Aging-Key + Luxood-Hautpflege + Nahrungsergänzung. Der tiefwirkendste Key — besonders bei langwierigen und degenerativen Beschwerden.</p>
+  <a href="https://vimeo.com/1174438879/7f146a086e" target="_blank" class="film-btn">▶ Imagefilm öffnen</a></div>
+
+  <div class="card"><h3>Wie du die Filme einsetzt</h3>
+  <ul class="cl" style="margin-top:0.5rem">
+    <li><span class="ck">✓</span> Als Gesprächsöffner und Kundengewinnungs-Tool — alle Filme eignen sich auch als erster Kontakt</li>
+    <li><span class="ck">✓</span> Wenn jemand fragt „Wie funktioniert das genau?"</li>
+    <li><span class="ck">✓</span> Als Vorbereitung auf das Beratungsgespräch</li>
+    <li><span class="ck">✓</span> Zum Weiterschicken an Interessierte — professionell gemacht, weckt Neugier</li>
+    <li><span class="ck">✗</span> Nie als Ersatz für ein persönliches Gespräch</li>
+  </ul>
+  <div class="ybox" style="margin-top:0.75rem"><div class="lb">Welcher Film wann?</div><p><strong>Beosigner-Film:</strong> toller Einstiegsfilm für die Kundengewinnung — erklärt das Konzept emotional und verständlich. Funktioniert als erster Kontakt genauso gut wie als Vorbereitung auf die Beratung.<br><strong>Freeonic-Film:</strong> super als Gesprächsöffner — Elektrosmog und 5G sind Themen die sofort Interesse wecken, auch ohne Vorwissen.<br><strong>ViSponder & Slow Aging:</strong> für bestehende Kunden oder wenn das Thema von selbst kommt.</p></div>
+  <div class="ybox" style="margin-top:0.6rem"><div class="lb">Formulierung zum Schicken</div><p>„Ich habe gerade an dich gedacht — schau mal kurz dieses Video. Das trifft genau das was wir letztens besprochen haben." Oder einfach: „Ich schicke dir kurz einen Film dazu — der erklärt es viel schöner als ich es in einer Nachricht könnte."</p></div></div>
+</div>
+
+<!-- EMPFEHLUNGSPROGRAMM -->
+<div id="page-empfehlung" class="page">
+  <div class="phase-hdr"><div class="phase-num" style="background:var(--y);color:var(--n);font-size:18px">🎁</div><div><h2>Empfehlungsprogramm</h2><p>Deine begeisterten Kunden sind dein stärkstes Verkaufsteam</p></div></div>
+
+  <div class="card"><h3>Warum das Programm Gold wert ist — und kaum genutzt wird</h3><p>Vitarights belohnt Empfehlungen großzügig. Das Problem: die meisten Partner fragen einfach nicht danach. Nicht weil sie es nicht wollen — sondern weil ihnen die richtigen Formulierungen fehlen.</p>
+  <div class="nbox" style="margin-top:0.75rem"><div class="lb">Die Regel</div><p>Nie beim Verkaufsgespräch fragen. Erst wenn der Kunde wirklich begeistert ist — nach 2–4 Wochen Anwendung, wenn er von selbst positiv berichtet, oder wenn jemand fragt „Wo kann ich das kaufen?"</p></div></div>
+
+  <div class="sec-title">Weg 1 — Direkte Empfehlung (Laufzeit: 30 Tage)</div>
+  <div class="card">
+  <table style="width:100%;border-collapse:collapse;font-size:16px">
+    <tr style="background:var(--n);color:var(--w)"><th style="padding:0.6rem 0.75rem;text-align:left;border-radius:8px 0 0 0">Umsatz durch Empfehlungen</th><th style="padding:0.6rem 0.75rem;text-align:left;border-radius:0 8px 0 0">Prämie für deinen Kunden</th></tr>
+    <tr style="background:var(--be)"><td style="padding:0.55rem 0.75rem;border-bottom:1px solid var(--bd)">ab 175€ bis 500€</td><td style="padding:0.55rem 0.75rem;border-bottom:1px solid var(--bd)">50% Rabatt auf 1 Produkt</td></tr>
+    <tr><td style="padding:0.55rem 0.75rem;border-bottom:1px solid var(--bd)">über 500€ bis 1.000€</td><td style="padding:0.55rem 0.75rem;border-bottom:1px solid var(--bd)">50% Rabatt auf 2 Produkte</td></tr>
+    <tr style="background:var(--be)"><td style="padding:0.55rem 0.75rem;border-bottom:1px solid var(--bd)">über 1.000€ bis 1.500€</td><td style="padding:0.55rem 0.75rem;border-bottom:1px solid var(--bd)">1 Produkt geschenkt + 50% auf 1 weiteres</td></tr>
+    <tr style="background:var(--yl)"><td style="padding:0.55rem 0.75rem;font-weight:700">über 1.500€</td><td style="padding:0.55rem 0.75rem;font-weight:700;color:#5a4a00">2 Produkte geschenkt 🎁</td></tr>
+  </table>
+  <div class="bbox" style="margin-top:0.75rem"><div class="lb">Ausgenommen</div><p>Beosigner® Plus, FREEONIC® und Produkt-Sets. Alles andere frei wählbar — versandkostenfrei.</p></div></div>
+
+  <div class="sec-title">Weg 2 — Workshop koordinieren (Laufzeit: 14 Tage)</div>
+  <div class="card"><p>Der Kunde lädt Gäste ein — du hältst den Workshop (online oder offline). Gleiche Prämienstruktur wie oben, plus Zusatzprämien:</p>
+  <ul class="cl" style="margin-top:0.75rem">
+    <li><span class="ck">+</span> Mind. 5 Gäste nehmen teil → 50% Rabatt auf 1 weiteres Produkt</li>
+    <li><span class="ck">+</span> Ein Gast wird selbst Koordinator → nochmal 50% Rabatt auf 1 Produkt</li>
+  </ul></div>
+
+  <div class="sec-title">So sprichst du es an — fertige Sätze</div>
+  <div class="cb"><h3>Nach Begeisterung — direkte Empfehlung</h3><p>„Darf ich dich noch etwas fragen? Du bist ja total begeistert — gibt es jemanden in deinem Umfeld dem das auch helfen könnte? Vitarights hat ein tolles Empfehlungsprogramm: wenn jemand über dich kauft, bekommst du richtig schöne Produkte geschenkt oder stark reduziert. Ich erkläre dir kurz wie das läuft."</p></div>
+  <div class="cb"><h3>Workshop-Einladung</h3><p>„Hättest du Lust mal einen kleinen Workshop für ein paar Freundinnen zu machen? Online geht auch — ich mache alles, du lädst einfach ein. Und wenn jemand kauft, bekommst du tolle Produkte dafür."</p></div>
+  <div class="cb"><h3>Wenn jemand von selbst fragt wo man kaufen kann</h3><p>„Das freut mich! Am besten läuft das über mich — und wenn du noch jemanden mitbringst, gibt es für dich sogar etwas dazu. Soll ich dir kurz erklären wie das funktioniert?"</p></div>
+
+  <div class="ybox" style="margin-top:0.75rem"><div class="lb">Mehr Infos für Kunden</div><p>vitarights.de/k2 — dort ist alles offiziell erklärt. Den Link einfach dem Kunden schicken.</p></div>
+</div>
+
+<!-- WORKSHOP VORBEREITUNG -->
+<div id="page-workshop" class="page">
+  <div class="phase-hdr"><div class="phase-num" style="background:var(--bem);color:var(--n);font-size:18px">📋</div><div><h2>Workshop-Vorbereitung</h2><p>Checkliste für Vital-Workshops — online & offline</p></div></div>
+
+  <div class="card"><h3>Gespräch zur Workshop-Vorbereitung</h3><p>Dieses Gespräch führst du ca. 1–2 Wochen vor dem Workshop mit dem Kunden/Koordinator.</p>
+  <div class="ybox" style="margin-top:0.75rem"><div class="lb">Einstieg</div><p>„Wir hatten vereinbart dass ich mich melde — wir wollten deinen Workshop vorbereiten. Welchen Termin hast du dir ausgesucht?"</p></div>
+  <div class="ybox" style="margin-top:0.6rem"><div class="lb">Einladungen</div><p>„Erfahrungsgemäß kommen 4–5 Personen wenn du 8–10 einlädst. Am besten schickst du die Einladung persönlich — ich schicke dir gerne einen digitalen Einladungsflyer."</p></div>
+  <div class="bbox" style="margin-top:0.6rem"><div class="lb">Eine Woche vorher</div><p>Nochmal melden um die genaue Teilnehmerzahl zu klären.</p></div></div>
+
+  <div class="sec-title">Was der Gastgeber vorbereitet</div>
+  <div class="card">
+  <ul class="cl" style="margin-top:0.5rem">
+    <li><span class="ck">✓</span> Beosigner® Plus komplett aufgeladen</li>
+    <li><span class="ck">✓</span> Wasser und Gläser bereitstellen</li>
+    <li><span class="ck">✓</span> Essen erst nach dem Workshop — nicht vorher</li>
+    <li><span class="ck">✓</span> 8–10 Personen eingeladen</li>
+  </ul></div>
+
+  <div class="sec-title">Was du als Partner mitbringst</div>
+  <div class="card">
+  <ul class="cl" style="margin-top:0.5rem">
+    <li><span class="ck">✓</span> Produktkatalog und Image-Broschüre</li>
+    <li><span class="ck">✓</span> Teaser: Beosigner Plus, ViSponder Plus, Luxood Plus, Freeonic me</li>
+    <li><span class="ck">✓</span> Wissenschaftliche Studien (falls gewünscht)</li>
+    <li><span class="ck">✓</span> Bestellformulare</li>
+    <li><span class="ck">✓</span> Produkte im Original</li>
+    <li><span class="ck">✓</span> Eigene Teilnehmerliste</li>
+    <li><span class="ck">✓</span> Liste mit freien Terminen für weitere Workshops</li>
+    <li><span class="ck">✓</span> Koordinatoren-Programm Formulare</li>
+    <li><span class="ck">✓</span> Empfehlungsprogramm Formulare</li>
+    <li><span class="ck">✓</span> Zitronen und kleine Probierbecher (aus Glas)</li>
+    <li><span class="ck">✓</span> Laptop + Kabel (evtl. HDMI für großen Fernseher)</li>
+    <li><span class="ck">✓</span> Imagefilme bereit: Beosigner Plus, ViSponder Plus, Luxood Plus, Freeonic me</li>
+    <li><span class="ck">✓</span> Kugelschreiber, Notizblöcke, Vi-Mappen</li>
+    <li><span class="ck">✓</span> Koordinatoren-Geschenk (falls gewünscht)</li>
+  </ul></div>
+</div>
+
+<!-- ONBOARDING NEUE PARTNER -->
+<div id="page-onboarding" class="page">
+  <div class="phase-hdr"><div class="phase-num" style="background:var(--y);color:var(--n);font-size:18px">🌱</div><div><h2>Onboarding neue Partner</h2><p>Die ersten 72 Stunden nach dem Ja</p></div></div>
+
+  <div class="card"><h3>Warum die ersten 72 Stunden entscheiden</h3><p>Wer in den ersten drei Tagen nach dem Start keine klare Orientierung bekommt, fällt meistens ab — nicht aus Desinteresse, sondern weil er nicht weiß womit er anfangen soll. Diese Checkliste gibt Struktur.</p></div>
+
+  <div class="sec-title">Tag 1 — Ankommen und verstehen</div>
+  <div class="card">
+  <ul class="cl" style="margin-top:0.5rem">
+    <li><span class="ck">1</span> Herzliche persönliche Willkommensnachricht von dir — kein Template, echte Worte</li>
+    <li><span class="ck">2</span> Link zum Team-Leitfaden und zur App schicken</li>
+    <li><span class="ck">3</span> In Team-Gruppe aufnehmen</li>
+    <li><span class="ck">4</span> Erste Aufgabe mitgeben: „Lies heute Phase 1 durch und schreib dein Thema auf"</li>
+  </ul></div>
+
+  <div class="sec-title">Tag 2 — Erstes kurzes Gespräch</div>
+  <div class="card">
+  <ul class="cl" style="margin-top:0.5rem">
+    <li><span class="ck">1</span> Kurz melden: „Wie war das gestern? Ist dein Thema klarer geworden?"</li>
+    <li><span class="ck">2</span> Fragen beantworten — keine langen Erklärungen, kurze Antworten</li>
+    <li><span class="ck">3</span> Erste WhatsApp-Status-Idee gemeinsam überlegen</li>
+  </ul></div>
+
+  <div class="sec-title">Tag 3 — Erste Sichtbarkeit</div>
+  <div class="card">
+  <ul class="cl" style="margin-top:0.5rem">
+    <li><span class="ck">1</span> Ersten WhatsApp-Status posten — gemeinsam formulieren wenn nötig</li>
+    <li><span class="ck">2</span> Die 20-Personen-Liste beginnen: wen kenne ich der dieses Thema hat?</li>
+    <li><span class="ck">3</span> Nächsten gemeinsamen Termin vereinbaren — in einer Woche</li>
+  </ul></div>
+
+  <div class="sec-title">Erste Woche — Formulierungen</div>
+  <div class="cb"><h3>Willkommensnachricht</h3><p>„Ich freue mich so dass du dabei bist! Ich schicke dir gleich den Link zu unserem Leitfaden — da ist alles drin was du für den Start brauchst. Heute reicht es wenn du Phase 1 durchliest und dein Thema aufschreibst. Ich melde mich morgen kurz 🙏"</p></div>
+  <div class="cb"><h3>Tag 2 — Check-in</h3><p>„Hey — wie war das gestern? Ist dein Thema klarer geworden? Wenn du magst reden wir heute kurz darüber — 15 Minuten reichen."</p></div>
+  <div class="cb"><h3>Wenn sie zögern</h3><p>„Das ist völlig normal — der erste Schritt fühlt sich immer komisch an. Was wäre für dich der kleinste mögliche erste Schritt den du heute noch machen könntest?"</p></div>
+</div>
+
+<!-- COMEBACK ALS UPLINE -->
+<div id="page-comeback-upline" class="page">
+  <div class="phase-hdr"><div class="phase-num" style="background:var(--bem);color:var(--n);font-size:18px">💬</div><div><h2>Comeback-Gespräch als Upline</h2><p>Wie du Partner ansprichst die aus dem Tritt geraten sind</p></div></div>
+
+  <div class="card"><h3>Das Ziel dieses Gesprächs</h3><p>Nicht motivieren, nicht überreden — herausfinden was wirklich dahintersteckt. Manchmal ist jemand kurz abgetaucht. Manchmal hat er sich entschieden aufzuhören. Beides ist okay. Du musst nur wissen was es ist.</p>
+  <div class="rbox" style="margin-top:0.75rem"><div class="lb">Was nie funktioniert</div><p>Motivationsreden, Zahlen zeigen, erklären wie einfach es ist. Wer demotiviert ist, reagiert darauf mit Rückzug. Fragen funktionieren — Aussagen nicht.</p></div></div>
+
+  <div class="sec-title">Der Einstieg — nie konfrontativ</div>
+  <div class="cb"><h3>Nach 2–3 Wochen Stille</h3><p>„Hey [Name] — ich wollte mich kurz melden, nicht wegen Business, sondern weil ich dich auf dem Radar habe. Wie geht es dir gerade?"</p></div>
+  <div class="cb"><h3>Wenn sie sagen „Ich komme gerade nicht dazu"</h3><p>„Das kenne ich gut. Darf ich fragen — ist es gerade einfach viel, oder ist der Funke auch ein bisschen weg?"</p></div>
+  <div class="cb"><h3>Wenn die Motivation fehlt</h3><p>„Was war eigentlich der Moment wo du gedacht hast — das will ich machen? Ich frage weil ich gerne verstehen würde was gerade anders ist."</p></div>
+
+  <div class="sec-title">Wenn sie wirklich aufhören wollen</div>
+  <div class="card"><p>Respektiere es. Kein Überreden. Eine offene Tür lassen:</p>
+  <div class="ybox" style="margin-top:0.75rem"><div class="lb">Formulierung</div><p>„Das verstehe ich vollständig. Wenn sich das irgendwann ändert, melde dich einfach — die Tür bleibt offen. Und unabhängig davon: ich bin froh dass ich dich kenne."</p></div></div>
+
+  <div class="sec-title">Wenn sie einen Neustart möchten</div>
+  <div class="cb"><h3>Neustart anbieten</h3><p>„Wäre es hilfreich wenn wir nochmal ganz von vorne anfangen — ohne Druck, ohne Rückstand? Einfach als ob heute der erste Tag wäre?"</p></div>
+  <div class="cb"><h3>Ersten Schritt gemeinsam machen</h3><p>„Was wäre der eine Schritt den du heute noch machen könntest — nicht morgen, heute? Ich bin dabei wenn du magst."</p></div>
+</div>
+
+<!-- NEUE REICHWEITE-STRATEGIEN -->
+<div id="page-reichweite" class="page">
+  <div class="phase-hdr"><div class="phase-num" style="background:var(--y);color:var(--n);font-size:18px">📡</div><div><h2>Neue Reichweite-Strategien</h2><p>Drei bewährte Wege zusätzlich zur 7-Tage-Gruppe</p></div></div>
+
+  <div class="card"><h3>Strategie 1 — Die WhatsApp-Status-Sequenz</h3><p>Kein Kurs, keine Gruppe, kein Aufwand. Einfach 7 Tage hintereinander einen Status posten der eine Geschichte erzählt — Tag 1 das Problem, Tag 7 die Lösung. Wer reagiert, ist warm. Funktioniert parallel zu allem anderen.</p>
+  <div class="ybox" style="margin-top:0.75rem"><div class="lb">Die 7-Tage-Struktur</div><p>Tag 1: Das Problem benennen — „Kennst du das?" · Tag 2–3: Hintergrund & Aha-Momente · Tag 4: persönliche Geschichte · Tag 5: Was wirklich hilft · Tag 6: Die Brücke · Tag 7: Einladung zum Gespräch</p></div>
+  <div class="bbox" style="margin-top:0.6rem"><div class="lb">Der Vorteil</div><p>Keine Gruppe zu managen, kein fixer Termin. Wer fragt, kommt von selbst. Ideal für alle die noch kein Netzwerk aufgebaut haben.</p></div></div>
+
+  <div class="card"><h3>Strategie 2 — Die Ergebnis-Kette</h3><p>Begeisterte Kunden teilen ihre Geschichte — aber nur wenn du aktiv dafür sorgst. Wer nur hofft dass es passiert, wartet vergeblich.</p>
+  <div class="sec-title" style="margin-top:0.75rem">So läuft es konkret</div>
+  <ul class="cl" style="margin-top:0.25rem">
+    <li><span class="ck">1</span> <strong>Aktiv sammeln:</strong> „Magst du mir kurz in zwei Sätzen schreiben was sich verändert hat? Ich würde das gerne mit anderen teilen — anonym wenn du möchtest."</li>
+    <li><span class="ck">2</span> <strong>Aufbereiten:</strong> Nicht einfach weiterleiten. Kurzen Rahmen drum: „Eine Kundin von mir hat das heute geschrieben — ich finde es so treffend."</li>
+    <li><span class="ck">3</span> <strong>Gezielt posten:</strong> Als Status, in der Facebook-Gruppe, oder direkt an 3–5 Menschen die gerade im Gespräch sind. Mit offener Frage drunter.</li>
+    <li><span class="ck">4</span> <strong>Jede Reaktion persönlich beantworten:</strong> „Das kenne ich — darf ich fragen was bei dir das Thema ist?"</li>
+  </ul>
+  <div class="rbox" style="margin-top:0.75rem"><div class="lb">Das Geheimnis</div><p>Du bist bei jedem Schritt der aktive Teil. Es läuft nicht von allein — aber es braucht auch kaum Zeit.</p></div></div>
+
+  <div class="card"><h3>Strategie 3 — Das Kooperations-Webinar</h3><p>Du machst ein Webinar zusammen mit jemandem aus deinem Netzwerk — einer Tierärztin, Ernährungsberaterin, Hundetrainerin. Beide teilen ihre Community. Doppelte Reichweite, geteilte Arbeit.</p>
+  <div class="ybox" style="margin-top:0.75rem"><div class="lb">So findest du den richtigen Partner</div><p>Wer hat dasselbe Publikum aber ein anderes Thema? Wer ergänzt dich ohne zu konkurrieren? Tierärzte und Tierheilpraktiker sind oft offen für sowas — wenn man respektvoll und ohne Verkaufsdruck anfragt.</p></div>
+  <div class="ybox" style="margin-top:0.6rem"><div class="lb">Einladung formulieren</div><p>„Ich mache regelmäßig kleine Online-Abende zum Thema [X]. Ich dachte an dich weil du in einem anderen Bereich unterwegs bist aber ähnliche Menschen ansprichst. Hätte es für dich Sinn, das mal gemeinsam zu machen?"</p></div>
+  <div class="bbox" style="margin-top:0.6rem"><div class="lb">Wann sinnvoll</div><p>Erst wenn das eigene Fundament steht — also ab Phase 3. Kooperationen brauchen Vorbereitung und Koordination, das ist nichts für den allerersten Monat.</p></div></div>
+</div>
+
+
+<div id="page-spickzettel" class="page">
+  <div class="phase-hdr"><div class="phase-num" style="background:var(--y);color:var(--n);font-size:18px">⚡</div><div><h2>Spickzettel</h2><p>Sätze für jeden Moment — direkt kopieren</p></div></div>
+
+  <div class="sec" style="margin-top:0">Situation wählen</div>
+  <div class="spick-cat">
+    <button class="spick-btn active" onclick="spick('sp-gespraech',this)">Im Gespräch</button>
+    <button class="spick-btn" onclick="spick('sp-teuer',this)">Zu teuer!</button>
+    <button class="spick-btn" onclick="spick('sp-still',this)">Wird still</button>
+    <button class="spick-btn" onclick="spick('sp-gruppe',this)">In der Gruppe</button>
+    <button class="spick-btn" onclick="spick('sp-webinar',this)">Webinar</button>
+    <button class="spick-btn" onclick="spick('sp-einladen',this)">Einladen</button>
+  </div>
+
+  <!-- Im Gespräch -->
+  <div class="spick-sec active" id="sp-gespraech">
+    <div class="sec" style="margin-top:0">Beratungsgespräch einladen</div>
+    <div class="phrase-card"><span class="phrase-t">„Ich nehme mir gerne 30–45 Minuten für dich — dann schauen wir gemeinsam was für dich und dein Tier wirklich sinnvoll ist. Wann passt es dir?"</span><button class="copy-btn" onclick="cp(this)">📋</button></div>
+    <div class="phrase-card"><span class="phrase-t">„Am besten erkläre ich dir das persönlich — auch per Video ist kein Problem. Keine Verpflichtung, nur ein ehrliches Gespräch."</span><button class="copy-btn" onclick="cp(this)">📋</button></div>
+    <div class="phrase-card"><span class="phrase-t">„Das Thema [z.B. Juckreiz] — suchst du gerade aktiv nach einer Lösung, oder ist es eher so ein ‚wäre schön wenn'?"</span><button class="copy-btn" onclick="cp(this)">📋</button></div>
+
+    <div class="sec">Real Interest — zuhören & tiefer gehen</div>
+    <div class="phrase-card"><span class="phrase-t">„Was hast du bisher alles versucht — und was hat davon nicht so funktioniert wie erhofft?"</span><button class="copy-btn" onclick="cp(this)">📋</button></div>
+    <div class="phrase-card"><span class="phrase-t">„Was macht es mit dir, dass du das schon so lange siehst?"</span><button class="copy-btn" onclick="cp(this)">📋</button></div>
+    <div class="phrase-card"><span class="phrase-t">„Auf einer Skala von 1–10: Wie wichtig ist es dir, das jetzt wirklich zu lösen?"</span><button class="copy-btn" onclick="cp(this)">📋</button></div>
+
+    <div class="sec">Bright Future — Zukunftsbild öffnen</div>
+    <div class="phrase-card"><span class="phrase-t">„Wenn wir uns in einem halben Jahr nochmal sprechen — wie soll es dann für dich aussehen?"</span><button class="copy-btn" onclick="cp(this)">📋</button></div>
+    <div class="phrase-card"><span class="phrase-t">„Was würde sich in deinem Alltag verändern wenn das nicht mehr dein Thema wäre?"</span><button class="copy-btn" onclick="cp(this)">📋</button></div>
+    <div class="phrase-card"><span class="phrase-t">„Bei allem was wir gerade besprochen haben — was wäre für dich jetzt der sinnvollste nächste Schritt?"</span><button class="copy-btn" onclick="cp(this)">📋</button></div>
+
+    <div class="sec">Preispräsentation</div>
+    <div class="phrase-card"><span class="phrase-t">„Oder du steigst klein ein mit dem Basisgerät für 895 € und nimmst dir nur das Zubehör dazu, was du wirklich zum Start brauchst — wenn überhaupt. Allein mit dem Basisgerät gibt es schon sehr gute Ergebnisse."</span><button class="copy-btn" onclick="cp(this)">📋</button></div>
+    <div class="phrase-card"><span class="phrase-t">„Und falls es für dich einfacher ist — du kannst auch über PayPal in Raten zahlen, 3 bis 24 Monate. Das machen viele so."</span><button class="copy-btn" onclick="cp(this)">📋</button></div>
+    <div class="phrase-card"><span class="phrase-t">„Was spricht dich davon am meisten an?"</span><button class="copy-btn" onclick="cp(this)">📋</button></div>
+    <div class="sec">Statt RAP — Fragen statt Aussagen</div>
+    <div class="phrase-card"><span class="phrase-t">„Was wäre es dir wert wenn das Problem in drei Monaten wirklich gelöst wäre?"</span><button class="copy-btn" onclick="cp(this)">📋</button></div>
+    <div class="phrase-card"><span class="phrase-t">„Wie würde es sich anfühlen zu wissen, dass du mich jederzeit per WhatsApp erreichen kannst?"</span><button class="copy-btn" onclick="cp(this)">📋</button></div>
+    <div class="phrase-card"><span class="phrase-t">„Soll ich dir kurz erzählen was bei mir den Unterschied gemacht hat?"</span><button class="copy-btn" onclick="cp(this)">📋</button></div>
+
+    <div class="sec">Wenn die Antwort Nein ist</div>
+    <div class="phrase-card"><span class="phrase-t">„Das verstehe ich gut. Dann macht es gerade keinen Sinn dass wir weitermachen — ich will deine Zeit nicht verschwenden. Wenn sich das ändert, melde dich einfach."</span><button class="copy-btn" onclick="cp(this)">📋</button></div>
+  </div>
+
+  <!-- Zu teuer -->
+  <div class="spick-sec" id="sp-teuer">
+    <div class="sec" style="margin-top:0">Erst herausfinden was wirklich dahintersteckt</div>
+    <div class="phrase-card"><span class="phrase-t">„Was meinst du mit zu teuer — geht es um den Betrag an sich, oder fragst du dich ob es das für dich wert ist?"</span><button class="copy-btn" onclick="cp(this)">📋</button></div>
+
+    <div class="sec">Wenn sie den Wert noch nicht sieht</div>
+    <div class="phrase-card"><span class="phrase-t">„Was wäre es dir wert wenn dieses Thema in drei Monaten wirklich gelöst wäre — nicht mehr der Tierarzt, nicht mehr die Cremes, einfach weg?"</span><button class="copy-btn" onclick="cp(this)">📋</button></div>
+    <div class="phrase-card"><span class="phrase-t">„Was hast du in den letzten zwei Jahren alles ausgegeben um das zu lösen — zusammengerechnet?"</span><button class="copy-btn" onclick="cp(this)">📋</button></div>
+
+    <div class="sec">Wenn sie Angst hat Geld zu verschwenden</div>
+    <div class="phrase-card"><span class="phrase-t">„Ich verstehe das. Du hast schon einiges probiert. Was darf ich dir erzählen, damit du eine ehrliche Einschätzung bekommst?"</span><button class="copy-btn" onclick="cp(this)">📋</button></div>
+    <div class="phrase-card"><span class="phrase-t">„Ich kann dir gerne zwei Geschichten aus meinem Umfeld erzählen — nicht als Werbung, sondern damit du siehst was realistisch möglich ist."</span><button class="copy-btn" onclick="cp(this)">📋</button></div>
+
+    <div class="sec">Wenn Unsicherheit dahintersteckt</div>
+    <div class="phrase-card"><span class="phrase-t">„Was bräuchtest du, um wirklich sicher zu sein — nicht fast, sondern wirklich? Was fehlt dir noch?"</span><button class="copy-btn" onclick="cp(this)">📋</button></div>
+    <div class="phrase-card"><span class="phrase-t">„Was wäre für dich ein Zeichen dass es sich lohnt?"</span><button class="copy-btn" onclick="cp(this)">📋</button></div>
+
+    <div class="sec">Wenn es wirklich eng ist</div>
+    <div class="phrase-card"><span class="phrase-t">„Das respektiere ich völlig. Wäre es eine Option wenn du wartest bis es passt — und ich mich dann melde?"</span><button class="copy-btn" onclick="cp(this)">📋</button></div>
+
+    <div class="sec">Nie so</div>
+    <div class="rbox" style="margin-top:0"><div class="lb">Diese Sätze vermeiden</div><p>„Aber das ist doch gar nicht teuer wenn man bedenkt was du bekommst!" — Sofort Rabatt anbieten — „Alle anderen finden es auch seinen Preis wert!"</p></div>
+  </div>
+
+  <!-- Wird still -->
+  <div class="spick-sec" id="sp-still">
+    <div class="sec" style="margin-top:0">Nach dem Webinar — 48 Stunden später</div>
+    <div class="phrase-card"><span class="phrase-t">„Hey [Name], hat dich vom gestrigen Webinar etwas beschäftigt? Manchmal kommen die Gedanken dazu erst hinterher 😊"</span><button class="copy-btn" onclick="cp(this)">📋</button></div>
+
+    <div class="sec">Wenn jemand Interesse gezeigt hat, aber dann still wurde</div>
+    <div class="phrase-card"><span class="phrase-t">„Hey du, ich wollte kurz nachfragen: Ist das Thema für dich noch aktuell oder eher erstmal vom Tisch? Ich sortiere gerade ein bisschen 😊"</span><button class="copy-btn" onclick="cp(this)">📋</button></div>
+    <div class="phrase-card"><span class="phrase-t">„Kurze Frage: Willst du noch Infos oder passt es für dich erstmal? Ich richte mich da ganz nach dir."</span><button class="copy-btn" onclick="cp(this)">📋</button></div>
+    <div class="phrase-card"><span class="phrase-t">„Ich checke gerade meine Gespräche: Soll ich deine Anfrage offen lassen oder schließen? Ich will nur Klarheit für uns beide 😊"</span><button class="copy-btn" onclick="cp(this)">📋</button></div>
+
+    <div class="sec">Wenn schon Infos geschickt wurden</div>
+    <div class="phrase-card"><span class="phrase-t">„War meine letzte Nachricht zu viel Info auf einmal? Soll ich's dir kurz und knapp zusammenfassen?"</span><button class="copy-btn" onclick="cp(this)">📋</button></div>
+    <div class="phrase-card"><span class="phrase-t">„Es kam keine Rückmeldung – alles gut? Willst du noch was wissen oder passt es für dich erstmal?"</span><button class="copy-btn" onclick="cp(this)">📋</button></div>
+
+    <div class="sec">Wenn jemand mal begeistert war</div>
+    <div class="phrase-card"><span class="phrase-t">„Du hattest ja damals gesagt dass dich die Wirkung total beeindruckt hat. Soll ich dir noch den Vorteil vom aktuellen Angebot zeigen?"</span><button class="copy-btn" onclick="cp(this)">📋</button></div>
+    <div class="phrase-card"><span class="phrase-t">„Ich musste heute an dich denken – dein Thema kam in einem Gespräch vor. Soll ich dir kurz sagen warum das gerade interessant für dich wäre?"</span><button class="copy-btn" onclick="cp(this)">📋</button></div>
+
+    <div class="sec">Ehrliche Antwort herauskitzeln</div>
+    <div class="phrase-card"><span class="phrase-t">„Sag mir ehrlich: Interessiert es dich grundsätzlich oder eher nicht? Ich hab da null Erwartungen, ich brauch nur Orientierung 😊"</span><button class="copy-btn" onclick="cp(this)">📋</button></div>
+    <div class="phrase-card"><span class="phrase-t">„Wenn du sagst 'Nein', ist es absolut okay. Ich will nur für mich richtig sortieren."</span><button class="copy-btn" onclick="cp(this)">📋</button></div>
+  </div>
+
+  <!-- In der Gruppe -->
+  <div class="spick-sec" id="sp-gruppe">
+    <div class="sec" style="margin-top:0">Wenn niemand antwortet</div>
+    <div class="phrase-card"><span class="phrase-t">Nicht nachhaken — einfach morgen weitermachen. Viele lesen nur mit. Reaktionen kommen oft erst ab Tag 3.</span><button class="copy-btn" onclick="cp(this)">📋</button></div>
+
+    <div class="sec">Wenn jemand kritisch nachfragt</div>
+    <div class="phrase-card"><span class="phrase-t">„Das ist eine super Frage. Am besten erkläre ich das im Webinar am Ende der Woche — da habe ich auch konkrete Beispiele dabei."</span><button class="copy-btn" onclick="cp(this)">📋</button></div>
+
+    <div class="sec">Wenn jemand widerspricht</div>
+    <div class="phrase-card"><span class="phrase-t">„Das sehe ich total — es gibt da wirklich unterschiedliche Perspektiven. Im Webinar zeige ich euch was ich selbst erlebt habe."</span><button class="copy-btn" onclick="cp(this)">📋</button></div>
+
+    <div class="sec">Wenn jemand nach dem Produkt fragt</div>
+    <div class="phrase-card"><span class="phrase-t">„Das freut mich dass du fragst! Genau dazu machen wir übermorgen ein kleines Webinar — da erkläre ich dir alles in Ruhe. Magst du dabei sein?"</span><button class="copy-btn" onclick="cp(this)">📋</button></div>
+
+    <div class="sec">Wenn jemand privat schreibt</div>
+    <div class="phrase-card"><span class="phrase-t">„Ich freue mich so — genau darüber reden wir am Ende der Woche. Ich schicke dir dann den Link persönlich!"</span><button class="copy-btn" onclick="cp(this)">📋</button></div>
+
+    <div class="sec">Wenn jemand an Tag 6 antwortet</div>
+    <div class="phrase-card"><span class="phrase-t">„Super dass du dabei bist! Ich schicke dir den Link gleich persönlich 🌟"</span><button class="copy-btn" onclick="cp(this)">📋</button></div>
+  </div>
+
+  <!-- Webinar -->
+  <div class="spick-sec" id="sp-webinar">
+    <div class="sec" style="margin-top:0">Einladung kommunizieren</div>
+    <div class="phrase-card"><span class="phrase-t">„Es gibt keine Aufzeichnung — aber ich bin heute Abend live dabei und gehe persönlich auf eure Fragen ein. Das gibt es nur heute Abend."</span><button class="copy-btn" onclick="cp(this)">📋</button></div>
+
+    <div class="sec">Am Ende des Webinars — Soft-Einladung</div>
+    <div class="phrase-card"><span class="phrase-t">„Wer mehr erfahren möchte oder Fragen zu seiner eigenen Situation hat — meldet euch einfach bei mir. Ich freue mich über jede Nachricht."</span><button class="copy-btn" onclick="cp(this)">📋</button></div>
+
+    <div class="sec">Nachricht nach dem Webinar — selber Tag</div>
+    <div class="phrase-card"><span class="phrase-t">„Hey [Name], schön dass du heute dabei warst 🙏 Hat dich etwas besonders angesprochen?"</span><button class="copy-btn" onclick="cp(this)">📋</button></div>
+    <div class="phrase-card"><span class="phrase-t">„Das höre ich öfter — genau dafür ist der Beosigner gemacht. Hast du mal 20 Minuten? Ich erkläre dir kurz wie das konkret bei dir aussehen könnte."</span><button class="copy-btn" onclick="cp(this)">📋</button></div>
+
+    <div class="sec">An alle die nicht dabei waren — 48h später</div>
+    <div class="phrase-card"><span class="phrase-t">„Ich habe gemerkt dass du heute nicht dabei sein konntest — schade! Wenn du magst, erkläre ich dir das Wichtigste kurz persönlich — keine 15 Minuten. Wäre das was für dich?"</span><button class="copy-btn" onclick="cp(this)">📋</button></div>
+  </div>
+
+  <!-- Einladen -->
+  <div class="spick-sec" id="sp-einladen">
+    <div class="sec" style="margin-top:0">Zur 7-Tage-Gruppe einladen</div>
+    <div class="phrase-card"><span class="phrase-t">„Ich starte nächste Woche eine kleine 7-Tage-Gruppe zum Thema [dein Thema]. Ich dachte dabei an dich — passt das gerade für dich?"</span><button class="copy-btn" onclick="cp(this)">📋</button></div>
+    <div class="phrase-card"><span class="phrase-t">„Ich mache gerade etwas Interessantes zum Thema [X] — wenn dich das interessiert, sag Bescheid, ich erkläre gerne mehr."</span><button class="copy-btn" onclick="cp(this)">📋</button></div>
+
+    <div class="sec">Zur Partnerschaft einladen</div>
+    <div class="phrase-card"><span class="phrase-t">„Ich frage mich manchmal, ob das für dich auch interessant wäre — nicht nur als Kundin, sondern als jemand der das weitergibt. Kein Druck, aber wenn dich das neugierig macht, rede ich gerne darüber."</span><button class="copy-btn" onclick="cp(this)">📋</button></div>
+
+    <div class="sec">Monatsende</div>
+    <div class="phrase-card"><span class="phrase-t">„Nur als Info, weil ich dich auf dem Radar hatte: Das Angebot läuft in ein paar Tagen aus. Ich wollte dich nicht verpassen lassen 😊"</span><button class="copy-btn" onclick="cp(this)">📋</button></div>
+    <div class="phrase-card"><span class="phrase-t">„Falls du noch drüber nachgedacht hast – das Monatsangebot endet bald. Wenn du magst sag ich dir die wichtigsten Unterschiede noch mal."</span><button class="copy-btn" onclick="cp(this)">📋</button></div>
+  </div>
+  <div class="pb"></div>
+</div>
+
+<!-- GESPRÄCHSFÜHRUNG -->
+
+<div id="page-imagefilme" class="page">
+  <div class="phase-hdr"><div class="phase-num" style="background:var(--y);color:var(--n);font-size:18px">🎬</div><div><h2>Imagefilme</h2><p>Starke Kundengewinnungs-Tools — griffbereit</p></div></div>
+
+  <div class="card" style="margin-top:0"><h3>Imagefilme — griffbereit für jedes Gespräch</h3><p>Diese Filme sind professionell, kurz und überzeugend — und ein starkes Kundengewinnungs-Tool. Du kannst sie auch als ersten Kontakt schicken. Sie wecken Neugier, erklären verständlich und öffnen Gespräche ganz natürlich.</p></div>
+
+  <div class="sec" style="margin-top:0.75rem">Die Filme</div>
+
+  <div class="card" style="border-left:3px solid var(--y)">
+    <h3>🔵 Beosigner® Plus</h3>
+    <p>„Für ein Leben mit voller Kraft" — der Hauptfilm. Zeigt das Gerät, die Wirkweise und echte Anwendungen.</p>
+    <a href="https://vimeo.com/1174418837/bc245f4c7b" target="_blank" style="display:inline-flex;align-items:center;gap:6px;margin-top:0.75rem;padding:8px 16px;background:var(--y);color:var(--n);border-radius:8px;text-decoration:none;font-size:14px;font-weight:700">▶ Film öffnen</a>
+  </div>
+
+  <div class="card" style="border-left:3px solid var(--bm)">
+    <h3>🟢 FREEONIC® me</h3>
+    <p>„Defends and Empowers" — Elektrosmog, Schutz, Lebensqualität. Gut für Menschen die noch nie davon gehört haben.</p>
+    <a href="https://vimeo.com/1174430553/cd71f2a323" target="_blank" style="display:inline-flex;align-items:center;gap:6px;margin-top:0.75rem;padding:8px 16px;background:var(--y);color:var(--n);border-radius:8px;text-decoration:none;font-size:14px;font-weight:700">▶ Film öffnen</a>
+  </div>
+
+  <div class="card" style="border-left:3px solid var(--bm)">
+    <h3>🟡 ViSponder® Plus</h3>
+    <p>„Für ein starkes Jetzt" — Energie, Bewegung, Wohlbefinden. Für bestehende Kunden die mehr möchten.</p>
+    <a href="https://vimeo.com/1174455172/f618073272" target="_blank" style="display:inline-flex;align-items:center;gap:6px;margin-top:0.75rem;padding:8px 16px;background:var(--y);color:var(--n);border-radius:8px;text-decoration:none;font-size:14px;font-weight:700">▶ Film öffnen</a>
+  </div>
+
+  <div class="card" style="border-left:3px solid var(--bem)">
+    <h3>🌿 Slow Aging Konzept</h3>
+    <p>„Das einzigartige Slow-Aging-Konzept" — für Menschen die langfristig und ganzheitlich denken.</p>
+    <a href="https://vimeo.com/1174438879/7f146a086e" target="_blank" style="display:inline-flex;align-items:center;gap:6px;margin-top:0.75rem;padding:8px 16px;background:var(--y);color:var(--n);border-radius:8px;text-decoration:none;font-size:14px;font-weight:700">▶ Film öffnen</a>
+  </div>
+
+  <div class="sec">Wann schickst du welchen Film?</div>
+  <div class="phrase-card"><span class="phrase-t">„Ich schicke dir kurz einen kurzen Film dazu — der erklärt es viel schöner als ich es in einer Nachricht könnte."</span><button class="copy-btn" onclick="cp(this)">📋</button></div>
+  <div class="bbox" style="margin-top:0.75rem"><div class="lb">Wann schicken?</div><p>Alle vier Filme eignen sich als Gesprächsöffner — auch als erster Kontakt. Besonders der Beosigner- und Freeonic-Film wecken sofort Neugier. Nie als Ersatz für ein persönliches Gespräch — aber ein toller Einstieg.</p></div>
+  <div class="pb"></div>
+</div>
+<!-- PARTNERGEWINNUNG -->
+<div id="page-partnergewinnung" class="page">
+  <div class="phase-hdr"><div class="phase-num" style="background:var(--y);color:var(--n);font-size:18px">🤝</div><div><h2>Partnergewinnung</h2><p>Der natürliche Weg vom Kunden zum Partner</p></div></div>
+
+  <div class="card"><h3>Das wichtigste Prinzip zuerst</h3><p>Partner kommen fast ausschließlich aus zufriedenen Kunden — nicht aus dem Nichts. Das ist kein Zufall, sondern Logik: Wer den Beosigner selbst erlebt hat, kann ihn glaubwürdig empfehlen. Wer ihn nicht kennt, wird ihn nicht empfehlen — egal wie attraktiv das Geschäftsmodell klingt.</p>
+  <div class="nbox" style="margin-top:0.75rem"><div class="lb">Realistischer Maßstab</div><p>1 neuer Partner in 6 Monaten ist solide. 3–5 in 6 Monaten ist Spitzenleistung. Kein Druck — wer zu früh zu viele Partner erwartet, verliert die Freude am Business.</p></div></div>
+
+  <div class="card"><h3>Der richtige Zeitpunkt</h3><p>Nie beim ersten Gespräch. Nie beim Kauf. Und auch nicht in der ersten Woche nach dem Kauf.</p>
+  <ul class="cl" style="margin-top:0.75rem">
+    <li><span class="ck">✓</span> Nach 2–4 Wochen eigener positiver Erfahrung</li>
+    <li><span class="ck">✓</span> Wenn der Kunde von selbst begeistert berichtet — "Das ist so toll!"</li>
+    <li><span class="ck">✓</span> Wenn der Kunde jemanden empfiehlt — "Meine Freundin müsste das auch haben"</li>
+    <li><span class="ck">✓</span> Wenn jemand fragt wie du zum Beosigner gekommen bist und was du damit machst</li>
+    <li><span class="ck">✗</span> Nie wenn der Kunde noch keine eigenen Ergebnisse hat</li>
+    <li><span class="ck">✗</span> Nie als Ersatz für ein Kundengespräch — erst Kunde, dann irgendwann vielleicht Partner</li>
+  </ul></div>
+
+  <div class="card"><h3>Die Einladung — so klingt es natürlich</h3><p>Kein Pitch, keine Präsentation. Eine ehrliche Frage die Neugier weckt ohne Druck zu machen.</p>
+  <div class="cb" style="margin-top:0.75rem"><h3>Wenn jemand begeistert erzählt</h3><p>„Ich freue mich so dass es dir so gut geht. Darf ich dich mal etwas fragen — hast du schon mal daran gedacht, das was du erlebst auch weiterzugeben? Ich frage weil ich manchmal denke, du wärst da richtig gut."</p></div>
+  <div class="cb"><h3>Wenn jemand jemanden empfiehlt</h3><p>„Das ist so schön dass du direkt an andere denkst. Weißt du — manche meiner Kunden machen das inzwischen selbst. Die empfehlen nicht nur weiter, sie begleiten Menschen dabei. Wäre das etwas das dich interessieren würde?"</p></div>
+  <div class="cb"><h3>Wenn jemand fragt wie du das machst</h3><p>„Ich arbeite als Partnerin von Vitarights — das bedeutet ich begleite Menschen mit dem Beosigner und verdiene dabei etwas dazu. Es ist kein Hauptberuf, aber es macht mir wirklich Freude. Magst du mal hören wie das funktioniert?"</p></div>
+  <div class="cb"><h3>Die sanfteste Einladung überhaupt</h3><p>„Ich frage mich manchmal ob das für dich auch interessant wäre — nicht als Verpflichtung, sondern einfach mal schauen. Kein Druck, nur ein Gespräch. Wärst du neugierig?"</p></div></div>
+
+  <div class="card"><h3>Die Mietoption — niedrigschwelliger Einstieg</h3><p>Für Menschen die Interesse haben aber den Beosigner noch nicht selbst haben: Als neuer Partner können sie in den ersten 60 Tagen ein Vorführgerät mieten — 55 € zzgl. MwSt./Monat für das Basisgerät, 80 € für Set L, 100 € für Set XL. So können sie das Gerät erst erleben, bevor sie kaufen.</p>
+  <div class="rbox" style="margin-top:0.75rem"><div class="lb">Wichtiger Hinweis für dich als Upline</div><p>Bei einem Mietstart ist deine Provision deutlich geringer als beim klassischen Erstverkauf. Nur empfehlen wenn die Person klar motiviert und handlungsbereit ist — und wenn du bereit bist, in jemanden zu investieren ohne sofortige Provision.</p></div></div>
+
+  <div class="card"><h3>Was tun wenn jemand Nein sagt?</h3><p>Respektiere es sofort — kein zweites Mal nachfragen beim selben Thema. Tür offen lassen:</p>
+  <div class="ybox" style="margin-top:0.75rem"><div class="lb">Formulierung</div><p>„Das verstehe ich vollständig — das ist auch nichts für jeden. Ich wollte es einfach mal gefragt haben weil ich an dich gedacht habe. Falls sich das irgendwann ändert, weißt du wo ich bin."</p></div>
+  <div class="bbox" style="margin-top:0.6rem"><div class="lb">Warum das so wichtig ist</div><p>Manche Menschen sagen nach 6 Monaten von selbst: „Weißt du noch als du gefragt hast? Ich glaube jetzt wäre ich bereit." Das passiert nur wenn du beim ersten Nein Würde gezeigt hast.</p></div></div>
+</div>
+
+<!-- EINWAND-METHODE -->
+<div id="page-einwand-methode" class="page">
+  <div class="phase-hdr"><div class="phase-num" style="background:var(--y);color:var(--n);font-size:18px">🎯</div><div><h2>Die Einwand-Methode</h2><p>Alle Einwände auf den Tisch — dann erst antworten</p></div></div>
+
+  <div class="card"><h3>Warum klassisches Einwand-Handling nicht funktioniert</h3><p>Die meisten Menschen versuchen Einwände sofort zu beantworten — Argument gegen Argument. Das Problem: Der erste Einwand ist fast nie der echte. Wer sofort antwortet, kämpft gegen Symptome statt gegen die Ursache.</p>
+  <div class="nbox" style="margin-top:0.75rem"><div class="lb">Das Prinzip</div><p>Erst alle Einwände sammeln. Dann den wichtigsten finden. Dann nur den lösen — und zwar nicht mit Argumenten, sondern mit echtem Interesse und der eigenen Geschichte.</p></div></div>
+
+  <div class="sec-title">Die 4-Schritte-Methode</div>
+
+  <div class="card"><h3>Schritt 1 — Sammeln: „Was brauchst du, damit...?"</h3><p>Die Einstiegsfrage öffnet den Raum ohne Druck. Sie signalisiert: ich will verstehen, nicht überzeugen.</p>
+  <div class="ybox" style="margin-top:0.75rem"><div class="lb">Die Formulierung</div><p>„Was bräuchtest du, damit du eine klare Entscheidung treffen kannst?"</p><p style="margin-top:0.4rem">Oder weicher: „Was bewegt dich gerade noch?"</p></div></div>
+
+  <div class="card"><h3>Schritt 2 — Vertiefen: „Und was noch?"</h3><p>Nach der ersten Antwort: nicht sofort reagieren. Einfach nachfragen. Immer wieder — bis nichts mehr kommt. Meist kommen 2–4 Einwände bevor der echte auftaucht.</p>
+  <div class="ybox" style="margin-top:0.75rem"><div class="lb">Die Formulierung</div><p>„Und was noch?" — kurz, ruhig, ohne Druck.</p><p style="margin-top:0.4rem">Oder: „Gibt es noch etwas?" / „Was sonst noch?"</p></div>
+  <div class="bbox" style="margin-top:0.6rem"><div class="lb">Wichtig</div><p>Stille aushalten. Nicht sofort füllen. Viele sagen den echten Grund erst nach einer kurzen Pause.</p></div></div>
+
+  <div class="card"><h3>Schritt 3 — Zusammenfassen und bestätigen</h3><p>Wenn nichts mehr kommt, alle Einwände kurz wiederholen — in eigenen Worten. Das zeigt dass du wirklich zugehört hast, und gibt der Person die Chance zu korrigieren.</p>
+  <div class="ybox" style="margin-top:0.75rem"><div class="lb">Die Formulierung</div><p>„Wenn ich das richtig verstehe, hast du im Moment drei Dinge die dich zögern lassen: [Einwand 1], [Einwand 2] und [Einwand 3]. Habe ich das richtig?"</p></div></div>
+
+  <div class="card"><h3>Schritt 4 — Den Kern finden und lösen</h3><p>Jetzt kommt die wichtigste Frage: Was davon ist am schwersten? Fast immer gibt es einen Kern-Einwand hinter dem alle anderen hängen. Nur den ansprechen — nicht alle auf einmal.</p>
+  <div class="ybox" style="margin-top:0.75rem"><div class="lb">Die Formulierung</div><p>„Was davon wiegt für dich am schwersten? Was müsste sich als erstes klären, damit der Rest leichter wird?"</p></div>
+  <div class="ybox" style="margin-top:0.6rem"><div class="lb">Nach der Lösung</div><p>„Wenn das für dich geklärt wäre — was würde dich dann noch zurückhalten?"</p><p style="margin-top:0.4rem">Wenn die Antwort „Eigentlich nichts mehr" ist — die Entscheidung ist gefallen. Sie hat sich selbst überzeugt.</p></div></div>
+
+  <div class="divider"></div>
+
+  <div class="sec-title">Dialogbeispiel 1 — Einwand-Methode beim Verkauf</div>
+  <div class="card"><p style="font-size:14px;color:var(--tm);font-style:italic">Situation: Kundin hat das Webinar gesehen, ist interessiert, aber zögert. Du rufst sie an.</p></div>
+
+  <div class="dlg">
+    <div class="dlg-title">Vollständiges Beispiel — Einwand-Klärung beim Kauf</div>
+    <div class="msg us"><div class="mwrap"><div class="mwho">Du</div><div class="bbl">Hey Monika, schön dass wir uns kurz sprechen. Du hattest ja beim Webinar noch Fragen. Was bewegt dich gerade noch?</div></div></div>
+    <div class="msg them"><div class="mwrap"><div class="mwho">Monika</div><div class="bbl">Ich bin mir nicht sicher ob das bei meiner Katze wirklich hilft. Sie hat das schon so lange.</div></div></div>
+    <div class="msg us"><div class="mwrap"><div class="mwho">Du</div><div class="bbl">Das verstehe ich gut. Und was noch?</div></div></div>
+    <div class="msg them"><div class="mwrap"><div class="mwho">Monika</div><div class="bbl">Naja... es ist auch nicht gerade wenig Geld.</div></div></div>
+    <div class="msg us"><div class="mwrap"><div class="mwho">Du</div><div class="bbl">Ja, das stimmt. Und gibt es noch etwas?</div></div></div>
+    <div class="msg them"><div class="mwrap"><div class="mwho">Monika</div><div class="bbl">Eigentlich... ich habe schon so vieles probiert. Ich glaube ich habe einfach Angst dass es wieder nichts bringt.</div></div></div>
+    <div class="msg us"><div class="mwrap"><div class="mwho">Du</div><div class="bbl">Danke dass du das sagst. Wenn ich das richtig verstehe hast du im Moment drei Dinge: du weißt nicht ob es bei deiner Katze wirkt, der Preis ist ein Thema, und dahinter steckt die Angst wieder enttäuscht zu werden. Habe ich das richtig?</div></div></div>
+    <div class="msg them"><div class="mwrap"><div class="mwho">Monika</div><div class="bbl">Ja, genau. Vor allem das letzte.</div></div></div>
+    <div class="msg us"><div class="mwrap"><div class="mwho">Du</div><div class="bbl">Das kenne ich so gut. Ich habe dasselbe erlebt — mit meinem Hund habe ich jahrelang alles probiert und war so müde davon. Darf ich dir erzählen was bei mir den Unterschied gemacht hat?</div></div></div>
+    <div class="msg them"><div class="mwrap"><div class="mwho">Monika</div><div class="bbl">Ja, gerne.</div></div></div>
+    <div class="msg us"><div class="mwrap"><div class="mwho">Du</div><div class="bbl">[Eigene Geschichte — 3–4 Sätze] ... Wenn das für dich geklärt wäre — was würde dich dann noch zurückhalten?</div></div></div>
+    <div class="msg them"><div class="mwrap"><div class="mwho">Monika</div><div class="bbl">Eigentlich... nichts mehr. Ich glaube ich möchte es versuchen.</div></div></div>
+  </div>
+
+  <div class="bbox" style="margin-top:0.75rem"><div class="lb">Was hier passiert ist</div><p>Du hast nie argumentiert. Du hast zugehört bis der echte Einwand kam — die Angst vor Enttäuschung. Und dann hast du nicht dagegen argumentiert, sondern deine eigene Geschichte geteilt. Sie hat sich selbst überzeugt.</p></div>
+
+  <div class="divider"></div>
+
+  <div class="sec-title">Dialogbeispiel 2 — Einwand-Methode bei der Partneransprache</div>
+  <div class="card"><p style="font-size:14px;color:var(--tm);font-style:italic">Situation: Begeisterte Kundin seit 6 Wochen. Du hast sie gefragt ob eine Partnerschaft interessant wäre. Sie zögert.</p></div>
+
+  <div class="dlg">
+    <div class="dlg-title">Vollständiges Beispiel — Einwand-Klärung bei Partneransprache</div>
+    <div class="msg them"><div class="mwrap"><div class="mwho">Sandra</div><div class="bbl">Hmm... ich weiß nicht. Das klingt interessant aber ich bin da unsicher.</div></div></div>
+    <div class="msg us"><div class="mwrap"><div class="mwho">Du</div><div class="bbl">Das ist völlig okay. Was bräuchtest du, damit du dir das besser vorstellen könntest?</div></div></div>
+    <div class="msg them"><div class="mwrap"><div class="mwho">Sandra</div><div class="bbl">Ich glaube ich habe nicht genug Zeit. Ich arbeite Vollzeit und habe zwei Kinder.</div></div></div>
+    <div class="msg us"><div class="mwrap"><div class="mwho">Du</div><div class="bbl">Ja, das ist viel. Und was noch?</div></div></div>
+    <div class="msg them"><div class="mwrap"><div class="mwrap"><div class="mwho">Sandra</div><div class="bbl">Ich bin auch nicht so der Typ der gut verkaufen kann. Das liegt mir nicht so.</div></div></div></div>
+    <div class="msg us"><div class="mwrap"><div class="mwho">Du</div><div class="bbl">Verstehe ich. Und gibt es noch etwas?</div></div></div>
+    <div class="msg them"><div class="mwrap"><div class="mwho">Sandra</div><div class="bbl">Naja... ich glaube ich traue mir das einfach nicht zu. Was wenn ich das nicht hinbekomme?</div></div></div>
+    <div class="msg us"><div class="mwrap"><div class="mwho">Du</div><div class="bbl">Okay — also Zeit, Verkaufen liegt dir nicht, und dahinter steckt die Frage ob du das überhaupt schaffst. Habe ich das richtig?</div></div></div>
+    <div class="msg them"><div class="mwrap"><div class="mwho">Sandra</div><div class="bbl">Ja, genau. Das letzte vor allem.</div></div></div>
+    <div class="msg us"><div class="mwrap"><div class="mwho">Du</div><div class="bbl">Was das Verkaufen angeht — wir verkaufen gar nicht. Ich habe noch nie jemandem etwas aufgeschwatzt. Ich erzähle meine Geschichte, ich höre zu, und ich begleite. Das was du gerade mit mir erlebst — das ist es. Was die Zeit angeht: ich arbeite selbst mit wenigen Stunden pro Woche. Das geht wirklich. Was würde sich für dich verändern wenn du wüsstest dass du nicht verkaufen musst?</div></div></div>
+    <div class="msg them"><div class="mwrap"><div class="mwho">Sandra</div><div class="bbl">Oh. Dann klingt das schon ganz anders. Das könnte ich mir vorstellen.</div></div></div>
+  </div>
+
+  <div class="bbox" style="margin-top:0.75rem"><div class="lb">Was hier passiert ist</div><p>Der echte Einwand war nicht Zeit oder Verkaufen — es war die Angst zu scheitern und das falsche Bild vom Verkaufen. Erst durch dreimaliges Nachfragen ist das rausgekommen. Wer beim ersten Einwand (Zeit) geblieben wäre, hätte nie gewusst was wirklich dahintersteckt.</p></div>
+
+  <div class="divider"></div>
+
+  <div class="sec-title">Kopierbare Formulierungen</div>
+  <div class="cb"><h3>Einstieg</h3><p>„Was bewegt dich gerade noch?" / „Was bräuchtest du, damit du eine klare Entscheidung treffen kannst?"</p></div>
+  <div class="cb"><h3>Vertiefen</h3><p>„Und was noch?" / „Gibt es noch etwas?" / „Was sonst noch?"</p></div>
+  <div class="cb"><h3>Zusammenfassen</h3><p>„Wenn ich das richtig verstehe, hast du im Moment [Einwand 1], [Einwand 2] und [Einwand 3]. Habe ich das richtig?"</p></div>
+  <div class="cb"><h3>Den Kern finden</h3><p>„Was davon wiegt für dich am schwersten?" / „Was müsste sich als erstes klären, damit der Rest leichter wird?"</p></div>
+  <div class="cb"><h3>Abschluss</h3><p>„Wenn das für dich geklärt wäre — was würde dich dann noch zurückhalten?"</p></div>
+  <div class="cb"><h3>Wenn die Entscheidung gefallen ist</h3><p>„Was wäre für dich jetzt der sinnvollste nächste Schritt?" — Nie selbst einen Schritt vorschlagen. Sie nennt ihn selbst.</p></div>
+</div>
+
+
+</main>
+</div>
+
+<script>
+function spick(id,btn){
+  document.querySelectorAll('.spick-sec').forEach(function(s){s.classList.remove('active')});
+  document.querySelectorAll('.spick-btn').forEach(function(b){b.classList.remove('active')});
+  document.getElementById(id).classList.add('active');
+  btn.classList.add('active');
+}
+function cp(btn){
+  var t=btn.previousElementSibling.textContent;
+  navigator.clipboard.writeText(t).then(function(){
+    btn.classList.add('ok');
+    btn.textContent='✓ Kopiert';
+    setTimeout(function(){btn.classList.remove('ok');btn.textContent='📋';},2000);
+  });
+}
+function go(id,btn){
+  document.querySelectorAll('.page').forEach(function(p){p.classList.remove('active')});
+  document.querySelectorAll('.nav-item').forEach(function(b){b.classList.remove('active')});
+  document.getElementById('page-'+id).classList.add('active');
+  if(btn)btn.classList.add('active');
+  window.scrollTo(0,0);
+}
+function sub(pre,id,btn){
+  document.querySelectorAll('#page-'+pre+' .subpage').forEach(function(p){p.classList.remove('active')});
+  document.querySelectorAll('#page-'+pre+' .sub-btn').forEach(function(b){b.classList.remove('active')});
+  document.getElementById(id).classList.add('active');
+  if(btn)btn.classList.add('active');
+  // Scroll zur Sub-Nav — korrekt für Fixed-Sidebar Layout
+  var subNav=btn?btn.closest('.sub-nav'):document.querySelector('#page-'+pre+' .sub-nav');
+  if(subNav){
+    setTimeout(function(){
+      var rect=subNav.getBoundingClientRect();
+      var offset=rect.top+window.pageYOffset-80;
+      window.scrollTo({top:offset,behavior:'smooth'});
+    },10);
+  }
+}
+function cat(id,btn){
+  document.querySelectorAll('.cat-sec').forEach(function(s){s.classList.remove('active')});
+  document.querySelectorAll('.cat-btn').forEach(function(b){b.classList.remove('active')});
+  document.getElementById('cat-'+id).classList.add('active');
+  if(btn)btn.classList.add('active');
+}
+function dayTog(id){
+  var b=document.getElementById(id);
+  var c=document.getElementById('dc'+id.replace('d',''));
+  var op=b.classList.toggle('op');
+  c.classList.toggle('op',op);
+}
+function cpPost(btn){
+  var pre=btn.previousElementSibling.querySelector('pre');
+  if(!pre)return;
+  navigator.clipboard.writeText(pre.innerText).then(function(){
+    btn.classList.add('ok');
+    btn.textContent='✓ Kopiert!';
+    setTimeout(function(){btn.classList.remove('ok');btn.textContent='📋 Text kopieren';},2500);
+  });
+}
+function copyP(btn){
+  var t=btn.previousElementSibling.textContent;
+  navigator.clipboard.writeText(t).then(function(){
+    btn.classList.add('ok');
+    btn.textContent='✓';
+    setTimeout(function(){btn.classList.remove('ok');btn.textContent='📋 Kopieren';},2000);
+  });
+}
+function toggleMob(){
+  document.getElementById('mobnav').classList.toggle('open');
+}
+</script>
+</body>
+</html>
